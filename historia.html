@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>História - Verdelis RP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .history-hero {
+            background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.9)),
+                        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(180deg, var(--primary), var(--accent));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 2rem;
+            background: linear-gradient(145deg, #1A1A1A, #2D2D2D);
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            border-left-color: var(--accent);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left-color: var(--primary);
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border: 4px solid var(--dark);
+            border-radius: 50%;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -10px;
+            right: auto;
+        }
+        
+        .timeline-date {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .factions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .faction-card {
+            background: linear-gradient(145deg, #1A1A1A, #2D2D2D);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border-top: 5px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .faction-card.shadow { border-top-color: #8B0000; }
+        .faction-card.moon { border-top-color: #2F4F4F; }
+        .faction-card.light { border-top-color: #DAA520; }
+        .faction-card.tech { border-top-color: #4682B4; }
+        
+        .faction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        
+        .faction-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .faction-members {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .member-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .faction-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .world-map {
+            background: linear-gradient(145deg, #1A1A1A, #2D2D2D);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 4rem 0;
+            text-align: center;
+        }
+        
+        .map-placeholder {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            height: 400px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-content::after {
+                left: -10px;
+                right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDBDOC45NiAwIDAgOC45NiAwIDIwQzAgMzEuMDQgOC45NiA0MCAyMCA0MEMzMS4wNCA0MCA0MCAzMS4wNCA0MCAyMEM0MCA4Ljk2IDMxLjA0IDAgMjAgMFpNMTggMzJWOEgxNlYzMkgxOFpNMjQgMzJWOEgyMlYzMkgyNFoiIGZpbGw9IiNEREE1MjAiLz4KPC9zdmc+" alt="Logo">
+                <span>VERDELIS RP</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> INÍCIO</a></li>
+                <li><a href="historia.html" class="active"><i class="fas fa-book"></i> HISTÓRIA</a></li>
+                <li><a href="classes.html"><i class="fas fa-users"></i> CLASSES</a></li>
+                <li><a href="clas.html"><i class="fas fa-flag"></i> CLÃS</a></li>
+                <li><a href="loja.html"><i class="fas fa-gem"></i> LOJA</a></li>
+                <li><a href="contato.html"><i class="fas fa-envelope"></i> CONTATO</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" class="btn-discord"><i class="fab fa-discord"></i> DISCORD</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="history-hero">
+        <div class="container">
+            <h1>A QUEDA DE VERDELIS</h1>
+            <p>Da esperança tecnológica ao pesadelo sobrenatural</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <!-- Timeline -->
+        <div class="timeline">
+            <!-- Evento 1 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2014 - O INÍCIO</div>
+                    <h3>PROJETO FÊNIX</h3>
+                    <p>A corporação FAU (Força de Ação Unificada) inicia o "Projeto Fênix", uma pesquisa ambiciosa para erradicar doenças terminais e alcançar a imortalidade. Financiado por governos e corporações mundiais, o projeto prometia revolucionar a medicina.</p>
+                    <div class="faction-members">
+                        <span class="member-tag">FAU Corporation</span>
+                        <span class="member-tag">Governo Mundial</span>
+                        <span class="member-tag">Cientistas</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evento 2 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2022 - DESCOBERTA</div>
+                    <h3>RADIAÇÃO MÍSTICA</h3>
+                    <p>Os cientistas descobrem uma forma de radiação anteriormente desconhecida, batizada de "Energia Éter". Esta energia demonstra propriedades de cura extraordinárias, mas também efeitos colaterais imprevisíveis em testes com cobaias.</p>
+                    <div class="faction-members">
+                        <span class="member-tag">Dr. Alistair Reed</span>
+                        <span class="member-tag">Equipe de Pesquisa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evento 3 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">15 MARÇO 2024 - O DESASTRE</div>
+                    <h3>O GRANDE VAZAMENTO</h3>
+                    <p>Durante um experimento crítico, ocorre uma falha catastrófica no reator principal do Laboratório Central. Uma explosão de Energia Éter varre a cidade de Verdelis, rompendo o véu entre as dimensões e desencadeando o caos.</p>
+                    <div class="faction-members">
+                        <span class="member-tag" style="background: #ff4444;">CATÁSTROFE</span>
+                        <span class="member-tag" style="background: #ff4444;">EMERGÊNCIA</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evento 4 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024 - 2025 - O DESPERTAR</div>
+                    <h3>AS CRIATURAS EMERGEM</h3>
+                    <p>Nos meses seguintes ao desastre, criaturas que viviam às sombras da humanidade começam a emergir. Vampiros, lobisomens, demônios e outras entidades tornam-se parte do cotidiano, enquanto humanos lutam para sobreviver.</p>
+                    <div class="faction-members">
+                        <span class="member-tag">Vampiros</span>
+                        <span class="member-tag">Lobisomens</span>
+                        <span class="member-tag">Demônios</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evento 5 -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">ATUALIDADE - 2024</div>
+                    <h3>A NOVA VERDELIS</h3>
+                    <p>A cidade transformou-se em um campo de batalha entre facções rivais. Territórios são disputados, alianças são formadas e quebradas, enquanto sobreviventes adaptam-se a esta nova realidade onde o sobrenatural é parte da vida cotidiana.</p>
+                    <div class="faction-members">
+                        <span class="member-tag">Guerra Fria</span>
+                        <span class="member-tag">Territórios</span>
+                        <span class="member-tag">Sobrevivência</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Facções -->
+        <div class="text-center" style="margin: 4rem 0;">
+            <h2 class="section-title">AS FACÇÕES DE VERDELIS</h2>
+            <p>Escolha seu lado na guerra pelo controle da cidade</p>
+        </div>
+
+        <div class="factions-grid">
+            <!-- Congregação das Sombras -->
+            <div class="faction-card shadow">
+                <div class="faction-icon">🧛‍♂️</div>
+                <h3>CONGREGAÇÃO DAS SOMBRAS</h3>
+                <p>"A Noite Nos Pertence"</p>
+                
+                <div class="faction-members">
+                    <span class="member-tag">Vampiros</span>
+                    <span class="member-tag">Demônios</span>
+                    <span class="member-tag">Necromantes</span>
+                </div>
+                
+                <p>Uma aliança sinistra entre as criaturas da noite que buscam dominar Verdelis e estabelecer um novo ordem onde os fortes governam os fracos.</p>
+                
+                <div class="faction-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">85%</div>
+                        <div>Controle Noturno</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">12</div>
+                        <div>Territórios</div>
+                    </div>
+                </div>
+                
+                <div class="faction-members">
+                    <span class="member-tag" style="background: #8B0000;">🩸 Toreador</span>
+                    <span class="member-tag" style="background: #8B0000;">🩸 Brujah</span>
+                </div>
+            </div>
+
+            <!-- Alcateias da Lua -->
+            <div class="faction-card moon">
+                <div class="faction-icon">🐺</div>
+                <h3>ALCATEIAS DA LUA</h3>
+                <p>"A Lua Guia Nossas Presas"</p>
+                
+                <div class="faction-members">
+                    <span class="member-tag">Lobisomens</span>
+                    <span class="member-tag">Cambiantes</span>
+                    <span class="member-tag">Rastreadores</span>
+                </div>
+                
+                <p>Protetores ferozes dos territórios naturais, as alcateias defendem seus domínios com unhas e dentes contra todas as ameaças.</p>
+                
+                <div class="faction-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">70%</div>
+                        <div>Áreas Rurais</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">8</div>
+                        <div>Alcateias</div>
+                    </div>
+                </div>
+                
+                <div class="faction-members">
+                    <span class="member-tag" style="background: #2F4F4F;">🌙 Bloodmoon</span>
+                    <span class="member-tag" style="background: #2F4F4F;">🌙 Silverfang</span>
+                </div>
+            </div>
+
+            <!-- Aliança da Luz -->
+            <div class="faction-card light">
+                <div class="faction-icon">👼</div>
+                <h3>ALIANÇA DA LUZ</h3>
+                <p>"A Esperança Não Morreu"</p>
+                
+                <div class="faction-members">
+                    <span class="member-tag">Humanos</span>
+                    <span class="member-tag">Anjos Caídos</span>
+                    <span class="member-tag">Escolhidos</span>
+                </div>
+                
+                <p>Uma coalizão de sobreviventes determinados a restaurar a ordem e proteger o que resta da humanidade das trevas que consome Verdelis.</p>
+                
+                <div class="faction-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">45%</div>
+                        <div>Áreas Urbanas</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15</div>
+                        <div>Refúgios</div>
+                    </div>
+                </div>
+                
+                <div class="faction-members">
+                    <span class="member-tag" style="background: #DAA520;">✨ Guardiões</span>
+                    <span class="member-tag" style="background: #DAA520;">✨ Sobreviventes</span>
+                </div>
+            </div>
+
+            <!-- FAU Sobrevivente -->
+            <div class="faction-card tech">
+                <div class="faction-icon">🔫</div>
+                <h3>FAU SOBREVIVENTE</h3>
+                <p>"A Ordem Será Restaurada"</p>
+                
+                <div class="faction-members">
+                    <span class="member-tag">Militares</span>
+                    <span class="member-tag">Cientistas</span>
+                    <span class="member-tag">Engenheiros</span>
+                </div>
+                
+                <p>Os remanescentes da FAU continuam sua missão original: entender a catástrofe, desenvolver contramedidas e restaurar a civilização.</p>
+                
+                <div class="faction-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">95%</div>
+                        <div>Tecnologia</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">6</div>
+                        <div>Bases</div>
+                    </div>
+                </div>
+                
+                <div class="faction-members">
+                    <span class="member-tag" style="background: #4682B4;">⚡ Pesquisa</span>
+                    <span class="member-tag" style="background: #4682B4;">⚡ Segurança</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mapa do Mundo -->
+        <div class="world-map">
+            <h2 class="section-title">MAPA DE VERDELIS</h2>
+            <p>Explore os territórios e pontos estratégicos da cidade</p>
+            
+            <div class="map-placeholder">
+                🗺️ MAPA INTERATIVO DE VERDELIS
+                <br>
+                <small>(Em desenvolvimento - Próxima atualização)</small>
+            </div>
+            
+            <div class="faction-members">
+                <span class="member-tag" style="background: #8B0000;">🧛 Territórios Vampíricos</span>
+                <span class="member-tag" style="background: #2F4F4F;">🐺 Domínios Lobisomens</span>
+                <span class="member-tag" style="background: #DAA520;">👼 Zonas Humanas</span>
+                <span class="member-tag" style="background: #4682B4;">🔫 Bases FAU</span>
+                <span class="member-tag" style="background: #4B0082;">😈 Áreas Demoníacas</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VERDELIS RP</h3>
+                    <p>Um mundo de histórias, conflitos e alianças. Sua lenda começa aqui.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>HISTÓRIA</h4>
+                    <ul>
+                        <li><a href="#timeline">Linha do Tempo</a></li>
+                        <li><a href="#factions">Facções</a></li>
+                        <li><a href="#map">Mapa</a></li>
+                        <li><a href="#lore">Lore</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>RECURSOS</h4>
+                    <ul>
+                        <li><a href="#">Enciclopédia</a></li>
+                        <li><a href="#">Arquivos FAU</a></li>
+                        <li><a href="#">Relatórios</a></li>
+                        <li><a href="#">Crônicas</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

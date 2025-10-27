@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes - Verdelis RP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .classes-hero {
+            background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.9)),
+                        url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .class-detail {
+            background: linear-gradient(145deg, #1A1A1A, #2D2D2D);
+            border-radius: 15px;
+            margin: 2rem 0;
+            overflow: hidden;
+            border-left: 5px solid var(--primary);
+        }
+        
+        .class-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .class-header.vampiro { background: linear-gradient(135deg, #8B0000, #B22222); }
+        .class-header.lobisomem { background: linear-gradient(135deg, #2F4F4F, #4682B4); }
+        .class-header.demonio { background: linear-gradient(135deg, #4B0082, #8A2BE2); }
+        .class-header.anjo { background: linear-gradient(135deg, #DAA520, #FFD700); }
+        .class-header.humano { background: linear-gradient(135deg, #696969, #808080); }
+        .class-header.escolhido { background: linear-gradient(135deg, #006400, #228B22); }
+        .class-header.fau { background: linear-gradient(135deg, #2F4F4F, #708090); }
+        
+        .class-content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .class-abilities, .class-weaknesses {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+        
+        .ability-list, .weakness-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .ability-list li, .weakness-list li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            border-left: 3px solid var(--accent);
+        }
+        
+        .weakness-list li {
+            border-left-color: #ff4444;
+        }
+        
+        .class-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .stat-bar {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            width: 100%;
+            height: 8px;
+            background: var(--gray-dark);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+        }
+        
+        @media (max-width: 768px) {
+            .class-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .class-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDBDOC45NiAwIDAgOC45NiAwIDIwQzAgMzEuMDQgOC45NiA0MCAyMCA0MEMzMS4wNCA0MCA0MCAzMS4wNCA0MCAyMEM0MCA4Ljk2IDMxLjA0IDAgMjAgMFpNMTggMzJWOEgxNlYzMkgxOFpNMjQgMzJWOEgyMlYzMkgyNFoiIGZpbGw9IiNEREE1MjAiLz4KPC9zdmc+" alt="Logo">
+                <span>VERDELIS RP</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> INÍCIO</a></li>
+                <li><a href="historia.html"><i class="fas fa-book"></i> HISTÓRIA</a></li>
+                <li><a href="classes.html" class="active"><i class="fas fa-users"></i> CLASSES</a></li>
+                <li><a href="clas.html"><i class="fas fa-flag"></i> CLÃS</a></li>
+                <li><a href="loja.html"><i class="fas fa-gem"></i> LOJA</a></li>
+                <li><a href="contato.html"><i class="fas fa-envelope"></i> CONTATO</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" class="btn-discord"><i class="fab fa-discord"></i> DISCORD</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="classes-hero">
+        <div class="container">
+            <h1>ESCOLHA SUA CLASSE</h1>
+            <p>7 raças únicas, cada uma com habilidades especiais e fraquezas específicas</p>
+        </div>
+    </section>
+
+    <section class="container" style="padding: 2rem 0;">
+        <!-- Vampiro -->
+        <div class="class-detail">
+            <div class="class-header vampiro">
+                <h2>🧛 VAMPIRO</h2>
+                <p>"Senhores da Noite, Mestres da Escuridão"</p>
+            </div>
+            <div class="class-content">
+                <div>
+                    <h3><i class="fas fa-bolt"></i> HABILIDADES</h3>
+                    <ul class="ability-list">
+                        <li><strong>Drenagem de Sangue:</strong> Recupere vida sugando NPCs inconscientes</li>
+                        <li><strong>Transformação em Morcego:</strong> Mobilidade aérea e evasão</li>
+                        <li><strong>Visão Noturna:</strong> Veja na escuridão completa</li>
+                        <li><strong>Dominação Mental:</strong> Controle temporário de humanos</li>
+                        <li><strong>Super Velocidade:</strong> Movimentação extremamente rápida</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3><i class="fas fa-skull-crossbones"></i> FRAQUEZAS</h3>
+                    <ul class="weakness-list">
+                        <li><strong>Luz Solar:</strong> Dano contínuo durante o dia</li>
+                        <li><strong>Estacas de Madeira:</strong> Dano triplicado</li>
+                        <li><strong>Água Benta:</strong> Queimaduras graves</li>
+                        <li><strong>Necessidade de Sangue:</strong> Drenagem natural constante</li>
+                    </ul>
+                    
+                    <div class="class-stats">
+                        <div class="stat-bar">
+                            <div class="stat-label">DANO</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 80%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">DEFESA</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 60%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">MOBILIDADE</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 90%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">DIFICULDADE</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 70%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lobisomem -->
+        <div class="class-detail">
+            <div class="class-header lobisomem">
+                <h2>🐺 LOBISOMEM</h2>
+                <p>"Guardiões da Lua, Fúria da Natureza"</p>
+            </div>
+            <div class="class-content">
+                <div>
+                    <h3><i class="fas fa-bolt"></i> HABILIDADES</h3>
+                    <ul class="ability-list">
+                        <li><strong>Transformação em Lobo:</strong> Força e velocidade aumentadas</li>
+                        <li><strong>Fúria Berserker:</strong> Dano aumentado em combate</li>
+                        <li><strong>Sentidos Aguçados:</strong> Detecção aprimorada</li>
+                        <li><strong>Cura Lunar:</strong> Regeneração acelerada</li>
+                        <li><strong>Uivo de Alcateia:</strong> Buff para membros do grupo</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3><i class="fas fa-skull-crossbones"></i> FRAQUEZAS</h3>
+                    <ul class="weakness-list">
+                        <li><strong>Armas de Prata:</strong> Dano triplicado</li>
+                        <li><strong>Acônito:</strong> Envenenamento e fraqueza</li>
+                        <li><strong>Controle de Fúria:</strong> Dificuldade em controlar transformação</li>
+                        <li><strong>Lua Cheia:</strong> Transformação involuntária</li>
+                    </ul>
+                    
+                    <div class="class-stats">
+                        <div class="stat-bar">
+                            <div class="stat-label">DANO</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 90%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">DEFESA</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 80%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">MOBILIDADE</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 70%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">DIFICULDADE</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 60%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demônio -->
+        <div class="class-detail">
+            <div class="class-header demonio">
+                <h2>😈 DEMÔNIO</h2>
+                <p>"Emissários do Inferno, Portadores do Caos"</p>
+            </div>
+            <div class="class-content">
+                <div>
+                    <h3><i class="fas fa-bolt"></i> HABILIDADES</h3>
+                    <ul class="ability-list">
+                        <li><strong>Chamas do Inferno:</strong> Dano elemental de fogo</li>
+                        <li><strong>Possessão:</strong> Controle temporário de alvos</li>
+                        <li><strong>Teleporte Sombrio:</strong> Movimento instantâneo</li>
+                        <li><strong>Armadura Demoníaca:</strong> Defesa aumentada</li>
+                        <li><strong>Visão do Inferno:</strong> Detecção de almas</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3><i class="fas fa-skull-crossbones"></i> FRAQUEZAS</h3>
+                    <ul class="weakness-list">
+                        <li><strong>Símbolos Sagrados:</strong> Dano massivo</li>
+                        <li><strong>Água Benta:</strong> Queimaduras intensas</li>
+                        <li><strong>Luz Divina:</strong> Fraqueza em áreas sagradas</li>
+                        <li><strong>Exorcismo:</strong> Pode ser banido temporariamente</li>
+                    </ul>
+                    
+                    <div class="class-stats">
+                        <div class="stat-bar">
+                            <div class="stat-label">DANO</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 95%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">DEFESA</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 85%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">MOBILIDADE</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 50%"></div></div>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-label">DIFICULDADE</div>
+                            <div class="stat-value"><div class="stat-fill" style="width: 80%"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VERDELIS RP</h3>
+                    <p>Um mundo de criaturas, alianças e batalhas épicas.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>CLASSES</h4>
+                    <ul>
+                        <li><a href="#vampiro">Vampiro</a></li>
+                        <li><a href="#lobisomem">Lobisomem</a></li>
+                        <li><a href="#demonio">Demônio</a></li>
+                        <li><a href="#anjo">Anjo Caído</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>SUPORTE</h4>
+                    <ul>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Suporte</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

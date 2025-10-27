@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Verdelis RP</title>
+    <style>
+        /* Reset e estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-red: #e94560;
+            --accent-purple: #6a3093;
+            --accent-blue: #0f3460;
+            --text-light: #f1f1f1;
+            --text-gray: #b0b0b0;
+            --border-dark: #2d3748;
+        }
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9)), 
+                              url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a2e"/><path d="M0 0L100 100M100 0L0 100" stroke="%230f3460" stroke-width="1"/></svg>');
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(22, 33, 62, 0.9);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--accent-red);
+            font-size: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(233, 69, 96, 0.2);
+            color: var(--accent-red);
+        }
+
+        nav a.active {
+            background-color: var(--accent-red);
+            color: var(--text-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.7), rgba(106, 48, 147, 0.7));
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-gray);
+        }
+
+        /* Main Content */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .contact-info {
+            background-color: rgba(22, 33, 62, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .contact-info h2 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--accent-red);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-icon {
+            color: var(--accent-red);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            min-width: 30px;
+        }
+
+        .info-text h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .info-text p {
+            color: var(--text-gray);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-dark);
+            border-radius: 50%;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background-color: rgba(22, 33, 62, 0.7);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .contact-form h2 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--accent-red);
+            padding-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: rgba(15, 52, 96, 0.5);
+            border: 1px solid var(--border-dark);
+            border-radius: 4px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 2px rgba(233, 69, 96, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--accent-red);
+            color: var(--text-light);
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #d63447;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 4rem;
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            color: var(--accent-red);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: rgba(22, 33, 62, 0.7);
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-dark);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background-color: rgba(15, 52, 96, 0.5);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(15, 52, 96, 0.7);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        .faq-toggle {
+            color: var(--accent-red);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--accent-red);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-red);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">⚔️</div>
+                    <div class="logo-text">VERDELIS RP</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                        <li><a href="lojas.html">Lojas</a></li>
+                        <li><a href="fortalezas.html">Fortalezas</a></li>
+                        <li><a href="contato.html" class="active">Contato</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Entre em Contato</h1>
+            <p>Precisa de ajuda? Tem dúvidas sobre o servidor? Entre em contato conosco através dos canais oficiais.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="contact-content">
+            <!-- Informações de Contato -->
+            <div class="contact-info">
+                <h2>Informações de Contato</h2>
+                
+                <div class="info-item">
+                    <div class="info-icon">📧</div>
+                    <div class="info-text">
+                        <h3>Email</h3>
+                        <p>suporte@verdelisrp.com</p>
+                        <p>admin@verdelisrp.com</p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">🎮</div>
+                    <div class="info-text">
+                        <h3>Discord</h3>
+                        <p>Junte-se ao nosso servidor Discord para suporte imediato</p>
+                        <p><strong>discord.gg/verdelisrp</strong></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">🌐</div>
+                    <div class="info-text">
+                        <h3>Website</h3>
+                        <p>Para mais informações sobre o servidor</p>
+                        <p><strong>www.verdelisrp.com</strong></p>
+                    </div>
+                </div>
+                
+                <div class="info-item">
+                    <div class="info-icon">👥</div>
+                    <div class="info-text">
+                        <h3>Redes Sociais</h3>
+                        <p>Siga-nos para ficar por dentro das novidades</p>
+                        <div class="social-links">
+                            <a href="#" class="social-link">📘</a>
+                            <a href="#" class="social-link">🐦</a>
+                            <a href="#" class="social-link">📷</a>
+                            <a href="#" class="social-link">🎬</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Formulário de Contato -->
+            <div class="contact-form">
+                <h2>Envie uma Mensagem</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Assunto</label>
+                        <select id="subject" class="form-control" required>
+                            <option value="">Selecione um assunto</option>
+                            <option value="suporte">Suporte Técnico</option>
+                            <option value="bug">Reportar Bug</option>
+                            <option value="sugestao">Sugestão</option>
+                            <option value="parceria">Proposta de Parceria</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Mensagem</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Enviar Mensagem</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Perguntas Frequentes</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Como posso me juntar ao servidor?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Para se juntar ao Verdelis RP, você precisa ter o FiveM instalado e seguir os passos:</p>
+                        <ol>
+                            <li>Conecte-se ao nosso servidor através do FiveM</li>
+                            <li>Complete o processo de whitelist em nosso Discord</li>
+                            <li>Crie seu personagem seguindo as diretrizes do servidor</li>
+                            <li>Participe do tutorial inicial para entender as mecânicas</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Como funciona o sistema de classes?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>O Verdelis RP possui um sistema de classes único com 8 opções:</p>
+                        <ul>
+                            <li><strong>Humano:</strong> Base padrão sem habilidades especiais</li>
+                            <li><strong>Vampiro:</strong> Focado em habilidades noturnas e drenagem de sangue</li>
+                            <li><strong>Lobisomem:</strong> Transformação e poderes baseados em fúria</li>
+                            <li><strong>Demônio:</strong> Poderes das trevas e corrupção</li>
+                            <li><strong>Anjo Caído:</strong> Habilidades divinas corrompidas</li>
+                            <li><strong>Escolhido:</strong> Balance entre luz e trevas</li>
+                            <li><strong>FAU:</strong> Focado em tecnologia e combate tático</li>
+                            <li><strong>Zumbi:</strong> Habilidades de infecção e resistência</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Como criar ou entrar em um clã?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Os clãs no Verdelis RP são uma parte fundamental da experiência:</p>
+                        <ul>
+                            <li>Para criar um clã, você precisa ter pelo menos nível 10 em sua classe</li>
+                            <li>O custo para criar um clã é de $50.000</li>
+                            <li>Cada clã pode ter até 50 membros</li>
+                            <li>Clãs podem controlar territórios e construir fortalezas</li>
+                            <li>Use o comando /clanmenu para gerenciar seu clã</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        O servidor tem sistema de economia?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sim, o Verdelis RP possui um sistema de economia completo:</p>
+                        <ul>
+                            <li>Todos os jogadores começam com $5.000</li>
+                            <li>É possível ganhar dinheiro através de missões, trabalhos e comércio</li>
+                            <li>Clãs podem acumular recursos em suas tesourarias</li>
+                            <li>Existem lojas especializadas para cada tipo de classe</li>
+                            <li>O limite máximo de dinheiro é de $9.999.999</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Como reportar um bug ou problema?
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Se você encontrar um bug ou problema técnico:</p>
+                        <ol>
+                            <li>Use o canal #bug-reports em nosso Discord</li>
+                            <li>Inclua o máximo de detalhes possível</li>
+                            <li>Se possível, adicione screenshots ou vídeos</li>
+                            <li>Mencione sua classe, nível e o que estava fazendo quando o bug ocorreu</li>
+                            <li>Nossa equipe de desenvolvimento responderá o mais rápido possível</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Verdelis RP</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre Nós</a></li>
+                        <li><a href="equipe.html">Nossa Equipe</a></li>
+                        <li><a href="noticias.html">Notícias</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Sistemas</h3>
+                    <ul>
+                        <li><a href="classes.html">Sistema de Classes</a></li>
+                        <li><a href="clans.html">Sistema de Clãs</a></li>
+                        <li><a href="territorios.html">Sistema de Territórios</a></li>
+                        <li><a href="fortalezas.html">Sistema de Fortalezas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Recursos</h3>
+                    <ul>
+                        <li><a href="regras.html">Regras do Servidor</a></li>
+                        <li><a href="tutoriais.html">Tutoriais</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="status.html">Status do Servidor</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="suporte.html">Central de Ajuda</a></li>
+                        <li><a href="politica.html">Política de Privacidade</a></li>
+                        <li><a href="termos.html">Termos de Uso</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Verdelis RP. Todos os direitos reservados. FiveM Roleplay Server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulação de envio do formulário
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Aqui normalmente enviaria os dados para um servidor
+            // Por enquanto, apenas mostra um alerta
+            alert(`Obrigado, ${name}! Sua mensagem foi enviada com sucesso. Entraremos em contato em breve.`);
+            
+            // Limpa o formulário
+            this.reset();
+        });
+    </script>
+</body>
+</html>

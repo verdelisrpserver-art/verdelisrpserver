@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Clãs - Verdelis RP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .clans-hero {
+            background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.9)),
+                        url('https://images.unsplash.com/photo-1531315630201-bb15abeb1653?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .clan-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .clan-type-card {
+            background: linear-gradient(145deg, #1A1A1A, #2D2D2D);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+        }
+        
+        .clan-type-card.vampire { border-left-color: #8B0000; }
+        .clan-type-card.werewolf { border-left-color: #2F4F4F; }
+        .clan-type-card.hybrid { border-left-color: #DAA520; }
+        .clan-type-card.hunter { border-left-color: #4682B4; }
+        
+        .clan-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+        
+        .clan-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .clan-members {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .requirements {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 2rem 0;
+        }
+        
+        .requirement-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .requirement-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--gray-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .requirement-list li:before {
+            content: '🎯';
+        }
+        
+        .clan-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .clan-ranking {
+            margin: 4rem 0;
+        }
+        
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .ranking-table th,
+        .ranking-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-dark);
+        }
+        
+        .ranking-table th {
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .ranking-table tr:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .rank-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .rank-1 { background: #FFD700; color: black; }
+        .rank-2 { background: #C0C0C0; color: black; }
+        .rank-3 { background: #CD7F32; color: black; }
+        
+        .btn-clan {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-clan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDBDOC45NiAwIDAgOC45NiAwIDIwQzAgMzEuMDQgOC45NiA0MCAyMCA0MEMzMS4wNCA0MCA0MCAzMS4wNCA0MCAyMEM0MCA4Ljk2IDMxLjA0IDAgMjAgMFpNMTggMzJWOEgxNlYzMkgxOFpNMjQgMzJWOEgyMlYzMkgyNFoiIGZpbGw9IiNEREE1MjAiLz4KPC9zdmc+" alt="Logo">
+                <span>VERDELIS RP</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html"><i class="fas fa-home"></i> INÍCIO</a></li>
+                <li><a href="historia.html"><i class="fas fa-book"></i> HISTÓRIA</a></li>
+                <li><a href="classes.html"><i class="fas fa-users"></i> CLASSES</a></li>
+                <li><a href="clas.html" class="active"><i class="fas fa-flag"></i> CLÃS</a></li>
+                <li><a href="loja.html"><i class="fas fa-gem"></i> LOJA</a></li>
+                <li><a href="contato.html"><i class="fas fa-envelope"></i> CONTATO</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" class="btn-discord"><i class="fab fa-discord"></i> DISCORD</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="clans-hero">
+        <div class="container">
+            <h1>⚔️ SISTEMA DE CLÃS</h1>
+            <p>Una forças, domine territórios e escreva sua lenda</p>
+        </div>
+    </section>
+
+    <section class="container">
+        <!-- Tipos de Clãs -->
+        <div class="text-center" style="margin: 2rem 0;">
+            <h2>TIPOS DE CLÃS</h2>
+            <p>Escolha sua facção e lute por seus ideais</p>
+        </div>
+
+        <div class="clan-types">
+            <!-- Clãs Vampíricos -->
+            <div class="clan-type-card vampire">
+                <div class="clan-icon">🧛</div>
+                <h3>CLÃS VAMPÍRICOS</h3>
+                <p>"Senhores da Noite"</p>
+                
+                <div class="clan-members">
+                    <div class="member-avatar">VL</div>
+                    <div class="member-avatar">DM</div>
+                    <div class="member-avatar">AC</div>
+                    <div class="member-avatar">+5</div>
+                </div>
+                
+                <div class="clan-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">+25%</div>
+                        <div>Regeneração Noturna</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+15%</div>
+                        <div>Furtividade</div>
+                    </div>
+                </div>
+                
+                <p><strong>Membros:</strong> Apenas Vampiros</p>
+                <p><strong>Clãs Disponíveis:</strong> Toreador, Brujah, Ventrue, Nosferatu</p>
+                
+                <button class="btn-clan" onclick="joinClan('vampire')">
+                    <i class="fas fa-sign-in-alt"></i>
+                    ENTRAR EM CLÃ VAMPÍRICO
+                </button>
+            </div>
+
+            <!-- Alcateias -->
+            <div class="clan-type-card werewolf">
+                <div class="clan-icon">🐺</div>
+                <h3>ALCATEIAS</h3>
+                <p>"Guardiões da Lua"</p>
+                
+                <div class="clan-members">
+                    <div class="member-avatar">LW</div>
+                    <div class="member-avatar">FW</div>
+                    <div class="member-avatar">+8</div>
+                </div>
+                
+                <div class="clan-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">+30%</div>
+                        <div>Geração de Fúria</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+20%</div>
+                        <div>Dano em Grupo</div>
+                    </div>
+                </div>
+                
+                <p><strong>Membros:</strong> Apenas Lobisomens</p>
+                <p><strong>Alcateias:</strong> Bloodmoon, Silverfang, Nightclaw</p>
+                
+                <button class="btn-clan" onclick="joinClan('werewolf')">
+                    <i class="fas fa-sign-in-alt"></i>
+                    ENTRAR EM ALCATEIA
+                </button>
+            </div>
+
+            <!-- Clãs Híbridos -->
+            <div class="clan-type-card hybrid">
+                <div class="clan-icon">🌗</div>
+                <h3>CLÃS HÍBRIDOS</h3>
+                <p>"União das Raças"</p>
+                
+                <div class="clan-members">
+                    <div class="member-avatar">V</div>
+                    <div class="member-avatar">L</div>
+                    <div class="member-avatar">H</div>
+                    <div class="member-avatar">+12</div>
+                </div>
+                
+                <div class="clan-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">+25%</div>
+                        <div>Bônus Econômico</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">Todas</div>
+                        <div>Classes Aceitas</div>
+                    </div>
+                </div>
+                
+                <p><strong>Membros:</strong> Todas as Classes</p>
+                <p><strong>Vantagem:</strong> Versatilidade e Diplomacia</p>
+                
+                <button class="btn-clan" onclick="joinClan('hybrid')">
+                    <i class="fas fa-sign-in-alt"></i>
+                    ENTRAR EM CLÃ HÍBRIDO
+                </button>
+            </div>
+
+            <!-- Ordem de Caçadores -->
+            <div class="clan-type-card hunter">
+                <div class="clan-icon">🎯</div>
+                <h3>ORDEM DE CAÇADORES</h3>
+                <p>"Defensores da Humanidade"</p>
+                
+                <div class="clan-members">
+                    <div class="member-avatar">H</div>
+                    <div class="member-avatar">E</div>
+                    <div class="member-avatar">F</div>
+                    <div class="member-avatar">+6</div>
+                </div>
+                
+                <div class="clan-stats">
+                    <div class="stat-card">
+                        <div class="stat-value">+30%</div>
+                        <div>Dano vs Criaturas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">+25%</div>
+                        <div>Detecção</div>
+                    </div>
+                </div>
+                
+                <p><strong>Membros:</strong> Humanos, Escolhidos, FAU</p>
+                <p><strong>Missão:</strong> Proteger humanos e caçar criaturas</p>
+                
+                <button class="btn-clan" onclick="joinClan('hunter')">
+                    <i class="fas fa-sign-in-alt"></i>
+                    JUNTAR-SE À ORDEM
+                </button>
+            </div>
+        </div>
+
+        <!-- Requisitos para Criar Clã -->
+        <div class="requirements">
+            <h3><i class="fas fa-tasks"></i> REQUISITOS PARA CRIAR UM CLÃ</h3>
+            <ul class="requirement-list">
+                <li><strong>Nível 10+</strong> na sua classe principal</li>
+                <li><strong>$50.000</strong> no banco para taxa de criação</li>
+                <li><strong>Nome único</strong> (3-20 caracteres)</li>
+                <li><strong>Tag exclusiva</strong> (2-4 caracteres)</li>
+                <li><strong>Mínimo de 3 membros</strong> para clãs básicos</li>
+                <li><strong>Nível 5 do clã</strong> para construir fortaleza</li>
+            </ul>
+            
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <button class="btn-clan" onclick="createClan()">
+                    <i class="fas fa-plus"></i>
+                    CRIAR NOVO CLÃ
+                </button>
+            </div>
+        </div>
+
+        <!-- Ranking de Clãs -->
+        <div class="clan-ranking">
+            <h2 class="section-title">RANKING DOS CLÃS</h2>
+            
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Clã</th>
+                        <th>Líder</th>
+                        <th>Membros</th>
+                        <th>Nível</th>
+                        <th>Territórios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="rank-badge rank-1">1º</span></td>
+                        <td>🩸 Crimson Shadow</td>
+                        <td>Draven</td>
+                        <td>24/50</td>
+                        <td>15</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-2">2º</span></td>
+                        <td>🐺 Moon Howlers</td>
+                        <td>Fenrir</td>
+                        <td>18/50</td>
+                        <td>12</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td><span class="rank-badge rank-3">3º</span></td>
+                        <td>👑 Royal Blood</td>
+                        <td>Vladimir</td>
+                        <td>22/50</td>
+                        <td>11</td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>4º</td>
+                        <td>🔫 FAU Special Ops</td>
+                        <td>Miller</td>
+                        <td>15/50</td>
+                        <td>10</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>5º</td>
+                        <td>🌗 Unity Pact</td>
+                        <td>Orion</td>
+                        <td>28/50</td>
+                        <td>9</td>
+                        <td>3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VERDELIS RP</h3>
+                    <p>Una-se a outros jogadores e domine Verdelis juntos.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>CLÃS</h4>
+                    <ul>
+                        <li><a href="#vampire">Clãs Vampíricos</a></li>
+                        <li><a href="#werewolf">Alcateias</a></li>
+                        <li><a href="#hybrid">Clãs Híbridos</a></li>
+                        <li><a href="#hunter">Ordem de Caçadores</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>RECURSOS</h4>
+                    <ul>
+                        <li><a href="#">Guia de Clãs</a></li>
+                        <li><a href="#">Ranking</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Suporte</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function joinClan(clanType) {
+            alert(`Redirecionando para entrada em clã ${clanType.toUpperCase()}`);
+            // Aqui você integraria com o sistema do servidor
+        }
+        
+        function createClan() {
+            alert('Abrindo interface de criação de clã...');
+            // Aqui você abriria um modal ou redirecionaria para criação
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar interatividade aos botões de clã
+            document.querySelectorAll('.btn-clan').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.getAttribute('onclick');
+                    if (action.includes('joinClan')) {
+                        const clanType = action.match(/'([^']+)'/)[1];
+                        joinClan(clanType);
+                    } else if (action.includes('createClan')) {
+                        createClan();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas - Verdelis RP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-red: #e94560;
+            --accent-purple: #6a3093;
+            --accent-blue: #0f3460;
+            --accent-green: #00b894;
+            --accent-gold: #ffd700;
+            --text-light: #f1f1f1;
+            --text-gray: #b0b0b0;
+            --border-dark: #2d3748;
+        }
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            background-image: linear-gradient(rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(22, 33, 62, 0.9);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            color: var(--accent-red);
+            font-size: 2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(233, 69, 96, 0.2);
+            color: var(--accent-red);
+        }
+
+        nav a.active {
+            background-color: var(--accent-red);
+            color: var(--text-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.7), rgba(106, 48, 147, 0.7));
+            margin-bottom: 3rem;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-gray);
+        }
+
+        /* Sistema de Abas */
+        .systems-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .system-tab {
+            padding: 1rem 2rem;
+            background-color: var(--secondary-dark);
+            color: var(--text-light);
+            border: 2px solid var(--border-dark);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .system-tab.active, .system-tab:hover {
+            background-color: var(--accent-red);
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        /* Seções dos Sistemas */
+        .system-section {
+            display: none;
+            margin-bottom: 4rem;
+        }
+
+        .system-section.active {
+            display: block;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--accent-red);
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+
+        /* Grid de Sistemas */
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .system-card {
+            background-color: rgba(22, 33, 62, 0.7);
+            border-radius: 15px;
+            border: 2px solid var(--border-dark);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .system-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-red);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .system-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            text-align: center;
+        }
+
+        .system-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .system-title {
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .system-content {
+            padding: 1.5rem;
+        }
+
+        .system-description {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .system-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .system-features li {
+            padding: 0.5rem 0;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .system-features li:before {
+            content: "▶";
+            color: var(--accent-red);
+            font-size: 0.8rem;
+        }
+
+        .system-commands {
+            background-color: rgba(15, 52, 96, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .command-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .command-item:last-child {
+            border-bottom: none;
+        }
+
+        .command {
+            font-family: 'Courier New', monospace;
+            background-color: var(--primary-dark);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-green);
+        }
+
+        .command-desc {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Sistema de Progressão */
+        .progression-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: rgba(22, 33, 62, 0.7);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progression-table th {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            padding: 1rem;
+            text-align: left;
+            color: var(--text-light);
+        }
+
+        .progression-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-dark);
+            color: var(--text-gray);
+        }
+
+        .progression-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .progression-table tr:hover {
+            background-color: rgba(233, 69, 96, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--accent-red);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-red);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .systems-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .systems-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .system-tab {
+                width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .progression-table {
+                font-size: 0.9rem;
+            }
+            
+            .progression-table th,
+            .progression-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">⚔️</div>
+                    <div class="logo-text">VERDELIS RP</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historia.html">História</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="sistemas.html" class="active">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                        <li><a href="loja.html">Loja</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>🎮 Sistemas do Servidor</h1>
+            <p>Conheça todos os sistemas complexos e únicos do Verdelis RP</p>
+        </div>
+    </section>
+
+    <!-- Abas dos Sistemas -->
+    <div class="container">
+        <div class="systems-tabs">
+            <button class="system-tab active" data-tab="classes">
+                🧙‍♂️ Sistema de Classes
+            </button>
+            <button class="system-tab" data-tab="clans">
+                🏰 Sistema de Clãs
+            </button>
+            <button class="system-tab" data-tab="progression">
+                📈 Sistema de Progressão
+            </button>
+            <button class="system-tab" data-tab="territories">
+                🗺️ Sistema de Territórios
+            </button>
+            <button class="system-tab" data-tab="economy">
+                💰 Sistema Econômico
+            </button>
+        </div>
+
+        <!-- Sistema de Classes -->
+        <section id="classes" class="system-section active">
+            <h2 class="section-title">🧙‍♂️ Sistema de Classes</h2>
+            
+            <div class="systems-grid">
+                <!-- Vampiro -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🦇</div>
+                        <h3 class="system-title">Vampiro</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Senhores da noite com habilidades de sangue e transformação.</p>
+                        <ul class="system-features">
+                            <li><strong>Clãs:</strong> Toreador, Brujah, Ventrue, Nosferatu</li>
+                            <li><strong>Habilidades:</strong> Drenagem de Sangue, Transformação em Morcego</li>
+                            <li><strong>Vantagens:</strong> Visão noturna, Regeneração noturna</li>
+                            <li><strong>Fraquezas:</strong> Luz solar, Estacas, Água benta</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/drainblood</code>
+                                <span class="command-desc">Drenar sangue de NPCs</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/vampirevision</code>
+                                <span class="command-desc">Ativar visão noturna</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/batform</code>
+                                <span class="command-desc">Transformar em morcego</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lobisomem -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🐺</div>
+                        <h3 class="system-title">Lobisomem</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Guerreiros bestiais com fúria incontrolável e transformação lunar.</p>
+                        <ul class="system-features">
+                            <li><strong>Alcateias:</strong> Bloodmoon, Silverfang, Nightclaw</li>
+                            <li><strong>Habilidades:</strong> Transformação em Lobo, Rugido Assustador</li>
+                            <li><strong>Vantagens:</strong> Força aumentada, Regeneração rápida</li>
+                            <li><strong>Fraquezas:</strong> Prata, Acônito, Lua cheia (controle)</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/transform</code>
+                                <span class="command-desc">Transformar em lobo</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/wolfhowl</code>
+                                <span class="command-desc">Rugido de alcateia</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/hunt</code>
+                                <span class="command-desc">Caçar presas para fúria</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demônio -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">😈</div>
+                        <h3 class="system-title">Demônio</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Seres das trevas com poderes de corrupção e fogo infernal.</p>
+                        <ul class="system-features">
+                            <li><strong>Habilidades:</strong> Fogo Infernal, Possessão, Telecinese</li>
+                            <li><strong>Vantagens:</strong> Imunidade a fogo, Visão verdadeira</li>
+                            <li><strong>Fraquezas:</strong> Itens sagrados, Água benta, Símbolos</li>
+                            <li><strong>Recursos:</strong> Essência demoníaca</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/hellfire</code>
+                                <span class="command-desc">Conjurar fogo infernal</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/possess</code>
+                                <span class="command-desc">Possuir criaturas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Anjo Caído -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">👼</div>
+                        <h3 class="system-title">Anjo Caído</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Seres celestiais banidos com poderes divinos corrompidos.</p>
+                        <ul class="system-features">
+                            <li><strong>Habilidades:</strong> Luz Profana, Asas Corrompidas, Maldições</li>
+                            <li><strong>Vantagens:</strong> Voo limitado, Resistência divina</li>
+                            <li><strong>Fraquezas:</strong> Lembranças do céu, Arrependimento</li>
+                            <li><strong>Recursos:</strong> Essência celestial</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/unholylight</code>
+                                <span class="command-desc">Luz profana</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/fallenwings</code>
+                                <span class="command-desc">Ativar asas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Escolhido -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">⭐</div>
+                        <h3 class="system-title">Escolhido</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Humanos abençoados com poderes de luz e equilíbrio.</p>
+                        <ul class="system-features">
+                            <li><strong>Habilidades:</strong> Cura Divina, Proteção Sagrada, Exorcismo</li>
+                            <li><strong>Vantagens:</strong> Bônus contra criaturas das trevas</li>
+                            <li><strong>Fraquezas:</strong> Vulnerável a poderes sombrios</li>
+                            <li><strong>Recursos:</strong> Fé</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/divineheal</code>
+                                <span class="command-desc">Cura divina</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/holyprotection</code>
+                                <span class="command-desc">Proteção sagrada</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAU -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🔫</div>
+                        <h3 class="system-title">FAU</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Força de Ação Urgente - Caçadores de criaturas sobrenaturais.</p>
+                        <ul class="system-features">
+                            <li><strong>Habilidades:</strong> Armamento Pesado, Tecnologia Avançada, Investigação</li>
+                            <li><strong>Vantagens:</strong> Equipamento militar, Suporte tático</li>
+                            <li><strong>Fraquezas:</strong> Recursos limitados, Dependência de equipamento</li>
+                            <li><strong>Recursos:</strong> Munição especial</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/faugear</code>
+                                <span class="command-desc">Equipamento FAU</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/track</code>
+                                <span class="command-desc">Rastrear criaturas</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema de Clãs -->
+        <section id="clans" class="system-section">
+            <h2 class="section-title">🏰 Sistema de Clãs</h2>
+            
+            <div class="systems-grid">
+                <!-- Criação de Clãs -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🏗️</div>
+                        <h3 class="system-title">Criação de Clãs</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Forme seu próprio clã e domine Verdelis RP.</p>
+                        <ul class="system-features">
+                            <li><strong>Custo:</strong> $50.000</li>
+                            <li><strong>Membros máx:</strong> 50 jogadores</li>
+                            <li><strong>Requisitos:</strong> Nível 10+</li>
+                            <li><strong>Tipos:</strong> Vampírico, Lobisomem, Híbrido, Caçador</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/createclan [nome] [tag]</code>
+                                <span class="command-desc">Criar um clã</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/clanmenu</code>
+                                <span class="command-desc">Menu do clã</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hierarquia -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">📊</div>
+                        <h3 class="system-title">Hierarquia</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Sistema de ranks e permissões dentro do clã.</p>
+                        <ul class="system-features">
+                            <li><strong>Líder:</strong> Permissões totais</li>
+                            <li><strong>Oficial:</strong> Gerenciar membros</li>
+                            <li><strong>Veterano:</strong> Convidar jogadores</li>
+                            <li><strong>Membro:</strong> Acesso básico</li>
+                            <li><strong>Iniciante:</strong> Permissões limitadas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Fortalezas -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🏯</div>
+                        <h3 class="system-title">Fortalezas</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Bases defensivas exclusivas para clãs.</p>
+                        <ul class="system-features">
+                            <li><strong>Tipos:</strong> Covil Vampírico, Covil Lobisomem, Santuário Híbrido</li>
+                            <li><strong>Custo:</strong> 15.000-22.000 Verdelium</li>
+                            <li><strong>Defesas:</strong> Muralhas, Torres, Armadilhas</li>
+                            <li><strong>Capacidade:</strong> 15-25 membros</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema de Progressão -->
+        <section id="progression" class="system-section">
+            <h2 class="section-title">📈 Sistema de Progressão</h2>
+            
+            <div class="systems-grid">
+                <!-- Sistema de XP -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">⭐</div>
+                        <h3 class="system-title">Sistema de Experiência</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Ganhe XP e suba de nível para desbloquear novas habilidades.</p>
+                        <ul class="system-features">
+                            <li><strong>Nível máximo:</strong> 100</li>
+                            <li><strong>Fontes de XP:</strong> Missões, Combate, Eventos</li>
+                            <li><strong>Multiplicador VIP:</strong> +50% XP</li>
+                            <li><strong>Recompensas:</strong> Habilidades, Itens, Verdelium</li>
+                        </ul>
+                        <div class="system-commands">
+                            <div class="command-item">
+                                <code class="command">/level</code>
+                                <span class="command-desc">Ver seu nível</span>
+                            </div>
+                            <div class="command-item">
+                                <code class="command">/skills</code>
+                                <span class="command-desc">Habilidades</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Progressão -->
+                <div class="system-card" style="grid-column: 1 / -1;">
+                    <div class="system-header">
+                        <div class="system-icon">📋</div>
+                        <h3 class="system-title">Tabela de Progressão</h3>
+                    </div>
+                    <div class="system-content">
+                        <table class="progression-table">
+                            <thead>
+                                <tr>
+                                    <th>Nível</th>
+                                    <th>XP Necessário</th>
+                                    <th>Recompensas</th>
+                                    <th>Habilidades Desbloqueadas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1-10</td>
+                                    <td>1.000-10.000</td>
+                                    <td>Habilidades básicas</td>
+                                    <td>Transformação, Visão noturna</td>
+                                </tr>
+                                <tr>
+                                    <td>11-25</td>
+                                    <td>15.000-50.000</td>
+                                    <td>Itens raros, Verdelium</td>
+                                    <td>Habilidades intermediárias</td>
+                                </tr>
+                                <tr>
+                                    <td>26-50</td>
+                                    <td>75.000-250.000</td>
+                                    <td>Veículos exclusivos</td>
+                                    <td>Habilidades avançadas</td>
+                                </tr>
+                                <tr>
+                                    <td>51-100</td>
+                                    <td>400.000-1.000.000</td>
+                                    <td>Títulos lendários</td>
+                                    <td>Habilidades lendárias</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema de Territórios -->
+        <section id="territories" class="system-section">
+            <h2 class="section-title">🗺️ Sistema de Territórios</h2>
+            
+            <div class="systems-grid">
+                <!-- Controle Territorial -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🎯</div>
+                        <h3 class="system-title">Controle Territorial</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Domine territórios e ganhe benefícios exclusivos.</p>
+                        <ul class="system-features">
+                            <li><strong>Tipos:</strong> Urbano, Rural, Estratégico, Sagrado</li>
+                            <li><strong>Benefícios:</strong> Recursos, Bônus, Rendimento</li>
+                            <li><strong>Conquista:</strong> Sistema de captura</li>
+                            <li><strong>Defesa:</strong> Cooldown de 1 hora</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Recursos -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">💎</div>
+                        <h3 class="system-title">Recursos</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Cada território oferece recursos únicos.</p>
+                        <ul class="system-features">
+                            <li><strong>Urbano:</strong> Dinheiro, Informação</li>
+                            <li><strong>Rural:</strong> Materiais, Plantas</li>
+                            <li><strong>Estratégico:</strong> Armas, Veículos</li>
+                            <li><strong>Sagrado:</strong> Artefatos, Conhecimento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sistema Econômico -->
+        <section id="economy" class="system-section">
+            <h2 class="section-title">💰 Sistema Econômico</h2>
+            
+            <div class="systems-grid">
+                <!-- Moedas -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">💵</div>
+                        <h3 class="system-title">Sistema de Moedas</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Dualidade monetária: Dinheiro in-game e Verdelium premium.</p>
+                        <ul class="system-features">
+                            <li><strong>Dinheiro:</strong> $5.000 inicial</li>
+                            <li><strong>Verdelium:</strong> Moeda premium</li>
+                            <li><strong>Limite:</strong> $9.999.999</li>
+                            <li><strong>Ganhos:</strong> Missões, Trabalhos, Comércio</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Lojas -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🏪</div>
+                        <h3 class="system-title">Lojas Especializadas</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Lojas únicas para cada tipo de classe e clã.</p>
+                        <ul class="system-features">
+                            <li><strong>Vampiro:</strong> Mercado das Sombras</li>
+                            <li><strong>Lobisomem:</strong> Covil da Lua</li>
+                            <li><strong>Híbrido:</strong> Emporium Universal</li>
+                            <li><strong>Caçador:</strong> Arsenal do Caçador</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- NPCs Hostis -->
+                <div class="system-card">
+                    <div class="system-header">
+                        <div class="system-icon">🎯</div>
+                        <h3 class="system-title">NPCs Hostis</h3>
+                    </div>
+                    <div class="system-content">
+                        <p class="system-description">Caçadores especializados em criaturas sobrenaturais.</p>
+                        <ul class="system-features">
+                            <li><strong>Tipos:</strong> Caçador de Vampiros, Caçador de Lobisomens</li>
+                            <li><strong>Comportamento:</strong> Patrulha, Investigação, Combate</li>
+                            <li><strong>Recompensas:</strong> Itens raros, Experiência</li>
+                            <li><strong>Dificuldade:</strong> Escalonável</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Verdelis RP</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historia.html">História</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Classes</h3>
+                    <ul>
+                        <li><a href="#">Vampiros</a></li>
+                        <li><a href="#">Lobisomens</a></li>
+                        <li><a href="#">Demônios</a></li>
+                        <li><a href="#">Anjos Caídos</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Status do Servidor</a></li>
+                        <li><a href="#">Política de Reembolso</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Termos de Serviço</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Sobre Nós</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados. FiveM Roleplay Server.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sistema de Abas
+        document.querySelectorAll('.system-tab').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active de todos os botões e seções
+                document.querySelectorAll('.system-tab').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.system-section').forEach(section => section.classList.remove('active'));
+                
+                // Adiciona active ao botão clicado
+                button.classList.add('active');
+                
+                // Mostra a seção correspondente
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Sistemas Verdelis RP carregados com sucesso!');
+        });
+    </script>
+</body>
+</html>
