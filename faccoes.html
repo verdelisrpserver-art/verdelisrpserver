@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facções - Verdelis RP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-red: #e94560;
+            --accent-purple: #6a3093;
+            --accent-blue: #0f3460;
+            --accent-gold: #ffd700;
+            --text-light: #f1f1f1;
+            --text-gray: #b0b0b0;
+            --border-dark: #2d3748;
+        }
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(22, 33, 62, 0.95);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(233, 69, 96, 0.2);
+            color: var(--accent-red);
+        }
+
+        nav a.active {
+            background-color: var(--accent-red);
+            color: var(--text-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.8), rgba(106, 48, 147, 0.8));
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-gray);
+        }
+
+        /* Factions Grid */
+        .factions-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            color: var(--accent-red);
+        }
+
+        .factions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .faction-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--border-dark);
+            transition: all 0.3s ease;
+        }
+
+        .faction-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-red);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .faction-header {
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .faction-name {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .faction-tagline {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+
+        .faction-content {
+            padding: 2rem;
+        }
+
+        .faction-description {
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .requirements {
+            margin-bottom: 2rem;
+        }
+
+        .requirements h4 {
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .requirements-list {
+            list-style: none;
+        }
+
+        .requirements-list li {
+            padding: 0.5rem 0;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .requirements-list li:before {
+            content: "✓";
+            color: var(--accent-red);
+            font-weight: bold;
+        }
+
+        .benefits {
+            margin-bottom: 2rem;
+        }
+
+        .benefits h4 {
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .benefits-list {
+            list-style: none;
+        }
+
+        .benefits-list li {
+            padding: 0.5rem 0;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .benefits-list li:before {
+            content: "★";
+            color: var(--accent-gold);
+        }
+
+        .faction-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            color: var(--accent-red);
+            border: 2px solid var(--accent-red);
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .faction-btn:hover {
+            background: var(--accent-red);
+            color: white;
+        }
+
+        /* Process Section */
+        .process-section {
+            padding: 4rem 0;
+            background: var(--secondary-dark);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .step-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--accent-red);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-red);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .factions-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-image">VR</div>
+                    <div class="logo-text">VERDELIS RP</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historia.html">História</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="faccoes.html" class="active">Facções</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                        <li><a href="loja.html">Loja</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Sistema de Facções</h1>
+            <p>Como humano, prove seu valor e ingresse em facções especiais através de missões desafiadoras. Cada facção oferece benefícios únicos e oportunidades de progressão.</p>
+        </div>
+    </section>
+
+    <!-- Factions Grid -->
+    <section class="factions-section">
+        <div class="container">
+            <h2 class="section-title">Facções Disponíveis</h2>
+            
+            <div class="factions-grid">
+                <!-- Ordem dos Caçadores -->
+                <div class="faction-card">
+                    <div class="faction-header">
+                        <h3 class="faction-name">Ordem dos Caçadores</h3>
+                        <p class="faction-tagline">Defensores da Humanidade</p>
+                    </div>
+                    <div class="faction-content">
+                        <p class="faction-description">
+                            Guerreiros dedicados à proteção da humanidade contra a ameaça sobrenatural. 
+                            Combinam tradições ancestrais com técnicas modernas de combate.
+                        </p>
+                        
+                        <div class="requirements">
+                            <h4>Requisitos de Entrada</h4>
+                            <ul class="requirements-list">
+                                <li>Nível 10+ como Humano</li>
+                                <li>Missão: "Rastreamento Inicial" completada</li>
+                                <li>5 Criaturas sobrenaturais eliminadas</li>
+                                <li>Reputação neutra ou positiva com humanos</li>
+                                <li>Equipamento básico de combate</li>
+                            </ul>
+                        </div>
+
+                        <div class="benefits">
+                            <h4>Benefícios da Facção</h4>
+                            <ul class="benefits-list">
+                                <li>Acesso a armas anti-criaturas</li>
+                                <li>Treinamento especializado em combate</li>
+                                <li>Missões exclusivas de caça</li>
+                                <li>Recompensas por eliminações</li>
+                                <li>Rede de contatos e informações</li>
+                            </ul>
+                        </div>
+
+                        <a href="#" class="faction-btn">Iniciar Missão de Entrada</a>
+                    </div>
+                </div>
+
+                <!-- Corporação de Pesquisa -->
+                <div class="faction-card">
+                    <div class="faction-header" style="background: linear-gradient(135deg, #006400, #00008B);">
+                        <h3 class="faction-name">Corporação de Pesquisa</h3>
+                        <p class="faction-tagline">Ciência Contra o Caos</p>
+                    </div>
+                    <div class="faction-content">
+                        <p class="faction-description">
+                            Cientistas e pesquisadores que estudam o fenômeno Éter e desenvolvem 
+                            tecnologia para conter a ameaça sobrenatural.
+                        </p>
+                        
+                        <div class="requirements">
+                            <h4>Requisitos de Entrada</h4>
+                            <ul class="requirements-list">
+                                <li>Nível 8+ como Humano</li>
+                                <li>Missão: "Coleta de Amostras" completada</li>
+                                <li>3 Amostras Éter coletadas</li>
+                                <li>Habilidade em investigação</li>
+                                <li>Reputação com FAU positiva</li>
+                            </ul>
+                        </div>
+
+                        <div class="benefits">
+                            <h4>Benefícios da Facção</h4>
+                            <ul class="benefits-list">
+                                <li>Acesso a laboratórios avançados</li>
+                                <li>Tecnologia experimental</li>
+                                <li>Pesquisa de equipamentos especiais</li>
+                                <li>Suporte científico em campo</li>
+                                <li>Bônus em descobertas</li>
+                            </ul>
+                        </div>
+
+                        <a href="#" class="faction-btn">Iniciar Missão de Entrada</a>
+                    </div>
+                </div>
+
+                <!-- Guilda de Comerciantes -->
+                <div class="faction-card">
+                    <div class="faction-header" style="background: linear-gradient(135deg, #DAA520, #8B4513);">
+                        <h3 class="faction-name">Guilda de Comerciantes</h3>
+                        <p class="faction-tagline">Ouro Move o Mundo</p>
+                    </div>
+                    <div class="faction-content">
+                        <p class="faction-description">
+                            Comerciantes e negociantes que mantêm a economia funcionando no mundo 
+                            pós-apocalíptico, conectando diferentes facções através do comércio.
+                        </p>
+                        
+                        <div class="requirements">
+                            <h4>Requisitos de Entrada</h4>
+                            <ul class="requirements-list">
+                                <li>Nível 6+ como Humano</li>
+                                <li>Missão: "Rota Comercial" completada</li>
+                                <li>$50,000 em transações</li>
+                                <li>Reputação com múltiplas facções</li>
+                                <li>Veículo comercial próprio</li>
+                            </ul>
+                        </div>
+
+                        <div class="benefits">
+                            <h4>Benefícios da Facção</h4>
+                            <ul class="benefits-list">
+                                <li>Acesso a mercadorias exclusivas</li>
+                                <li>Descontos em todas as lojas</li>
+                                <li>Rotas comerciais protegidas</li>
+                                <li>Missões de transporte lucrativas</li>
+                                <li>Rede de contatos comerciais</li>
+                            </ul>
+                        </div>
+
+                        <a href="#" class="faction-btn">Iniciar Missão de Entrada</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section">
+        <div class="container">
+            <h2 class="section-title">Como Entrar em uma Facção</h2>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Desenvolva seu Personagem</h3>
+                    <p class="step-description">
+                        Alcance o nível necessário e desenvolva as habilidades requeridas 
+                        pela facção desejada através de missões gerais.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Complete Missões Preliminares</h3>
+                    <p class="step-description">
+                        Realize as missões específicas de qualificação que demonstram 
+                        seu valor e aptidão para a facção escolhida.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Prova Final</h3>
+                    <p class="step-description">
+                        Enfrente o desafio final que testará todas suas habilidades 
+                        e determinará se você está pronto para ingressar na facção.
+                    </p>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Iniciação</h3>
+                    <p class="step-description">
+                        Participe da cerimônia de iniciação e receba seus equipamentos 
+                        e privilégios como membro oficial da facção.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Verdelis RP</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historia.html">História</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Jogabilidade</h3>
+                    <ul>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="faccoes.html">Facções</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Status do Servidor</a></li>
+                        <li><a href="#">Reportar Bug</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Comunidade</h3>
+                    <ul>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Fórum</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Eventos</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados. Servidor FiveM Roleplay.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sistema de interação com facções
+        document.querySelectorAll('.faction-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const factionName = this.closest('.faction-card').querySelector('.faction-name').textContent;
+                alert(`Missão de entrada para ${factionName} iniciada!\n\nVerifique seu diário de missões no jogo para mais detalhes.`);
+            });
+        });
+    </script>
+</body>
+</html>
