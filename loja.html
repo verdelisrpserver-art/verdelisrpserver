@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -1532,7 +1534,11 @@
                 }
             });
 
-            // Processar compra - CORREÇÃO PRINCIPAL
+            // =============================================
+            // SISTEMA DE COMPRA CORRIGIDO - INTEGRAÇÃO COM WEBHOOK
+            // =============================================
+
+            // Processar compra - INTEGRAÇÃO COM SEU WEBHOOK
             function processPurchase(citizenID, playerName, paymentMethod) {
                 // Mostrar loading
                 document.getElementById('loading').style.display = 'block';
@@ -1544,31 +1550,82 @@
                     player_name: playerName || 'Não informado',
                     product_id: currentProduct.productId,
                     product_name: currentProduct.name,
-                    price: currentProduct.price,
+                    price: parseFloat(currentProduct.price),
                     currency: currentProduct.currency,
                     payment_method: paymentMethod,
                     transaction_id: generateTransactionId(),
-                    purchase_date: new Date().toISOString()
+                    purchase_date: new Date().toISOString(),
+                    source: 'web_store' // Identificar que veio da loja web
                 };
 
-                // Salvar dados no localStorage para recuperação
-                localStorage.setItem('pendingPurchase', JSON.stringify(purchaseData));
-
-                // Redirecionar para gateway de pagamento
-                redirectToPaymentGateway(purchaseData);
+                // Enviar para o webhook do FiveM
+                sendToWebhook(purchaseData);
             }
 
-            // Função para redirecionar para gateway de pagamento
+            // Função para enviar para o webhook do FiveM
+            async function sendToWebhook(purchaseData) {
+                try {
+                    // URL do seu webhook - SUBSTITUA pela URL real do seu servidor
+                    const webhookUrl = 'https://seu-servidor.com/api/store-webhook';
+                    
+                    console.log('Enviando para webhook:', purchaseData);
+                    
+                    // Se for compra com Verdelium (moeda do jogo)
+                    if (purchaseData.currency === 'verdelium') {
+                        processVerdeliumPurchase(purchaseData);
+                    } else {
+                        // Se for compra com dinheiro real, redirecionar para gateway
+                        redirectToPaymentGateway(purchaseData);
+                    }
+                    
+                } catch (error) {
+                    console.error('Erro ao enviar para webhook:', error);
+                    document.getElementById('loading').style.display = 'none';
+                    showError('Erro de conexão. Tente novamente.');
+                }
+            }
+
+            // Processar compra com Verdelium (moeda do jogo)
+            function processVerdeliumPurchase(purchaseData) {
+                // Enviar requisição para verificar saldo e processar compra
+                fetch('https://seu-servidor.com/api/process-verdelium-purchase', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(purchaseData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    if (data.success) {
+                        showSuccess(`✅ Compra realizada com sucesso! ${purchaseData.product_name} foi adicionado à sua conta.`);
+                    } else {
+                        showError(`❌ Erro: ${data.message || 'Saldo insuficiente ou erro no processamento'}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    document.getElementById('loading').style.display = 'none';
+                    showError('Erro de conexão com o servidor.');
+                });
+            }
+
+            // Função para redirecionar para gateway de pagamento (COMPRAS COM DINHEIRO REAL)
             function redirectToPaymentGateway(purchaseData) {
-                // Aqui você deve substituir pela URL do seu gateway de pagamento real
+                // Gateway de pagamento real - SUBSTITUA pelas suas URLs
                 const paymentGateways = {
                     'pix': 'https://seusite.com/payment/pix',
-                    'credit': 'https://seusite.com/payment/credit',
+                    'credit': 'https://seusite.com/payment/credit', 
                     'boleto': 'https://seusite.com/payment/boleto',
                     'paypal': 'https://seusite.com/payment/paypal'
                 };
 
                 const gatewayUrl = paymentGateways[purchaseData.payment_method] || 'https://seusite.com/payment';
+
+                // Salvar dados para recuperação após pagamento
+                localStorage.setItem('pendingPurchase', JSON.stringify(purchaseData));
 
                 // Criar formulário dinâmico para enviar dados
                 const form = document.createElement('form');
@@ -1644,4 +1701,3 @@
     </script>
 </body>
 </html>
-
