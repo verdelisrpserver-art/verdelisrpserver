@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Aprovado - Verdelis RP</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #e94560;
+        }
+        .success-icon {
+            font-size: 4rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #e94560;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #d63447;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✅</div>
+        <h1>Pagamento Aprovado!</h1>
+        <p>Seus itens estão sendo processados e serão entregues em breve.</p>
+        <p>Transaction ID: <strong id="transactionId"></strong></p>
+        <a href="loja.html" class="btn">Voltar para a Loja</a>
+    </div>
+
+    <script>
+        // Obter transaction ID da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const transactionId = urlParams.get('transaction_id');
+        if (transactionId) {
+            document.getElementById('transactionId').textContent = transactionId;
+        }
+    </script>
+</body>
+</html>

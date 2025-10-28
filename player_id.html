@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identificação do Jogador - Verdelis RP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #e94560;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(233, 69, 96, 0.3);
+        }
+
+        .logo p {
+            color: #8f8f8f;
+            font-size: 1.1em;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #e94560;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        input[type="text"]::placeholder {
+            color: #8f8f8f;
+        }
+
+        .info-box {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid rgba(233, 69, 96, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-box li {
+            margin-bottom: 8px;
+            color: #ccc;
+            font-size: 0.9em;
+        }
+
+        .info-box li:before {
+            content: "•";
+            color: #e94560;
+            margin-right: 8px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #e94560, #c2334d);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #c2334d, #a52c42);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #51cf66;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>VERDELIS RP</h1>
+            <p>Identificação do Jogador</p>
+        </div>
+
+        <div class="info-box">
+            <h3>Como encontrar seu ID:</h3>
+            <ul>
+                <li>Digite <strong>/id</strong> no chat do jogo</li>
+                <li>Ou pressione <strong>F8</strong> e digite <strong>id</strong></li>
+                <li>Seu ID aparecerá como: <strong>ID: 123</strong></li>
+                <li>Este ID é necessário para receber seus itens</li>
+            </ul>
+        </div>
+
+        <form id="playerIdForm">
+            <div class="form-group">
+                <label for="playerId">SEU ID NO SERVIDOR:</label>
+                <input type="text" id="playerId" name="playerId" placeholder="Exemplo: 123" required maxlength="5">
+                <div class="error-message" id="idError">Por favor, insira um ID válido (apenas números)</div>
+            </div>
+
+            <div class="form-group">
+                <label for="playerName">SEU NOME NO JOGO (opcional):</label>
+                <input type="text" id="playerName" name="playerName" placeholder="Exemplo: John_Doe" maxlength="50">
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-secondary" onclick="goBack()">Voltar</button>
+                <button type="submit" class="btn btn-primary">Continuar para Pagamento</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Obter dados do produto da URL
+        function getProductData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                productId: urlParams.get('productId'),
+                productName: urlParams.get('productName'),
+                price: urlParams.get('price'),
+                category: urlParams.get('category')
+            };
+        }
+
+        // Validar ID do jogador
+        function validatePlayerId(id) {
+            const idRegex = /^\d+$/;
+            return idRegex.test(id) && id.length > 0 && id.length <= 5;
+        }
+
+        // Manipular envio do formulário
+        document.getElementById('playerIdForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const playerId = document.getElementById('playerId').value;
+            const playerName = document.getElementById('playerName').value;
+            const errorElement = document.getElementById('idError');
+            
+            if (!validatePlayerId(playerId)) {
+                errorElement.style.display = 'block';
+                return;
+            }
+            
+            errorElement.style.display = 'none';
+            
+            // Obter dados do produto
+            const productData = getProductData();
+            
+            // Salvar dados no localStorage para a próxima página
+            const orderData = {
+                playerId: playerId,
+                playerName: playerName || 'Não informado',
+                productId: productData.productId,
+                productName: productData.productName,
+                price: productData.price,
+                category: productData.category,
+                timestamp: new Date().toISOString()
+            };
+            
+            localStorage.setItem('verdelisOrder', JSON.stringify(orderData));
+            
+            // Redirecionar para a página de pagamento
+            window.location.href = 'payment.html';
+        });
+
+        // Voltar para a loja
+        function goBack() {
+            window.location.href = 'loja.html';
+        }
+
+        // Validação em tempo real
+        document.getElementById('playerId').addEventListener('input', function() {
+            const errorElement = document.getElementById('idError');
+            if (validatePlayerId(this.value)) {
+                errorElement.style.display = 'none';
+            } else {
+                errorElement.style.display = 'block';
+            }
+        });
+
+        // Verificar se há dados do produto na URL
+        window.addEventListener('load', function() {
+            const productData = getProductData();
+            if (!productData.productId) {
+                alert('Dados do produto não encontrados. Redirecionando para a loja.');
+                window.location.href = 'loja.html';
+            }
+        });
+    </script>
+</body>
+</html>
