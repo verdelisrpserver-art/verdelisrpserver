@@ -29,8 +29,6 @@
             background-color: var(--primary-dark);
             color: var(--text-light);
             line-height: 1.6;
-            background-image: linear-gradient(rgba(26, 26, 46, 0.9), rgba(22, 33, 62, 0.9));
-            min-height: 100vh;
         }
 
         .container {
@@ -41,7 +39,7 @@
 
         /* Header */
         header {
-            background-color: rgba(22, 33, 62, 0.9);
+            background-color: rgba(22, 33, 62, 0.95);
             padding: 1rem 0;
             border-bottom: 1px solid var(--accent-red);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -59,12 +57,19 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
-        .logo-icon {
-            color: var(--accent-red);
-            font-size: 2rem;
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .logo-text {
@@ -78,7 +83,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         nav a {
@@ -100,87 +105,142 @@
             color: var(--text-light);
         }
 
+        /* Player ID Section */
+        .player-id-section {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid var(--accent-red);
+        }
+
+        .player-id-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .player-id-title {
+            font-size: 1.5rem;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .player-id-inputs {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .player-id-input {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-dark);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+            min-width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .player-id-input:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .player-id-input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .id-help {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .id-help a {
+            color: var(--accent-red);
+            text-decoration: none;
+        }
+
+        .id-help a:hover {
+            text-decoration: underline;
+        }
+
         /* Hero Section */
         .hero {
-            padding: 4rem 0;
+            padding: 4rem 0 2rem;
             text-align: center;
-            background: linear-gradient(135deg, rgba(15, 52, 96, 0.7), rgba(106, 48, 147, 0.7));
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.8), rgba(106, 48, 147, 0.8));
             margin-bottom: 3rem;
-            border-radius: 0 0 20px 20px;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            color: var(--text-light);
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 700px;
             margin: 0 auto;
             color: var(--text-gray);
         }
 
-        /* Abas da Loja */
-        .store-tabs {
+        /* Store Navigation */
+        .store-nav {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 3rem;
+            margin: 3rem 0;
             flex-wrap: wrap;
         }
 
-        .tab-btn {
+        .store-tab {
             padding: 1rem 2rem;
-            background-color: var(--secondary-dark);
+            background: var(--secondary-dark);
             color: var(--text-light);
             border: 2px solid var(--border-dark);
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
         }
 
-        .tab-btn.active, .tab-btn:hover {
-            background-color: var(--accent-red);
+        .store-tab:hover,
+        .store-tab.active {
+            background: var(--accent-red);
             border-color: var(--accent-red);
             transform: translateY(-2px);
         }
 
-        /* Seções da Loja */
-        .store-section {
-            display: none;
-            margin-bottom: 4rem;
-        }
-
-        .store-section.active {
-            display: block;
+        /* Products Grid */
+        .products-section {
+            padding: 4rem 0;
         }
 
         .section-title {
             text-align: center;
+            font-size: 3rem;
+            margin-bottom: 3rem;
             color: var(--accent-red);
-            margin-bottom: 2rem;
-            font-size: 2.5rem;
         }
 
-        /* Grid de Produtos */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .product-card {
-            background-color: rgba(22, 33, 62, 0.7);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
-            border: 2px solid var(--border-dark);
             overflow: hidden;
+            border: 2px solid var(--border-dark);
             transition: all 0.3s ease;
             position: relative;
         }
@@ -204,34 +264,36 @@
             z-index: 2;
         }
 
-        .product-image {
-            height: 200px;
+        .product-header {
+            padding: 2rem;
+            text-align: center;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
+        }
+
+        .product-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .product-tagline {
+            font-size: 1.1rem;
+            color: var(--text-gray);
         }
 
         .product-content {
-            padding: 1.5rem;
-        }
-
-        .product-title {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--text-light);
+            padding: 2rem;
         }
 
         .product-description {
             color: var(--text-gray);
             margin-bottom: 1.5rem;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .product-features {
             list-style: none;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .product-features li {
@@ -253,20 +315,24 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            border: 1px solid var(--accent-gold);
         }
 
-        .price {
-            font-size: 1.8rem;
+        .price-amount {
+            font-size: 2rem;
             font-weight: bold;
             color: var(--accent-gold);
         }
 
-        .currency {
+        .price-currency {
             font-size: 1rem;
             color: var(--text-gray);
         }
 
-        .buy-btn {
+        .buy-button {
             display: block;
             width: 100%;
             padding: 1rem;
@@ -278,51 +344,228 @@
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
-            text-decoration: none;
         }
 
-        .buy-btn:hover {
+        .buy-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
         }
 
-        /* Seção de Processo */
-        .process-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
+        .buy-button:disabled {
+            background: var(--border-dark);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
 
-        .process-step {
-            text-align: center;
-            padding: 2rem;
-            background-color: rgba(22, 33, 62, 0.7);
-            border-radius: 10px;
-            border: 1px solid var(--border-dark);
-        }
-
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
-            border-radius: 50%;
-            display: flex;
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            border: 2px solid var(--accent-red);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .modal-title {
             font-size: 1.5rem;
+            color: var(--accent-red);
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-red);
+        }
+
+        .modal-body {
+            margin-bottom: 1.5rem;
+        }
+
+        .order-summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
             font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--accent-gold);
+        }
+
+        .payment-method-select {
+            width: 100%;
+            padding: 0.75rem;
+            margin: 1rem 0;
+            border: 2px solid var(--border-dark);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .confirm-button {
+            flex: 1;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-red), #d63447);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirm-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(233, 69, 96, 0.4);
+        }
+
+        .cancel-button {
+            flex: 1;
+            padding: 1rem;
+            background: var(--border-dark);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-button:hover {
+            background: var(--accent-blue);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--accent-red);
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
             margin: 0 auto 1rem;
         }
 
-        /* FAQ */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: none;
+        }
+
+        .message.success {
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid #4caf50;
+            color: #4caf50;
+        }
+
+        .message.error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
+        }
+
+        /* Payment Methods */
+        .payment-section {
+            padding: 4rem 0;
+            background: var(--secondary-dark);
+            text-align: center;
+        }
+
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .payment-method {
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid var(--border-dark);
+        }
+
+        /* FAQ Section */
         .faq-section {
-            margin: 4rem 0;
+            padding: 4rem 0;
         }
 
         .faq-item {
-            background-color: rgba(22, 33, 62, 0.7);
+            background: rgba(255, 255, 255, 0.05);
             margin: 1rem 0;
             border-radius: 10px;
             border: 1px solid var(--border-dark);
@@ -331,7 +574,7 @@
 
         .faq-question {
             padding: 1.5rem;
-            background-color: rgba(15, 52, 96, 0.5);
+            background: rgba(15, 52, 96, 0.5);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -341,7 +584,7 @@
         }
 
         .faq-question:hover {
-            background-color: rgba(15, 52, 96, 0.7);
+            background: rgba(15, 52, 96, 0.7);
         }
 
         .faq-answer {
@@ -354,16 +597,6 @@
         .faq-item.active .faq-answer {
             padding: 1.5rem;
             max-height: 500px;
-        }
-
-        .faq-toggle {
-            color: var(--accent-red);
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
         }
 
         /* Footer */
@@ -414,21 +647,12 @@
 
         /* Responsividade */
         @media (max-width: 992px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-            
             .footer-content {
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .store-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .tab-btn {
-                width: 250px;
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             }
         }
 
@@ -444,15 +668,29 @@
             }
             
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.5rem;
             }
             
             .footer-content {
                 grid-template-columns: 1fr;
             }
             
-            .process-steps {
-                grid-template-columns: 1fr;
+            .store-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .store-tab {
+                width: 250px;
+            }
+
+            .player-id-inputs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .player-id-input {
+                min-width: 100%;
             }
         }
     </style>
@@ -463,7 +701,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <div class="logo-icon">⚔️</div>
+                    <div class="logo-image">VR</div>
                     <div class="logo-text">VERDELIS RP</div>
                 </div>
                 <nav>
@@ -471,6 +709,7 @@
                         <li><a href="index.html">Início</a></li>
                         <li><a href="historia.html">História</a></li>
                         <li><a href="classes.html">Classes</a></li>
+                        <li><a href="faccoes.html">Facções</a></li>
                         <li><a href="sistemas.html">Sistemas</a></li>
                         <li><a href="clans.html">Clãs</a></li>
                         <li><a href="loja.html" class="active">Loja</a></li>
@@ -481,130 +720,195 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
+    <!-- Player ID Section -->
+    <section class="player-id-section">
         <div class="container">
-            <h1>🏪 Loja Verdelis RP</h1>
-            <p>Adquira Verdelium, VIP, fortalezas e itens exclusivos para sua jornada épica</p>
+            <div class="player-id-container">
+                <h2 class="player-id-title">🎮 Identificação do Jogador</h2>
+                <div class="player-id-inputs">
+                    <input type="text" id="playerCitizenID" class="player-id-input" placeholder="Digite seu CitizenID *" required>
+                    <input type="text" id="playerName" class="player-id-input" placeholder="Seu Nome no Jogo">
+                </div>
+                <p class="id-help">
+                    💡 <strong>Dica:</strong> Use o comando <code>/id</code> no jogo para descobrir seu CitizenID. 
+                    | <a href="#" onclick="showCitizenIDHelp()">Como encontrar meu CitizenID?</a>
+                </p>
+            </div>
         </div>
     </section>
 
-    <!-- Abas da Loja -->
+    <!-- Messages -->
     <div class="container">
-        <div class="store-tabs">
-            <button class="tab-btn active" data-tab="verdelium">
-                💎 Verdelium
-            </button>
-            <button class="tab-btn" data-tab="vip">
-                👑 VIP
-            </button>
-            <button class="tab-btn" data-tab="fortalezas">
-                🏰 Fortalezas
-            </button>
-            <button class="tab-btn" data-tab="itens">
-                🎯 Itens Premium
-            </button>
-        </div>
+        <div class="message success" id="successMessage"></div>
+        <div class="message error" id="errorMessage"></div>
+    </div>
 
-        <!-- Seção Verdelium -->
-        <section id="verdelium" class="store-section active">
-            <h2 class="section-title">💎 Comprar Verdelium</h2>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Loja Verdelium</h1>
+            <p>Adquira Verdelium, VIP, fortalezas e itens exclusivos para potencializar sua experiência em Verdelis RP</p>
+        </div>
+    </section>
+
+    <!-- Store Navigation -->
+    <div class="container">
+        <div class="store-nav">
+            <button class="store-tab active" data-tab="verdelium">Verdelium</button>
+            <button class="store-tab" data-tab="vip">VIP</button>
+            <button class="store-tab" data-tab="fortalezas">Fortalezas</button>
+            <button class="store-tab" data-tab="itens">Itens Premium</button>
+        </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Processando sua compra...</p>
+    </div>
+
+    <!-- Verdelium Products -->
+    <section id="verdelium" class="products-section">
+        <div class="container">
+            <h2 class="section-title">Pacotes de Verdelium</h2>
             
             <div class="products-grid">
-                <!-- Pacote Básico -->
+                <!-- Pacote Inicial -->
                 <div class="product-card">
                     <div class="product-badge">Popular</div>
-                    <div class="product-image">💎</div>
+                    <div class="product-header">
+                        <h3 class="product-name">Pacote Inicial</h3>
+                        <p class="product-tagline">Ideal para começar</p>
+                    </div>
                     <div class="product-content">
-                        <h3 class="product-title">Pacote Inicial</h3>
-                        <p class="product-description">Ideal para começar sua jornada com vantagens básicas</p>
+                        <p class="product-description">
+                            Perfeito para novos jogadores que desejam vantagens básicas 
+                            e acesso à loja premium.
+                        </p>
                         <ul class="product-features">
                             <li>1.000 Verdelium</li>
-                            <li>Tag [Apoiador]</li>
+                            <li>Tag [Apoiador] no chat</li>
                             <li>Acesso à Loja VIP</li>
                             <li>Suporte Prioritário</li>
+                            <li>Entrega Instantânea</li>
                         </ul>
                         <div class="product-price">
-                            <span class="price">R$ 20,00</span>
+                            <span class="price-amount">R$ 20,00</span>
                         </div>
-                        <button class="buy-btn" data-product="Pacote Inicial - 1.000 Verdelium" data-price="20">
+                        <button class="buy-button" 
+                                data-product="Pacote Inicial - 1.000 Verdelium" 
+                                data-price="20.00"
+                                data-product-id="verdelium_pack_001"
+                                data-currency="BRL">
                             Comprar Agora
                         </button>
                     </div>
                 </div>
 
-                <!-- Pacote Intermediário -->
+                <!-- Pacote Avançado -->
                 <div class="product-card">
                     <div class="product-badge">Melhor Custo</div>
-                    <div class="product-image">💰</div>
+                    <div class="product-header">
+                        <h3 class="product-name">Pacote Avançado</h3>
+                        <p class="product-tagline">Mais valor por seu dinheiro</p>
+                    </div>
                     <div class="product-content">
-                        <h3 class="product-title">Pacote Avançado</h3>
-                        <p class="product-description">Perfeito para jogadores que querem mais recursos</p>
+                        <p class="product-description">
+                            Oferece o melhor custo-benefício para jogadores regulares 
+                            que querem mais recursos.
+                        </p>
                         <ul class="product-features">
                             <li>5.000 Verdelium</li>
                             <li>Tag [Patrocinador]</li>
                             <li>+10% Verdelium bônus</li>
                             <li>Suporte VIP</li>
-                            <li>Entrega Instantânea</li>
+                            <li>Priority Queue</li>
+                            <li>Presentes mensais</li>
                         </ul>
                         <div class="product-price">
-                            <span class="price">R$ 80,00</span>
+                            <span class="price-amount">R$ 80,00</span>
                         </div>
-                        <button class="buy-btn" data-product="Pacote Avançado - 5.000 Verdelium" data-price="80">
+                        <button class="buy-button" 
+                                data-product="Pacote Avançado - 5.000 Verdelium" 
+                                data-price="80.00"
+                                data-product-id="verdelium_pack_002"
+                                data-currency="BRL">
                             Comprar Agora
                         </button>
                     </div>
                 </div>
 
-                <!-- Pacote Premium -->
+                <!-- Pacote Lendário -->
                 <div class="product-card">
                     <div class="product-badge">Épico</div>
-                    <div class="product-image">🏆</div>
+                    <div class="product-header">
+                        <h3 class="product-name">Pacote Lendário</h3>
+                        <p class="product-tagline">Para verdadeiros mestres</p>
+                    </div>
                     <div class="product-content">
-                        <h3 class="product-title">Pacote Lendário</h3>
-                        <p class="product-description">Para os verdadeiros mestres de Verdelis</p>
+                        <p class="product-description">
+                            Experiência máxima com todos os benefícios premium e 
+                            vantagens exclusivas.
+                        </p>
                         <ul class="product-features">
                             <li>15.000 Verdelium</li>
                             <li>Tag [LENDÁRIO]</li>
                             <li>+25% Verdelium bônus</li>
-                            <li>Priority Queue</li>
                             <li>Suporte 24/7</li>
+                            <li>Priority Queue Ilimitado</li>
                             <li>Presentes exclusivos</li>
+                            <li>Acesso Beta aos novos conteúdos</li>
                         </ul>
                         <div class="product-price">
-                            <span class="price">R$ 200,00</span>
+                            <span class="price-amount">R$ 200,00</span>
                         </div>
-                        <button class="buy-btn" data-product="Pacote Lendário - 15.000 Verdelium" data-price="200">
+                        <button class="buy-button" 
+                                data-product="Pacote Lendário - 15.000 Verdelium" 
+                                data-price="200.00"
+                                data-product-id="verdelium_pack_003"
+                                data-currency="BRL">
                             Comprar Agora
                         </button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Seção VIP -->
-        <section id="vip" class="store-section">
-            <h2 class="section-title">👑 Status VIP</h2>
+    <!-- VIP Products -->
+    <section id="vip" class="products-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Status VIP</h2>
             
             <div class="products-grid">
                 <!-- VIP Prata -->
                 <div class="product-card">
-                    <div class="product-image">🥈</div>
+                    <div class="product-header" style="background: linear-gradient(135deg, #C0C0C0, #808080);">
+                        <h3 class="product-name">VIP Prata</h3>
+                        <p class="product-tagline">Vantagens essenciais</p>
+                    </div>
                     <div class="product-content">
-                        <h3 class="product-title">VIP Prata</h3>
-                        <p class="product-description">Vantagens essenciais para melhorar sua experiência</p>
+                        <p class="product-description">
+                            Status VIP básico com benefícios importantes para melhorar 
+                            sua experiência de jogo.
+                        </p>
                         <ul class="product-features">
                             <li>Duração: 30 dias</li>
                             <li>Tag [VIP] no chat</li>
                             <li>+30% Ganho de XP</li>
                             <li>Acesso a áreas VIP</li>
                             <li>3 Respawns extras/dia</li>
+                            <li>Desconto 10% em lojas</li>
                         </ul>
                         <div class="product-price">
-                            <span class="price">2.000</span>
-                            <span class="currency">Verdelium</span>
+                            <span class="price-amount">2.000</span>
+                            <span class="price-currency">Verdelium</span>
                         </div>
-                        <button class="buy-btn" data-product="VIP Prata - 30 Dias" data-price="2000" data-currency="verdelium">
+                        <button class="buy-button" 
+                                data-product="VIP Prata - 30 Dias" 
+                                data-price="2000"
+                                data-product-id="vip_pack_001"
+                                data-currency="verdelium">
                             Comprar com Verdelium
                         </button>
                     </div>
@@ -612,25 +916,34 @@
 
                 <!-- VIP Ouro -->
                 <div class="product-card">
-                    <div class="product-badge">Popular</div>
-                    <div class="product-image">🥇</div>
+                    <div class="product-badge">Recomendado</div>
+                    <div class="product-header" style="background: linear-gradient(135deg, #FFD700, #DAA520);">
+                        <h3 class="product-name">VIP Ouro</h3>
+                        <p class="product-tagline">Status premium completo</p>
+                    </div>
                     <div class="product-content">
-                        <h3 class="product-title">VIP Ouro</h3>
-                        <p class="product-description">Status premium com benefícios exclusivos</p>
+                        <p class="product-description">
+                            VIP completo com todos os benefícios essenciais e vantagens 
+                            exclusivas para jogadores dedicados.
+                        </p>
                         <ul class="product-features">
                             <li>Duração: 30 dias</li>
                             <li>Tag [VIP] Dourada</li>
                             <li>+50% Ganho de XP</li>
                             <li>Veículo VIP exclusivo</li>
                             <li>5 Respawns extras/dia</li>
-                            <li>Desconto em lojas 15%</li>
+                            <li>Desconto 15% em lojas</li>
                             <li>Suporte prioritário</li>
                         </ul>
                         <div class="product-price">
-                            <span class="price">4.000</span>
-                            <span class="currency">Verdelium</span>
+                            <span class="price-amount">4.000</span>
+                            <span class="price-currency">Verdelium</span>
                         </div>
-                        <button class="buy-btn" data-product="VIP Ouro - 30 Dias" data-price="4000" data-currency="verdelium">
+                        <button class="buy-button" 
+                                data-product="VIP Ouro - 30 Dias" 
+                                data-price="4000"
+                                data-product-id="vip_pack_002"
+                                data-currency="verdelium">
                             Comprar com Verdelium
                         </button>
                     </div>
@@ -639,255 +952,378 @@
                 <!-- VIP Diamante -->
                 <div class="product-card">
                     <div class="product-badge">Épico</div>
-                    <div class="product-image">💎</div>
+                    <div class="product-header" style="background: linear-gradient(135deg, #B9F2FF, #E6E6FA);">
+                        <h3 class="product-name">VIP Diamante</h3>
+                        <p class="product-tagline">Experiência máxima</p>
+                    </div>
                     <div class="product-content">
-                        <h3 class="product-title">VIP Diamante</h3>
-                        <p class="product-description">Experiência máxima com todos os benefícios</p>
+                        <p class="product-description">
+                            Status VIP máximo com todos os benefícios disponíveis e 
+                            vantagens exclusivas para os jogadores mais dedicados.
+                        </p>
                         <ul class="product-features">
                             <li>Duração: 30 dias</li>
                             <li>Tag [VIP] Diamante</li>
                             <li>+75% Ganho de XP</li>
                             <li>2 Veículos VIP</li>
                             <li>Respawns Ilimitados</li>
-                            <li>Desconto em lojas 25%</li>
+                            <li>Desconto 25% em lojas</li>
                             <li>Customização exclusiva</li>
                             <li>Suporte 24/7</li>
                         </ul>
                         <div class="product-price">
-                            <span class="price">7.500</span>
-                            <span class="currency">Verdelium</span>
+                            <span class="price-amount">7.500</span>
+                            <span class="price-currency">Verdelium</span>
                         </div>
-                        <button class="buy-btn" data-product="VIP Diamante - 30 Dias" data-price="7500" data-currency="verdelium">
+                        <button class="buy-button" 
+                                data-product="VIP Diamante - 30 Dias" 
+                                data-price="7500"
+                                data-product-id="vip_pack_003"
+                                data-currency="verdelium">
                             Comprar com Verdelium
                         </button>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- Seção Fortalezas -->
-        <section id="fortalezas" class="store-section">
-            <h2 class="section-title">🏰 Fortalezas</h2>
-            
-            <div class="products-grid">
-                <!-- Covil Vampírico -->
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #8B0000, #000000);">🦇</div>
-                    <div class="product-content">
-                        <h3 class="product-title">Covil Vampírico</h3>
-                        <p class="product-description">Refúgio subterrâneo para senhores da noite</p>
-                        <ul class="product-features">
-                            <li>+30% Regeneração de Sangue</li>
-                            <li>+20% Poder Noturno</li>
-                            <li>Capacidade: 15 membros</li>
-                            <li>5 Slots de Defesa</li>
-                            <li>Localização secreta</li>
-                            <li>Exclusivo para Vampiros</li>
-                        </ul>
-                        <div class="product-price">
-                            <span class="price">15.000</span>
-                            <span class="currency">Verdelium</span>
-                        </div>
-                        <button class="buy-btn" data-product="Covil Vampírico" data-price="15000" data-currency="verdelium">
-                            Comprar com Verdelium
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Covil Lobisomem -->
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #8B4513, #2F4F4F);">🐺</div>
-                    <div class="product-content">
-                        <h3 class="product-title">Covil de Lobisomens</h3>
-                        <p class="product-description">Fortaleza natural para alcateias selvagens</p>
-                        <ul class="product-features">
-                            <li>+40% Geração de Fúria</li>
-                            <li>+25% Força do Pack</li>
-                            <li>Capacidade: 20 membros</li>
-                            <li>6 Slots de Defesa</li>
-                            <li>Área de caça exclusiva</li>
-                            <li>Exclusivo para Lobisomens</li>
-                        </ul>
-                        <div class="product-price">
-                            <span class="price">18.000</span>
-                            <span class="currency">Verdelium</span>
-                        </div>
-                        <button class="buy-btn" data-product="Covil de Lobisomens" data-price="18000" data-currency="verdelium">
-                            Comprar com Verdelium
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Santuário Híbrido -->
-                <div class="product-card">
-                    <div class="product-badge">Versátil</div>
-                    <div class="product-image" style="background: linear-gradient(135deg, #4B0082, #006400);">⚖️</div>
-                    <div class="product-content">
-                        <h3 class="product-title">Santuário Híbrido</h3>
-                        <p class="product-description">Base versátil para múltiplas espécies</p>
-                        <ul class="product-features">
-                            <li>+35% Versatilidade</li>
-                            <li>+30% Bônus Econômico</li>
-                            <li>Capacidade: 25 membros</li>
-                            <li>8 Slots de Defesa</li>
-                            <li>Acesso a todas as classes</li>
-                            <li>Localização central</li>
-                        </ul>
-                        <div class="product-price">
-                            <span class="price">22.000</span>
-                            <span class="currency">Verdelium</span>
-                        </div>
-                        <button class="buy-btn" data-product="Santuário Híbrido" data-price="22000" data-currency="verdelium">
-                            Comprar com Verdelium
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Itens Premium -->
-        <section id="itens" class="store-section">
-            <h2 class="section-title">🎯 Itens Premium</h2>
-            
-            <div class="products-grid">
-                <!-- Veículo Esportivo -->
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #FF0000, #000000);">🏎️</div>
-                    <div class="product-content">
-                        <h3 class="product-title">Super Carro Esportivo</h3>
-                        <p class="product-description">Velocidade e estilo incomparáveis</p>
-                        <ul class="product-features">
-                            <li>Velocidade: 320 km/h</li>
-                            <li>Design exclusivo</li>
-                            <li>Proteção antibalas</li>
-                            <li>Personalização premium</li>
-                            <li>Garagem permanente</li>
-                        </ul>
-                        <div class="product-price">
-                            <span class="price">8.500</span>
-                            <span class="currency">Verdelium</span>
-                        </div>
-                        <button class="buy-btn" data-product="Super Carro Esportivo" data-price="8500" data-currency="verdelium">
-                            Comprar com Verdelium
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Arma Lendária -->
-                <div class="product-card">
-                    <div class="product-image" style="background: linear-gradient(135deg, #FFD700, #C0C0C0);">⚔️</div>
-                    <div class="product-content">
-                        <h3 class="product-title">Lâmina Ancestral</h3>
-                        <p class="product-description">Arma lendária com poderes antigos</p>
-                        <ul class="product-features">
-                            <li>Dano: 150% base</li>
-                            <li>Efeitos especiais únicos</li>
-                            <li>Durabilidade infinita</li>
-                            <li>Design animado</li>
-                            <li>Exclusividade garantida</li>
-                        </ul>
-                        <div class="product-price">
-                            <span class="price">12.000</span>
-                            <span class="currency">Verdelium</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Pacote de Poderes -->
-                <div class="product-card">
-                    <div class="product-badge">Bundle</div>
-                    <div class="product-image" style="background: linear-gradient(135deg, #6A0DAD, #00008B);">✨</div>
-                    <div class="product-content">
-                        <h3 class="product-title">Pacote de Poderes Lendários</h3>
-                        <p class="product-description">Coleção completa de habilidades épicas</p>
-                        <ul class="product-features">
-                            <li>3 Poderes lendários</li>
-                            <li>Efeitos visuais exclusivos</li>
-                            <li>Animações customizadas</li>
-                            <li>Cooldown reduzido</li>
-                            <li>Slot extra de habilidade</li>
-                        </ul>
-                        <div class="product-price">
-                            <span class="price">25.000</span>
-                            <span class="currency">Verdelium</span>
-                        </div>
-                        <button class="buy-btn" data-product="Pacote de Poderes Lendários" data-price="25000" data-currency="verdelium">
-                            Comprar com Verdelium
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Processo de Compra -->
-        <div class="process-steps">
-            <div class="process-step">
-                <div class="step-number">1</div>
-                <h3>Escolha seu Produto</h3>
-                <p>Selecione entre Verdelium, VIP, fortalezas ou itens premium</p>
-            </div>
-            <div class="process-step">
-                <div class="step-number">2</div>
-                <h3>Pagamento Seguro</h3>
-                <p>Realize o pagamento com PIX, cartão ou criptomoedas</p>
-            </div>
-            <div class="process-step">
-                <div class="step-number">3</div>
-                <h3>Entrega Automática</h3>
-                <p>Receba seus itens automaticamente no jogo</p>
-            </div>
-            <div class="process-step">
-                <div class="step-number">4</div>
-                <h3>Aproveite!</h3>
-                <p>Use suas vantagens e domine Verdelis RP</p>
             </div>
         </div>
+    </section>
 
-        <!-- FAQ -->
-        <div class="faq-section">
-            <h2 class="section-title">❓ Perguntas Frequentes</h2>
+    <!-- Fortalezas Products -->
+    <section id="fortalezas" class="products-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Fortalezas</h2>
+            
+            <div class="products-grid">
+                <!-- Fortaleza Básica -->
+                <div class="product-card">
+                    <div class="product-header" style="background: linear-gradient(135deg, #8B4513, #A0522D);">
+                        <h3 class="product-name">Fortaleza Básica</h3>
+                        <p class="product-tagline">Proteção essencial</p>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-description">
+                            Fortaleza inicial com defesas básicas para proteger 
+                            seu clã de ameaças menores.
+                        </p>
+                        <ul class="product-features">
+                            <li>5 Slots de construção</li>
+                            <li>Muros básicos</li>
+                            <li>2 Torres de vigilância</li>
+                            <li>Sistema de alarme</li>
+                            <li>Capacidade: 15 membros</li>
+                            <li>Localização padrão</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-amount">5.000</span>
+                            <span class="price-currency">Verdelium</span>
+                        </div>
+                        <button class="buy-button" 
+                                data-product="Fortaleza Básica" 
+                                data-price="5000"
+                                data-product-id="fortress_basic_001"
+                                data-currency="verdelium">
+                            Comprar com Verdelium
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fortaleza Avançada -->
+                <div class="product-card">
+                    <div class="product-badge">Popular</div>
+                    <div class="product-header" style="background: linear-gradient(135deg, #696969, #808080);">
+                        <h3 class="product-name">Fortaleza Avançada</h3>
+                        <p class="product-tagline">Defesas intermediárias</p>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-description">
+                            Fortaleza com defesas aprimoradas e sistemas de 
+                            segurança para clãs em crescimento.
+                        </p>
+                        <ul class="product-features">
+                            <li>15 Slots de construção</li>
+                            <li>Muros reforçados</li>
+                            <li>5 Torres com armas</li>
+                            <li>Sistema de defesa automática</li>
+                            <li>Capacidade: 30 membros</li>
+                            <li>Localização estratégica</li>
+                            <li>Gerador de energia</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-amount">12.000</span>
+                            <span class="price-currency">Verdelium</span>
+                        </div>
+                        <button class="buy-button" 
+                                data-product="Fortaleza Avançada" 
+                                data-price="12000"
+                                data-product-id="fortress_advanced_001"
+                                data-currency="verdelium">
+                            Comprar com Verdelium
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Fortaleza Épica -->
+                <div class="product-card">
+                    <div class="product-badge">Épico</div>
+                    <div class="product-header" style="background: linear-gradient(135deg, #FFD700, #DAA520);">
+                        <h3 class="product-name">Fortaleza Épica</h3>
+                        <p class="product-tagline">Defesa máxima</p>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-description">
+                            Fortaleza lendária com defesas de última geração 
+                            e sistemas avançados para clãs elite.
+                        </p>
+                        <ul class="product-features">
+                            <li>Slots de construção ilimitados</li>
+                            <li>Muros impenetráveis</li>
+                            <li>10 Torres com armas avançadas</li>
+                            <li>Sistema de defesa AI</li>
+                            <li>Capacidade: 50 membros</li>
+                            <li>Localização premium</li>
+                            <li>Gerador nuclear</li>
+                            <li>Hangar para veículos</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-amount">25.000</span>
+                            <span class="price-currency">Verdelium</span>
+                        </div>
+                        <button class="buy-button" 
+                                data-product="Fortaleza Épica" 
+                                data-price="25000"
+                                data-product-id="fortress_epic_001"
+                                data-currency="verdelium">
+                            Comprar com Verdelium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itens Premium -->
+    <section id="itens" class="products-section" style="display: none;">
+        <div class="container">
+            <h2 class="section-title">Itens Premium</h2>
+            
+            <div class="products-grid">
+                <!-- Pacote de Veículos -->
+                <div class="product-card">
+                    <div class="product-header" style="background: linear-gradient(135deg, #2F4F4F, #708090);">
+                        <h3 class="product-name">Pacote de Veículos</h3>
+                        <p class="product-tagline">Mobilidade premium</p>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-description">
+                            Coleção de veículos exclusivos com desempenho 
+                            superior e designs únicos.
+                        </p>
+                        <ul class="product-features">
+                            <li>3 Veículos exclusivos</li>
+                            <li>Customização especial</li>
+                            <li>Performance melhorada</li>
+                            <li>Resistência aumentada</li>
+                            <li>Garagem pessoal</li>
+                            <li>Seguro contra destruição</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-amount">3.500</span>
+                            <span class="price-currency">Verdelium</span>
+                        </div>
+                        <button class="buy-button" 
+                                data-product="Pacote de Veículos" 
+                                data-price="3500"
+                                data-product-id="vehicle_pack_001"
+                                data-currency="verdelium">
+                            Comprar com Verdelium
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Roupas Exclusivas -->
+                <div class="product-card">
+                    <div class="product-header" style="background: linear-gradient(135deg, #800080, #4B0082);">
+                        <h3 class="product-name">Roupas Exclusivas</h3>
+                        <p class="product-tagline">Estilo único</p>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-description">
+                            Conjuntos de roupas premium que destacam seu 
+                            personagem no mundo de Verdelis.
+                        </p>
+                        <ul class="product-features">
+                            <li>5 Conjuntos exclusivos</li>
+                            <li>Efeitos visuais especiais</li>
+                            <li>Customização detalhada</li>
+                            <li>Armadilhas ocultas</li>
+                            <li>Bonus de reputação</li>
+                            <li>Atualizações mensais</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-amount">1.500</span>
+                            <span class="price-currency">Verdelium</span>
+                        </div>
+                        <button class="buy-button" 
+                                data-product="Roupas Exclusivas" 
+                                data-price="1500"
+                                data-product-id="clothing_pack_001"
+                                data-currency="verdelium">
+                            Comprar com Verdelium
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Arsenal Épico -->
+                <div class="product-card">
+                    <div class="product-badge">Poderoso</div>
+                    <div class="product-header" style="background: linear-gradient(135deg, #8B0000, #B22222);">
+                        <h3 class="product-name">Arsenal Épico</h3>
+                        <p class="product-tagline">Poder de fogo supremo</p>
+                    </div>
+                    <div class="product-content">
+                        <p class="product-description">
+                            Armas lendárias com efeitos especiais e dano 
+                            aumentado para dominar o campo de batalha.
+                        </p>
+                        <ul class="product-features">
+                            <li>3 Armas lendárias</li>
+                            <li>Efeitos visuais únicos</li>
+                            <li>Dano 25% aumentado</li>
+                            <li>Recarregamento rápido</li>
+                            <li>Munição especial</li>
+                            <li>Resistência infinita</li>
+                        </ul>
+                        <div class="product-price">
+                            <span class="price-amount">8.000</span>
+                            <span class="price-currency">Verdelium</span>
+                        </div>
+                        <button class="buy-button" 
+                                data-product="Arsenal Épico" 
+                                data-price="8000"
+                                data-product-id="weapon_pack_001"
+                                data-currency="verdelium">
+                            Comprar com Verdelium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section class="payment-section">
+        <div class="container">
+            <h2 class="section-title">Métodos de Pagamento</h2>
+            <p class="hero" style="margin-bottom: 2rem; color: var(--text-gray);">
+                Aceitamos diversas formas de pagamento para sua comodidade
+            </p>
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <i class="fab fa-cc-paypal" style="font-size: 2rem; color: #0070ba; margin-bottom: 0.5rem;"></i>
+                    <div>PayPal</div>
+                </div>
+                <div class="payment-method">
+                    <i class="fab fa-cc-visa" style="font-size: 2rem; color: #1a1f71; margin-bottom: 0.5rem;"></i>
+                    <div>Cartão de Crédito</div>
+                </div>
+                <div class="payment-method">
+                    <i class="fab fa-pix" style="font-size: 2rem; color: #32BCAD; margin-bottom: 0.5rem;"></i>
+                    <div>PIX</div>
+                </div>
+                <div class="payment-method">
+                    <i class="fas fa-barcode" style="font-size: 2rem; color: var(--accent-gold); margin-bottom: 0.5rem;"></i>
+                    <div>Boleto</div>
+                </div>
+                <div class="payment-method">
+                    <i class="fab fa-cc-mastercard" style="font-size: 2rem; color: #eb001b; margin-bottom: 0.5rem;"></i>
+                    <div>Mastercard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
             
             <div class="faq-item">
                 <div class="faq-question">
                     Como recebo meus itens após a compra?
-                    <span class="faq-toggle">+</span>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>Todos os itens são entregues automaticamente em sua conta do jogo. Para Verdelium, ele é creditado instantaneamente. Para itens como VIP e fortalezas, use o comando <code>/redeem</code> no jogo.</p>
+                    <p>Todos os itens são entregues automaticamente após a confirmação do pagamento. 
+                    Você precisa informar seu <strong>CitizenID</strong> no campo acima para receber os itens. 
+                    Verdelium é creditado automaticamente em sua conta, enquanto itens como VIP e 
+                    fortalezas são ativados imediatamente.</p>
                 </div>
             </div>
-            
+
             <div class="faq-item">
                 <div class="faq-question">
-                    Quanto tempo leva para o VIP ativar?
-                    <span class="faq-toggle">+</span>
+                    O que é CitizenID e como encontro o meu?
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>O VIP é ativado instantaneamente após a confirmação do pagamento. Você receberá uma notificação no jogo e sua tag será atualizada automaticamente.</p>
+                    <p>O <strong>CitizenID</strong> é seu identificador único no servidor Verdelis RP. 
+                    Para encontrar seu CitizenID:</p>
+                    <ol>
+                        <li>Entre no servidor Verdelis RP</li>
+                        <li>Abra o chat e digite: <code>/id</code></li>
+                        <li>Seu CitizenID será exibido no chat</li>
+                        <li>Copie e cole no campo acima da loja</li>
+                    </ol>
                 </div>
             </div>
-            
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Posso reembolsar uma compra?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Devido à natureza dos produtos digitais, não oferecemos reembolsos após a 
+                    entrega dos itens. Certifique-se de que está comprando o produto correto e 
+                    que seu CitizenID está correto antes de finalizar a transação.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    O VIP é renovado automaticamente?
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Não, o VIP não é renovado automaticamente. Você receberá notificações quando 
+                    seu VIP estiver próximo do vencimento e poderá renová-lo manualmente através 
+                    da loja.</p>
+                </div>
+            </div>
+
             <div class="faq-item">
                 <div class="faq-question">
                     Posso transferir Verdelium para outros jogadores?
-                    <span class="faq-toggle">+</span>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>Não, o Verdelium é vinculado permanentemente à sua conta e não pode ser transferido ou negociado com outros jogadores.</p>
+                    <p>Não, Verdelium é vinculado permanentemente à conta que realizou a compra 
+                    e não pode ser transferido ou negociado com outros jogadores.</p>
                 </div>
             </div>
-            
+
             <div class="faq-item">
                 <div class="faq-question">
-                    E se eu tiver problemas com minha compra?
-                    <span class="faq-toggle">+</span>
+                    Há limite para quantos itens posso comprar?
+                    <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    <p>Entre em contato com nosso suporte no Discord ou através da página de contato. Nossa equipe resolverá qualquer problema em até 24 horas.</p>
+                    <p>Não há limites para a quantidade de Verdelium ou itens que você pode adquirir. 
+                    No entanto, alguns itens como fortalezas possuem limites por clã.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -904,12 +1340,12 @@
                 </div>
                 
                 <div class="footer-column">
-                    <h3>Loja</h3>
+                    <h3>Jogabilidade</h3>
                     <ul>
-                        <li><a href="#verdelium">Comprar Verdelium</a></li>
-                        <li><a href="#vip">Status VIP</a></li>
-                        <li><a href="#fortalezas">Fortalezas</a></li>
-                        <li><a href="#itens">Itens Premium</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="faccoes.html">Facções</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
                     </ul>
                 </div>
                 
@@ -919,75 +1355,257 @@
                         <li><a href="contato.html">Contato</a></li>
                         <li><a href="#">Central de Ajuda</a></li>
                         <li><a href="#">Status do Servidor</a></li>
-                        <li><a href="#">Política de Reembolso</a></li>
+                        <li><a href="#">Reportar Bug</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
-                    <h3>Legal</h3>
+                    <h3>Comunidade</h3>
                     <ul>
-                        <li><a href="#">Termos de Serviço</a></li>
-                        <li><a href="#">Política de Privacidade</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Sobre Nós</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Fórum</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Eventos</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados. FiveM Roleplay Server.</p>
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados. Servidor FiveM Roleplay.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Finalizar Compra</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-summary">
+                    <h4>Resumo do Pedido</h4>
+                    <div class="summary-item">
+                        <span>Produto:</span>
+                        <span id="modalProductName">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>CitizenID:</span>
+                        <span id="modalCitizenID">-</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Nome:</span>
+                        <span id="modalPlayerName">-</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span id="modalTotalPrice">-</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h4>Método de Pagamento</h4>
+                    <select class="payment-method-select" id="paymentMethod">
+                        <option value="pix">PIX (Instantâneo)</option>
+                        <option value="credit">Cartão de Crédito</option>
+                        <option value="boleto">Boleto Bancário</option>
+                        <option value="paypal">PayPal</option>
+                    </select>
+                </div>
+
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="termsCheckbox">
+                    <label for="termsCheckbox">Concordo com os <a href="#" style="color: var(--accent-red);">termos de serviço</a> e política de reembolso</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-button">Cancelar</button>
+                <button class="confirm-button" id="confirmPurchase">Confirmar Compra</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Sistema de Abas
-        document.querySelectorAll('.tab-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active de todos os botões e seções
-                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.store-section').forEach(section => section.classList.remove('active'));
-                
-                // Adiciona active ao botão clicado
-                button.classList.add('active');
-                
-                // Mostra a seção correspondente
-                const tabId = button.getAttribute('data-tab');
-                document.getElementById(tabId).classList.add('active');
-            });
-        });
-
-        // Sistema FAQ
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentElement;
-                item.classList.toggle('active');
-            });
-        });
-
-        // Sistema de Compra
-        document.querySelectorAll('.buy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const product = this.getAttribute('data-product');
-                const price = this.getAttribute('data-price');
-                const currency = this.getAttribute('data-currency');
-                
-                if (currency === 'verdelium') {
-                    alert(`🛒 Confirmar Compra:\n\n${product}\nPreço: ${price} Verdelium\n\nEsta compra será processada usando seu saldo de Verdelium.`);
-                } else {
-                    alert(`🛒 Redirecionando para pagamento:\n\n${product}\nPreço: R$ ${price},00\n\nVocê será redirecionado para nosso processador de pagamentos seguro.`);
-                }
-                
-                // Aqui você integraria com:
-                // 1. Sistema de pagamento real (Mercado Pago, PayPal, etc)
-                // 2. Webhook para notificar o servidor
-                // 3. Sistema de entrega automática
-            });
-        });
-
-        // Inicialização
+        // Sistema de abas da loja
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('Loja Verdelis RP carregada com sucesso!');
+            const storeTabs = document.querySelectorAll('.store-tab');
+            const productSections = document.querySelectorAll('.products-section');
+            
+            storeTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active de todas as abas e seções
+                    storeTabs.forEach(t => t.classList.remove('active'));
+                    productSections.forEach(section => section.style.display = 'none');
+                    
+                    // Adiciona active à aba clicada
+                    this.classList.add('active');
+                    
+                    // Mostra a seção correspondente
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).style.display = 'block';
+                });
+            });
+
+            // Sistema de FAQ
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', function() {
+                    const faqItem = this.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+
+            // Sistema de compra atualizado
+            let currentProduct = null;
+
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const citizenID = document.getElementById('playerCitizenID').value.trim();
+                    
+                    if (!citizenID) {
+                        showError('Por favor, digite seu CitizenID antes de comprar.');
+                        return;
+                    }
+
+                    currentProduct = {
+                        name: this.getAttribute('data-product'),
+                        price: this.getAttribute('data-price'),
+                        productId: this.getAttribute('data-product-id'),
+                        currency: this.getAttribute('data-currency')
+                    };
+
+                    openCheckoutModal();
+                });
+            });
+
+            // Modal functions
+            function openCheckoutModal() {
+                const citizenID = document.getElementById('playerCitizenID').value.trim();
+                const playerName = document.getElementById('playerName').value.trim();
+
+                document.getElementById('modalProductName').textContent = currentProduct.name;
+                document.getElementById('modalCitizenID').textContent = citizenID;
+                document.getElementById('modalPlayerName').textContent = playerName || 'Não informado';
+                
+                if (currentProduct.currency === 'BRL') {
+                    document.getElementById('modalTotalPrice').textContent = `R$ ${parseFloat(currentProduct.price).toFixed(2)}`;
+                } else {
+                    document.getElementById('modalTotalPrice').textContent = `${currentProduct.price} Verdelium`;
+                }
+
+                document.getElementById('checkoutModal').style.display = 'flex';
+            }
+
+            function closeCheckoutModal() {
+                document.getElementById('checkoutModal').style.display = 'none';
+                currentProduct = null;
+            }
+
+            // Event listeners para modal
+            document.querySelector('.close-modal').addEventListener('click', closeCheckoutModal);
+            document.querySelector('.cancel-button').addEventListener('click', closeCheckoutModal);
+
+            document.getElementById('confirmPurchase').addEventListener('click', function() {
+                const termsChecked = document.getElementById('termsCheckbox').checked;
+                const citizenID = document.getElementById('playerCitizenID').value.trim();
+                const playerName = document.getElementById('playerName').value.trim();
+                const paymentMethod = document.getElementById('paymentMethod').value;
+
+                if (!termsChecked) {
+                    showError('Você deve aceitar os termos de serviço para continuar.');
+                    return;
+                }
+
+                if (!citizenID) {
+                    showError('CitizenID é obrigatório.');
+                    return;
+                }
+
+                processPurchase(citizenID, playerName, paymentMethod);
+            });
+
+            // Fechar modal ao clicar fora
+            window.addEventListener('click', function(event) {
+                const modal = document.getElementById('checkoutModal');
+                if (event.target === modal) {
+                    closeCheckoutModal();
+                }
+            });
+
+            // Processar compra
+            function processPurchase(citizenID, playerName, paymentMethod) {
+                // Mostrar loading
+                document.getElementById('loading').style.display = 'block';
+                closeCheckoutModal();
+
+                // Dados da compra
+                const purchaseData = {
+                    citizenid: citizenID,
+                    player_name: playerName || 'Não informado',
+                    product_id: currentProduct.productId,
+                    product_name: currentProduct.name,
+                    price: currentProduct.price,
+                    currency: currentProduct.currency,
+                    payment_method: paymentMethod,
+                    transaction_id: generateTransactionId(),
+                    purchase_date: new Date().toISOString()
+                };
+
+                // Simular processamento (substitua pela sua API real)
+                setTimeout(() => {
+                    // Aqui você faria a requisição para sua API/Webhook
+                    simulatePaymentProcessing(purchaseData);
+                }, 2000);
+            }
+
+            function simulatePaymentProcessing(purchaseData) {
+                // Simular processamento de pagamento (90% de sucesso)
+                const success = Math.random() < 0.9;
+                
+                document.getElementById('loading').style.display = 'none';
+
+                if (success) {
+                    showSuccess(`✅ Compra realizada com sucesso! Seus itens serão entregues automaticamente. Transação: ${purchaseData.transaction_id}`);
+                    
+                    // Log para debug
+                    console.log('Compra processada:', purchaseData);
+                    
+                    // Aqui você redirecionaria para o gateway de pagamento real
+                    if (purchaseData.payment_method === 'pix') {
+                        // Exemplo: window.location.href = `https://seusite.com/pix?transaction=${purchaseData.transaction_id}`;
+                        alert('Redirecionando para o pagamento PIX...');
+                    }
+                } else {
+                    showError('❌ Erro ao processar o pagamento. Tente novamente ou entre em contato com o suporte.');
+                }
+            }
+
+            function generateTransactionId() {
+                return 'TXN_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            }
+
+            function showSuccess(message) {
+                const successEl = document.getElementById('successMessage');
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+                setTimeout(() => {
+                    successEl.style.display = 'none';
+                }, 10000);
+            }
+
+            function showError(message) {
+                const errorEl = document.getElementById('errorMessage');
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+                setTimeout(() => {
+                    errorEl.style.display = 'none';
+                }, 10000);
+            }
+
+            function showCitizenIDHelp() {
+                alert('Para encontrar seu CitizenID:\n\n1. Entre no servidor Verdelis RP\n2. Abra o chat e digite: /id\n3. Seu CitizenID será exibido no chat\n4. Copie e cole no campo acima');
+                return false;
+            }
         });
     </script>
 </body>
