@@ -5,316 +5,661 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classes - Verdelis RP</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
     <style>
-        .classes-hero {
-            background: linear-gradient(rgba(10,10,10,0.8), rgba(10,10,10,0.9)),
-                        url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 120px 0 80px;
-            text-align: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        .class-detail {
-            background: linear-gradient(145deg, #1A1A1A, #2D2D2D);
-            border-radius: 15px;
-            margin: 2rem 0;
-            overflow: hidden;
-            border-left: 5px solid var(--primary);
+
+        :root {
+            --primary-dark: #1a1a2e;
+            --secondary-dark: #16213e;
+            --accent-red: #e94560;
+            --accent-purple: #6a3093;
+            --accent-blue: #0f3460;
+            --accent-gold: #ffd700;
+            --text-light: #f1f1f1;
+            --text-gray: #b0b0b0;
+            --border-dark: #2d3748;
         }
-        
-        .class-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 2rem;
-            text-align: center;
+
+        body {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            line-height: 1.6;
         }
-        
-        .class-header.vampiro { background: linear-gradient(135deg, #8B0000, #B22222); }
-        .class-header.lobisomem { background: linear-gradient(135deg, #2F4F4F, #4682B4); }
-        .class-header.demonio { background: linear-gradient(135deg, #4B0082, #8A2BE2); }
-        .class-header.anjo { background: linear-gradient(135deg, #DAA520, #FFD700); }
-        .class-header.humano { background: linear-gradient(135deg, #696969, #808080); }
-        .class-header.escolhido { background: linear-gradient(135deg, #006400, #228B22); }
-        .class-header.fau { background: linear-gradient(135deg, #2F4F4F, #708090); }
-        
-        .class-content {
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(22, 33, 62, 0.95);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--accent-red);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent-red), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
             gap: 2rem;
         }
-        
-        .class-abilities, .class-weaknesses {
-            background: rgba(255,255,255,0.05);
-            padding: 1.5rem;
-            border-radius: 10px;
-        }
-        
-        .ability-list, .weakness-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-        
-        .ability-list li, .weakness-list li {
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            border-left: 3px solid var(--accent);
-        }
-        
-        .weakness-list li {
-            border-left-color: #ff4444;
-        }
-        
-        .class-stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .stat-bar {
-            text-align: center;
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--gray);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-value {
-            width: 100%;
-            height: 8px;
-            background: var(--gray-dark);
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(233, 69, 96, 0.2);
+            color: var(--accent-red);
+        }
+
+        nav a.active {
+            background-color: var(--accent-red);
+            color: var(--text-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(15, 52, 96, 0.8), rgba(106, 48, 147, 0.8));
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-gray);
+        }
+
+        /* Classes Navigation */
+        .classes-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .class-nav-btn {
+            padding: 1rem 2rem;
+            background: var(--secondary-dark);
+            color: var(--text-light);
+            border: 2px solid var(--border-dark);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .class-nav-btn:hover,
+        .class-nav-btn.active {
+            background: var(--accent-red);
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
+        }
+
+        /* Class Details */
+        .class-details {
+            display: none;
+            margin: 4rem 0;
+            background: rgba(22, 33, 62, 0.8);
+            border-radius: 15px;
+            border: 2px solid var(--border-dark);
             overflow: hidden;
         }
-        
-        .stat-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
+
+        .class-details.active {
+            display: block;
         }
-        
-        @media (max-width: 768px) {
+
+        .class-header {
+            padding: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+        }
+
+        .class-name {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .class-tagline {
+            font-size: 1.3rem;
+            color: var(--text-gray);
+        }
+
+        .class-content {
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .class-abilities h3,
+        .class-weaknesses h3 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .ability-list,
+        .weakness-list {
+            list-style: none;
+        }
+
+        .ability-list li,
+        .weakness-list li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-red);
+        }
+
+        .weakness-list li {
+            border-left-color: var(--accent-blue);
+        }
+
+        .class-description {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-dark);
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid var(--accent-red);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--accent-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-red);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
             .class-content {
                 grid-template-columns: 1fr;
             }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
             
-            .class-stats {
-                grid-template-columns: repeat(2, 1fr);
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .classes-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .class-nav-btn {
+                width: 250px;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
-            <div class="nav-brand">
-                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTIwIDBDOC45NiAwIDAgOC45NiAwIDIwQzAgMzEuMDQgOC45NiA0MCAyMCA0MEMzMS4wNCA0MCA0MCAzMS4wNCA0MCAyMEM0MCA4Ljk2IDMxLjA0IDAgMjAgMFpNMTggMzJWOEgxNlYzMkgxOFpNMjQgMzJWOEgyMlYzMkgyNFoiIGZpbGw9IiNEREE1MjAiLz4KPC9zdmc+" alt="Logo">
-                <span>VERDELIS RP</span>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-image">VR</div>
+                    <div class="logo-text">VERDELIS RP</div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historia.html">História</a></li>
+                        <li><a href="classes.html" class="active">Classes</a></li>
+                        <li><a href="faccoes.html">Facções</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                        <li><a href="loja.html">Loja</a></li>
+                        <li><a href="contato.html">Contato</a></li>
+                    </ul>
+                </nav>
             </div>
-            <ul class="nav-menu">
-                <li><a href="index.html"><i class="fas fa-home"></i> INÍCIO</a></li>
-                <li><a href="historia.html"><i class="fas fa-book"></i> HISTÓRIA</a></li>
-                <li><a href="classes.html" class="active"><i class="fas fa-users"></i> CLASSES</a></li>
-                <li><a href="clas.html"><i class="fas fa-flag"></i> CLÃS</a></li>
-                <li><a href="loja.html"><i class="fas fa-gem"></i> LOJA</a></li>
-                <li><a href="contato.html"><i class="fas fa-envelope"></i> CONTATO</a></li>
-            </ul>
-            <div class="nav-actions">
-                <a href="#" class="btn-discord"><i class="fab fa-discord"></i> DISCORD</a>
-            </div>
-        </nav>
+        </div>
     </header>
 
-    <section class="classes-hero">
+    <!-- Hero Section -->
+    <section class="hero">
         <div class="container">
-            <h1>ESCOLHA SUA CLASSE</h1>
-            <p>7 raças únicas, cada uma com habilidades especiais e fraquezas específicas</p>
+            <h1>7 Classes Únicas</h1>
+            <p>Escolha seu destino entre 7 classes distintas, cada uma com habilidades especiais, fraquezas e histórias únicas</p>
         </div>
     </section>
 
-    <section class="container" style="padding: 2rem 0;">
-        <!-- Vampiro -->
-        <div class="class-detail">
-            <div class="class-header vampiro">
-                <h2>🧛 VAMPIRO</h2>
-                <p>"Senhores da Noite, Mestres da Escuridão"</p>
+    <!-- Classes Navigation -->
+    <div class="container">
+        <div class="classes-nav">
+            <button class="class-nav-btn active" data-class="humano">Humano</button>
+            <button class="class-nav-btn" data-class="vampiro">Vampiro</button>
+            <button class="class-nav-btn" data-class="lobisomem">Lobisomem</button>
+            <button class="class-nav-btn" data-class="demonio">Demônio</button>
+            <button class="class-nav-btn" data-class="anjo-caido">Anjo Caído</button>
+            <button class="class-nav-btn" data-class="escolhido">Escolhido</button>
+            <button class="class-nav-btn" data-class="fau">FAU</button>
+        </div>
+
+        <!-- Humano -->
+        <div id="humano" class="class-details active">
+            <div class="class-header">
+                <h2 class="class-name">Humano</h2>
+                <p class="class-tagline">Os Sobreviventes Adaptáveis</p>
             </div>
             <div class="class-content">
-                <div>
-                    <h3><i class="fas fa-bolt"></i> HABILIDADES</h3>
+                <div class="class-description">
+                    <p>Os humanos são os sobreviventes originais do mundo pré-Éter. Apesar de não possuírem poderes sobrenaturais inatos, sua versatilidade, resiliência e capacidade de adaptação os tornam uma força formidável. Através de missões e provas de valor, humanos podem ingressar em facções especiais e adquirir habilidades únicas.</p>
+                </div>
+                <div class="class-abilities">
+                    <h3>Habilidades Especiais</h3>
                     <ul class="ability-list">
-                        <li><strong>Drenagem de Sangue:</strong> Recupere vida sugando NPCs inconscientes</li>
-                        <li><strong>Transformação em Morcego:</strong> Mobilidade aérea e evasão</li>
-                        <li><strong>Visão Noturna:</strong> Veja na escuridão completa</li>
-                        <li><strong>Dominação Mental:</strong> Controle temporário de humanos</li>
-                        <li><strong>Super Velocidade:</strong> Movimentação extremamente rápida</li>
+                        <li><strong>Versatilidade Tática:</strong> Acesso a múltiplos estilos de combate e equipamentos</li>
+                        <li><strong>Progressão por Missões:</strong> Desbloqueio de facções através de quests específicas</li>
+                        <li><strong>Adaptação Tecnológica:</strong> Uso eficiente de equipamentos modernos e veículos</li>
+                        <li><strong>Diplomacia:</strong> Bônus em interações com NPCs e outras facções</li>
+                        <li><strong>Resiliência:</strong> Recuperação acelerada e resistência a efeitos ambientais</li>
                     </ul>
                 </div>
-                <div>
-                    <h3><i class="fas fa-skull-crossbones"></i> FRAQUEZAS</h3>
+                <div class="class-weaknesses">
+                    <h3>Fraquezas</h3>
                     <ul class="weakness-list">
-                        <li><strong>Luz Solar:</strong> Dano contínuo durante o dia</li>
-                        <li><strong>Estacas de Madeira:</strong> Dano triplicado</li>
-                        <li><strong>Água Benta:</strong> Queimaduras graves</li>
-                        <li><strong>Necessidade de Sangue:</strong> Drenagem natural constante</li>
+                        <li>Sem poderes sobrenaturais inatos</li>
+                        <li>Dependente de equipamentos e tecnologia</li>
+                        <li>Vulnerável a efeitos Éter sem proteção</li>
+                        <li>Progressão mais lenta inicialmente</li>
+                        <li>Limitado contra criaturas de alto nível</li>
                     </ul>
-                    
-                    <div class="class-stats">
-                        <div class="stat-bar">
-                            <div class="stat-label">DANO</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 80%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">DEFESA</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 60%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">MOBILIDADE</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 90%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">DIFICULDADE</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 70%"></div></div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vampiro -->
+        <div id="vampiro" class="class-details">
+            <div class="class-header" style="background: linear-gradient(135deg, #8B0000, #000000);">
+                <h2 class="class-name">Vampiro</h2>
+                <p class="class-tagline">Senhores da Noite Eterna</p>
+            </div>
+            <div class="class-content">
+                <div class="class-description">
+                    <p>Mestres das sombras e da aristocracia oculta, os vampiros são seres imortais que se alimentam de sangue e acumulam poder através dos séculos. Com habilidades sobrenaturais e uma sociedade clânica rigorosa, manipulam eventos desde as trevas enquanto lutam contra sua fraqueza à luz solar.</p>
+                </div>
+                <div class="class-abilities">
+                    <h3>Habilidades Sobrenaturais</h3>
+                    <ul class="ability-list">
+                        <li><strong>Imortalidade:</strong> Envelhecimento suspenso e regeneração acelerada</li>
+                        <li><strong>Dominação Mental:</strong> Controle de mentes humanas e animais</li>
+                        <li><strong>Transformação em Morcego:</strong> Mobilidade aérea e furtividade</li>
+                        <li><strong>Visão Noturna:</strong> Visão perfeita na escuridão total</li>
+                        <li><strong>Poderes de Sangue:</strong> Habilidades únicas baseadas em consumo de sangue</li>
+                    </ul>
+                </div>
+                <div class="class-weaknesses">
+                    <h3>Fraquezas</h3>
+                    <ul class="weakness-list">
+                        <li>Dano solar contínuo e incapacitante</li>
+                        <li>Dependente de consumo regular de sangue</li>
+                        <li>Vulnerável a estacas e símbolos sagrados</li>
+                        <li>Não pode cruzar água corrente</li>
+                        <li>Precisa de convite para residências</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
         <!-- Lobisomem -->
-        <div class="class-detail">
-            <div class="class-header lobisomem">
-                <h2>🐺 LOBISOMEM</h2>
-                <p>"Guardiões da Lua, Fúria da Natureza"</p>
+        <div id="lobisomem" class="class-details">
+            <div class="class-header" style="background: linear-gradient(135deg, #8B4513, #2F4F4F);">
+                <h2 class="class-name">Lobisomem</h2>
+                <p class="class-tagline">Guerreiros da Lua</p>
             </div>
             <div class="class-content">
-                <div>
-                    <h3><i class="fas fa-bolt"></i> HABILIDADES</h3>
+                <div class="class-description">
+                    <p>Conectados com a natureza e os ciclos lunares, os lobisomens são guerreiros bestiais que podem se transformar em criaturas poderosas. Sua sociedade é baseada em alcateias, com forte ênfase em lealdade, território e instintos de caça. Durante a lua cheia, seu poder atinge o ápice.</p>
+                </div>
+                <div class="class-abilities">
+                    <h3>Habilidades Bestiais</h3>
                     <ul class="ability-list">
-                        <li><strong>Transformação em Lobo:</strong> Força e velocidade aumentadas</li>
-                        <li><strong>Fúria Berserker:</strong> Dano aumentado em combate</li>
-                        <li><strong>Sentidos Aguçados:</strong> Detecção aprimorada</li>
-                        <li><strong>Cura Lunar:</strong> Regeneração acelerada</li>
-                        <li><strong>Uivo de Alcateia:</strong> Buff para membros do grupo</li>
+                        <li><strong>Transformação em Lobo:</strong> Forma bestial com força e velocidade sobre-humanas</li>
+                        <li><strong>Regeneração Acelerada:</strong> Cura rápida de ferimentos</li>
+                        <li><strong>Sentidos Aguçados:</strong> Olfato, audição e visão sobre-humanos</li>
+                        <li><strong>Fúria Lunar:</strong> Poder aumentado durante ciclos lunares</li>
+                        <li><strong>Vínculo de Alcateia:</strong> Bônus quando próximo de outros lobisomens</li>
                     </ul>
                 </div>
-                <div>
-                    <h3><i class="fas fa-skull-crossbones"></i> FRAQUEZAS</h3>
+                <div class="class-weaknesses">
+                    <h3>Fraquezas</h3>
                     <ul class="weakness-list">
-                        <li><strong>Armas de Prata:</strong> Dano triplicado</li>
-                        <li><strong>Acônito:</strong> Envenenamento e fraqueza</li>
-                        <li><strong>Controle de Fúria:</strong> Dificuldade em controlar transformação</li>
-                        <li><strong>Lua Cheia:</strong> Transformação involuntária</li>
+                        <li>Vulnerável a armas de prata</li>
+                        <li>Transformação involuntária na lua cheia</li>
+                        <li>Dificuldade de controle durante a fúria</li>
+                        <li>Fraqueza a acônito (wolfsbane)</li>
+                        <li>Conflito interno humano-lobo</li>
                     </ul>
-                    
-                    <div class="class-stats">
-                        <div class="stat-bar">
-                            <div class="stat-label">DANO</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 90%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">DEFESA</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 80%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">MOBILIDADE</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 70%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">DIFICULDADE</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 60%"></div></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Demônio -->
-        <div class="class-detail">
-            <div class="class-header demonio">
-                <h2>😈 DEMÔNIO</h2>
-                <p>"Emissários do Inferno, Portadores do Caos"</p>
+        <div id="demonio" class="class-details">
+            <div class="class-header" style="background: linear-gradient(135deg, #800000, #400000);">
+                <h2 class="class-name">Demônio</h2>
+                <p class="class-tagline">Emissários do Inferno</p>
             </div>
             <div class="class-content">
-                <div>
-                    <h3><i class="fas fa-bolt"></i> HABILIDADES</h3>
+                <div class="class-description">
+                    <p>Seres infernais que emergiram através de portais Éter, os demônios possuem poderes de fogo, corrupção e tentação. Manipulam as emoções humanas e espalham o caos enquanto buscam expandir sua influência no mundo material. Sua natureza caótica os torna imprevisíveis e perigosos.</p>
+                </div>
+                <div class="class-abilities">
+                    <h3>Poderes Infernais</h3>
                     <ul class="ability-list">
-                        <li><strong>Chamas do Inferno:</strong> Dano elemental de fogo</li>
-                        <li><strong>Possessão:</strong> Controle temporário de alvos</li>
-                        <li><strong>Teleporte Sombrio:</strong> Movimento instantâneo</li>
-                        <li><strong>Armadura Demoníaca:</strong> Defesa aumentada</li>
-                        <li><strong>Visão do Inferno:</strong> Detecção de almas</li>
+                        <li><strong>Piromancia:</strong> Controle absoluto sobre chamas infernais</li>
+                        <li><strong>Teleporte Sombrio:</strong> Movimentação instantânea entre sombras</li>
+                        <li><strong>Corrupção:</strong> Habilidade de corromper seres e locais</li>
+                        <li><strong>Formas Demoníacas:</strong> Transformação em formas mais poderosas</li>
+                        <li><strong>Manipulação Emocional:</strong> Controle sobre medo, raiva e desejo</li>
                     </ul>
                 </div>
-                <div>
-                    <h3><i class="fas fa-skull-crossbones"></i> FRAQUEZAS</h3>
+                <div class="class-weaknesses">
+                    <h3>Fraquezas</h3>
                     <ul class="weakness-list">
-                        <li><strong>Símbolos Sagrados:</strong> Dano massivo</li>
-                        <li><strong>Água Benta:</strong> Queimaduras intensas</li>
-                        <li><strong>Luz Divina:</strong> Fraqueza em áreas sagradas</li>
-                        <li><strong>Exorcismo:</strong> Pode ser banido temporariamente</li>
+                        <li>Extrema vulnerabilidade a símbolos sagrados</li>
+                        <li>Dano aumentado por água benta</li>
+                        <li>Limitado por círculos de proteção</li>
+                        <li>Fraqueza em locais consagrados</li>
+                        <li>Conflito constante com anjos caídos</li>
                     </ul>
-                    
-                    <div class="class-stats">
-                        <div class="stat-bar">
-                            <div class="stat-label">DANO</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 95%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">DEFESA</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 85%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">MOBILIDADE</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 50%"></div></div>
-                        </div>
-                        <div class="stat-bar">
-                            <div class="stat-label">DIFICULDADE</div>
-                            <div class="stat-value"><div class="stat-fill" style="width: 80%"></div></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>VERDELIS RP</h3>
-                    <p>Um mundo de criaturas, alianças e batalhas épicas.</p>
+        <!-- Anjo Caído -->
+        <div id="anjo-caido" class="class-details">
+            <div class="class-header" style="background: linear-gradient(135deg, #4B0082, #000080);">
+                <h2 class="class-name">Anjo Caído</h2>
+                <p class="class-tagline">Seres Celestiais Banidos</p>
+            </div>
+            <div class="class-content">
+                <div class="class-description">
+                    <p>Antigos seres celestiais banidos do reino divino, os anjos caídos mantêm parte de seus poderes originais enquanto carregam o peso de sua queda. Divididos entre buscar redenção ou abraçar sua nova natureza, são figuras trágicas com habilidades impressionantes e conflitos internos profundos.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>CLASSES</h4>
-                    <ul>
-                        <li><a href="#vampiro">Vampiro</a></li>
-                        <li><a href="#lobisomem">Lobisomem</a></li>
-                        <li><a href="#demonio">Demônio</a></li>
-                        <li><a href="#anjo">Anjo Caído</a></li>
+                <div class="class-abilities">
+                    <h3>Poderes Celestiais</h3>
+                    <ul class="ability-list">
+                        <li><strong>Asas da Escuridão:</strong> Voo com asas de energia sombria</li>
+                        <li><strong>Manipulação de Luz:</strong> Controle sobre energia luminosa residual</li>
+                        <li><strong>Visão da Verdade:</strong> Capacidade de ver além das ilusões</li>
+                        <li><strong>Toque Curativo:</strong> Cura limitada de ferimentos</li>
+                        <li><strong>Presença Amedrontadora:</strong> Aura que intimida criaturas inferiores</li>
                     </ul>
                 </div>
-                <div class="footer-section">
-                    <h4>SUPORTE</h4>
-                    <ul>
-                        <li><a href="#">Discord</a></li>
-                        <li><a href="#">FAQ</a></li>
-                        <li><a href="#">Suporte</a></li>
+                <div class="class-weaknesses">
+                    <h3>Fraquezas</h3>
+                    <ul class="weakness-list">
+                        <li>Vulnerável a energias infernais puras</li>
+                        <li>Conflito interno constante</li>
+                        <li>Poderes reduzidos comparados à forma original</li>
+                        <li>Atraído por locais sagrados</li>
+                        <li>Alvo preferencial de demônios</li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados.</p>
+        </div>
+
+        <!-- Escolhido -->
+        <div id="escolhido" class="class-details">
+            <div class="class-header" style="background: linear-gradient(135deg, #FFD700, #DAA520);">
+                <h2 class="class-name">Escolhido</h2>
+                <p class="class-tagline">Humanos Abençoados</p>
+            </div>
+            <div class="class-content">
+                <div class="class-description">
+                    <p>Humanos que foram tocados por energias divinas ou expostos a fenômenos Éter específicos, ganhando poderes especiais enquanto mantêm sua humanidade. Os Escolhidos servem como ponte entre o mundo mortal e o sobrenatural, muitas vezes carregando missões ou destinos específicos.</p>
+                </div>
+                <div class="class-abilities">
+                    <h3>Dons Especiais</h3>
+                    <ul class="ability-list">
+                        <li><strong>Poderes de Luz:</strong> Habilidades baseadas em energia divina</li>
+                        <li><strong>Cura e Proteção:</strong> Capacidades defensivas e de suporte</li>
+                        <li><strong>Visões Proféticas:</strong> Vislumbres do futuro e insights</li>
+                        <li><strong>Resistência Sobrenatural:</strong> Defesa contra poderes das trevas</li>
+                        <li><strong>Purificação:</strong> Limpeza de corrupção e energias negativas</li>
+                    </ul>
+                </div>
+                <div class="class-weaknesses">
+                    <h3>Fraquezas</h3>
+                    <ul class="weakness-list">
+                        <li>Poderes ligados à força de vontade</li>
+                        <li>Vulnerável quando sem fé ou propósito</li>
+                        <li>Alvo de criaturas das trevas</li>
+                        <li>Limitado contra ameaças puramente físicas</li>
+                        <li>Pressão de cumprir destinos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAU -->
+        <div id="fau" class="class-details">
+            <div class="class-header" style="background: linear-gradient(135deg, #006400, #00008B);">
+                <h2 class="class-name">FAU</h2>
+                <p class="class-tagline">Força de Ação Urgente</p>
+            </div>
+            <div class="class-content">
+                <div class="class-description">
+                    <p>A última esperança organizada da humanidade, a FAU combina tecnologia militar de ponta com pesquisa científica avançada para enfrentar a ameaça sobrenatural. Seus agentes são altamente treinados e equipados com tecnologia anti-Éter, servindo como a linha de frente na proteção da civilização humana.</p>
+                </div>
+                <div class="class-abilities">
+                    <h3>Vantagens Tecnológicas</h3>
+                    <ul class="ability-list">
+                        <li><strong>Equipamento Militar Avançado:</strong> Armas e armaduras de última geração</li>
+                        <li><strong>Tecnologia Anti-Éter:</strong> Dispositivos que neutralizam poderes sobrenaturais</li>
+                        <li><strong>Suporte Aéreo e Terrestre:</strong> Acesso a veículos e recursos militares</li>
+                        <li><strong>Treinamento Especializado:</strong> Táticas contra criaturas sobrenaturais</li>
+                        <li><strong>Rede de Inteligência:</strong> Acesso a informações privilegiadas</li>
+                    </ul>
+                </div>
+                <div class="class-weaknesses">
+                    <h3>Limitações</h3>
+                    <ul class="weakness-list">
+                        <li>Dependente de equipamentos e suprimentos</li>
+                        <li>Burocracia e cadeia de comando</li>
+                        <li>Vulnerável sem tecnologia adequada</li>
+                        <li>Recursos limitados por missão</li>
+                        <li>Alvo prioritário de facções hostis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Verdelis RP</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="historia.html">História</a></li>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Jogabilidade</h3>
+                    <ul>
+                        <li><a href="classes.html">Classes</a></li>
+                        <li><a href="faccoes.html">Facções</a></li>
+                        <li><a href="sistemas.html">Sistemas</a></li>
+                        <li><a href="clans.html">Clãs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="contato.html">Contato</a></li>
+                        <li><a href="#">Central de Ajuda</a></li>
+                        <li><a href="#">Status do Servidor</a></li>
+                        <li><a href="#">Reportar Bug</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Comunidade</h3>
+                    <ul>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Fórum</a></li>
+                        <li><a href="#">Regras</a></li>
+                        <li><a href="#">Eventos</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Verdelis RP. Todos os direitos reservados. Servidor FiveM Roleplay.</p>
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Sistema de navegação entre classes
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.class-nav-btn');
+            const classDetails = document.querySelectorAll('.class-details');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active de todos os botões e detalhes
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    classDetails.forEach(detail => detail.classList.remove('active'));
+                    
+                    // Adiciona active ao botão clicado
+                    this.classList.add('active');
+                    
+                    // Mostra os detalhes da classe correspondente
+                    const classId = this.getAttribute('data-class');
+                    document.getElementById(classId).classList.add('active');
+                });
+            });
+        });
+    </script>
 </body>
 </html>
