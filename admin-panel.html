@@ -474,19 +474,19 @@
         <section id="dashboard">
             <div class="stats-grid">
                 <div class="stat-card total-visitors">
-                    <div class="stat-number" id="totalVisitors">1,247</div>
+                    <div class="stat-number" id="totalVisitors">0</div>
                     <div>Total de Visitantes</div>
                 </div>
                 <div class="stat-card today-visitors">
-                    <div class="stat-number" id="todayVisitors">89</div>
+                    <div class="stat-number" id="todayVisitors">0</div>
                     <div>Visitantes Hoje</div>
                 </div>
                 <div class="stat-card online-now">
-                    <div class="stat-number" id="onlineNow">12</div>
+                    <div class="stat-number" id="onlineNow">0</div>
                     <div>Online Agora</div>
                 </div>
                 <div class="stat-card unique-visitors">
-                    <div class="stat-number" id="uniqueVisitors">843</div>
+                    <div class="stat-number" id="uniqueVisitors">0</div>
                     <div>Visitantes Únicos</div>
                 </div>
             </div>
@@ -1114,6 +1114,28 @@
             document.getElementById('autoCleanup').value = settings.autoCleanup || 30;
         }
 
+        // ✅ SISTEMA DE ESTATÍSTICAS REAIS - DADOS ZERADOS
+        function updateVisitorStats() {
+            // Busca dados REAIS do localStorage (zerados inicialmente)
+            const total = parseInt(localStorage.getItem('totalVisitors') || '0');
+            const today = parseInt(localStorage.getItem('todayVisitors') || '0');
+            const online = parseInt(localStorage.getItem('onlineNow') || '0');
+            const unique = parseInt(localStorage.getItem('uniqueVisitors') || '0');
+            
+            // Atualiza a interface com dados REAIS
+            document.getElementById('totalVisitors').textContent = total.toLocaleString();
+            document.getElementById('todayVisitors').textContent = today;
+            document.getElementById('onlineNow').textContent = online;
+            document.getElementById('uniqueVisitors').textContent = unique.toLocaleString();
+            
+            console.log('📈 Estatísticas atualizadas (DADOS REAIS):', { 
+                total, 
+                today, 
+                online, 
+                unique 
+            });
+        }
+
         // Funções auxiliares
         function getTypeIcon(type) {
             const icons = {
@@ -1165,25 +1187,44 @@
                 }
             }, 60000); // Verifica a cada minuto
             
-            // Atualiza estatísticas a cada 30 segundos
+            // ✅ ATUALIZA ESTATÍSTICAS REAIS a cada 30 segundos
             setInterval(updateVisitorStats, 30000);
+            
+            // ✅ INICIALIZA DADOS ZERADOS se não existirem
+            initializeTrackingData();
         });
 
-        // Simulação de dados de visitantes
-        function updateVisitorStats() {
-            // Em um sistema real, isso viria de uma API
-            const total = parseInt(localStorage.getItem('totalVisitors') || '1247');
-            const today = Math.floor(Math.random() * 20) + 80; // Simulação
-            const online = Math.floor(Math.random() * 10) + 5; // Simulação
-            const unique = parseInt(localStorage.getItem('uniqueVisitors') || '843');
+        // ✅ INICIALIZA DADOS ZERADOS PARA TRACKING
+        function initializeTrackingData() {
+            const now = new Date();
+            const today = now.toDateString();
             
-            document.getElementById('totalVisitors').textContent = total.toLocaleString();
-            document.getElementById('todayVisitors').textContent = today;
-            document.getElementById('onlineNow').textContent = online;
-            document.getElementById('uniqueVisitors').textContent = unique.toLocaleString();
+            // Inicializa dados zerados se não existirem
+            if (!localStorage.getItem('totalVisitors')) {
+                localStorage.setItem('totalVisitors', '0');
+            }
+            if (!localStorage.getItem('uniqueVisitors')) {
+                localStorage.setItem('uniqueVisitors', '0');
+            }
+            if (!localStorage.getItem('todayVisitors')) {
+                localStorage.setItem('todayVisitors', '0');
+                localStorage.setItem('todayDate', today);
+            }
+            if (!localStorage.getItem('onlineNow')) {
+                localStorage.setItem('onlineNow', '0');
+            }
+            
+            // Zera visitantes do dia se for um novo dia
+            const storedDate = localStorage.getItem('todayDate');
+            if (storedDate !== today) {
+                localStorage.setItem('todayVisitors', '0');
+                localStorage.setItem('todayDate', today);
+            }
+            
+            console.log('✅ Dados de tracking inicializados e zerados');
         }
 
-        // Inicializa as estatísticas
+        // ✅ INICIALIZA AS ESTATÍSTICAS COM DADOS REAIS
         updateVisitorStats();
     </script>
 </body>
