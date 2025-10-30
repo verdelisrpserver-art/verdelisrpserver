@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - Verdelis RP</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --vampire-color: #8B0000;
+            --werewolf-color: #8B4513;
+            --angel-color: #1E90FF;
+            --demon-color: #DC143C;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 2em;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: rgba(0, 0, 0, 0.3);
+            margin-bottom: 50px;
+        }
+
+        .hero h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #cccccc;
+        }
+
+        .events-section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .event-card.vampire::before { background: var(--vampire-color); }
+        .event-card.werewolf::before { background: var(--werewolf-color); }
+        .event-card.angel::before { background: var(--angel-color); }
+        .event-card.demon::before { background: var(--demon-color); }
+        .event-card.human::before { background: var(--primary-color); }
+        .event-card.special::before { background: linear-gradient(90deg, #FFD700, #FFA500); }
+
+        .event-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .event-type {
+            font-size: 0.9em;
+            color: #cccccc;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .event-description {
+            color: #cccccc;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .event-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .event-date, .event-location {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #aaaaaa;
+            font-size: 0.9em;
+        }
+
+        .event-participants {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .calendar-day {
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            font-weight: bold;
+            color: #cccccc;
+        }
+
+        .calendar-date {
+            text-align: center;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .calendar-date:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .calendar-date.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .calendar-date.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .upcoming-events {
+            margin-top: 50px;
+        }
+
+        .event-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-date {
+            width: 80px;
+            padding-right: 20px;
+            text-align: right;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-left: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #cccccc;
+        }
+
+        .empty-state i {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+            opacity: 0.5;
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 40px 0;
+            margin-top: 80px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h2 {
+                font-size: 2em;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-details {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 5px;
+            }
+
+            .calendar-date {
+                padding: 10px 5px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <h1>🧛 Verdelis RP</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">🏠 Início</a></li>
+                    <li><a href="sobre.html">📖 Sobre</a></li>
+                    <li><a href="eventos.html" style="background: rgba(255,255,255,0.1);">🎪 Eventos</a></li>
+                    <li><a href="classes.html">⚔️ Classes</a></li>
+                    <li><a href="contato.html">📞 Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>🎭 Eventos do RP</h2>
+            <p>Participe dos eventos épicos do Verdelis RP! Batalhas entre clãs, festas da corte vampírica, caçadas da lua cheia e muito mais.</p>
+        </div>
+    </section>
+
+    <!-- Eventos em Destaque -->
+    <section class="events-section">
+        <div class="container">
+            <h2 class="section-title">⭐ Eventos em Destaque</h2>
+            
+            <div class="events-grid" id="featuredEvents">
+                <!-- Eventos serão carregados aqui via JavaScript -->
+            </div>
+
+            <!-- Calendário de Eventos -->
+            <div class="calendar-section">
+                <div class="calendar-header">
+                    <h3>📅 Calendário de Eventos</h3>
+                    <div id="currentMonth">Fevereiro 2024</div>
+                </div>
+                <div class="calendar-grid" id="calendar">
+                    <!-- Calendário será gerado via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Próximos Eventos -->
+            <div class="upcoming-events">
+                <h2 class="section-title">🕐 Próximos Eventos</h2>
+                <div class="event-timeline" id="upcomingEvents">
+                    <!-- Timeline de eventos será carregada aqui -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🧛 Verdelis RP</h3>
+                    <p>O melhor servidor de RPG temático com vampiros, lobisomens, anjos, demônios e muito mais!</p>
+                </div>
+                <div class="footer-section">
+                    <h3>🔗 Links Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="regras.html">Regras do Servidor</a></li>
+                        <li><a href="classes.html">Classes e Raças</a></li>
+                        <li><a href="galeria.html">Galeria</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>📞 Contato</h3>
+                    <ul class="footer-links">
+                        <li><a href="discord.gg/verdelis">Discord</a></li>
+                        <li><a href="#">Fórum</a></li>
+                        <li><a href="contato.html">Suporte</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dados de exemplo (em produção, viriam do localStorage ou API)
+        const sampleEvents = [
+            {
+                id: 1,
+                title: "Lua Cheia Sangrenta",
+                description: "A lua cheia traz fúria e poder para os lobisomens. Caçada especial com recompensas em dobro para a alcateia vencedora.",
+                type: "werewolf",
+                date: "2024-02-15",
+                time: "21:00",
+                location: "Floresta de Paleto",
+                participants: 24,
+                maxParticipants: 30,
+                status: "confirmed",
+                badge: "POPULAR"
+            },
+            {
+                id: 2,
+                title: "Festa da Corte Vampírica",
+                description: "Os senhores vampiros convocam um baile na mansão abandonada. Trajes formais obrigatórios. Sangue fresco garantido.",
+                type: "vampire",
+                date: "2024-02-18",
+                time: "22:00",
+                location: "Mansão Eclipse",
+                participants: 18,
+                maxParticipants: 25,
+                status: "confirmed",
+                badge: "EXCLUSIVO"
+            },
+            {
+                id: 3,
+                title: "Conclave dos Anjos Caídos",
+                description: "Reunião secreta para discutir o futuro dos anjos renegados. Novas missões e alianças serão formadas.",
+                type: "angel",
+                date: "2024-02-20",
+                time: "20:00",
+                location: "Catedral Abandonada",
+                participants: 12,
+                maxParticipants: 20,
+                status: "confirmed"
+            },
+            {
+                id: 4,
+                title: "Invasão Demoníaca",
+                description: "Portais infernais se abrem no centro da cidade. Todos os clãs devem se unir para repelir a ameaça.",
+                type: "special",
+                date: "2024-02-25",
+                time: "19:00",
+                location: "Centro de Los Santos",
+                participants: 35,
+                maxParticipants: 50,
+                status: "planned",
+                badge: "EPICO"
+            }
+        ];
+
+        // Carrega eventos do localStorage ou usa os de exemplo
+        function loadEvents() {
+            const savedEvents = localStorage.getItem('verdelisPublicEvents');
+            return savedEvents ? JSON.parse(savedEvents) : sampleEvents;
+        }
+
+        // Renderiza eventos em destaque
+        function renderFeaturedEvents() {
+            const container = document.getElementById('featuredEvents');
+            const events = loadEvents();
+            
+            if (events.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i>📅</i>
+                        <h3>Nenhum Evento Programado</h3>
+                        <p>Os administradores ainda não publicaram eventos.</p>
+                        <p><small>Volte em breve para conferir a programação!</small></p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = events.map(event => {
+                const eventDate = new Date(event.date);
+                const now = new Date();
+                const isUpcoming = eventDate >= now;
+                
+                return `
+                    <div class="event-card ${event.type}">
+                        ${event.badge ? `<span class="event-badge">${event.badge}</span>` : ''}
+                        
+                        <div class="event-type">
+                            ${getTypeIcon(event.type)} ${getTypeName(event.type)}
+                        </div>
+                        
+                        <h3 class="event-title">${event.title}</h3>
+                        
+                        <p class="event-description">${event.description}</p>
+                        
+                        <div class="event-details">
+                            <div class="event-date">
+                                <span>📅</span>
+                                ${formatDate(event.date)} às ${event.time}
+                            </div>
+                            <div class="event-location">
+                                <span>📍</span>
+                                ${event.location}
+                            </div>
+                        </div>
+                        
+                        <div class="event-details">
+                            <div class="event-participants">
+                                👥 ${event.participants}/${event.maxParticipants} participantes
+                            </div>
+                            <div class="event-actions">
+                                ${isUpcoming ? 
+                                    `<button class="btn btn-primary" onclick="participate(${event.id})">Participar</button>` :
+                                    `<button class="btn btn-secondary" disabled>Evento Finalizado</button>`
+                                }
+                                <button class="btn btn-secondary" onclick="showEventDetails(${event.id})">Detalhes</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Renderiza calendário
+        function renderCalendar() {
+            const calendar = document.getElementById('calendar');
+            const events = loadEvents();
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            
+            // Dias da semana
+            const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+            let calendarHTML = '';
+            
+            // Cabeçalho dos dias
+            days.forEach(day => {
+                calendarHTML += `<div class="calendar-day">${day}</div>`;
+            });
+            
+            // Primeiro dia do mês
+            const firstDay = new Date(year, month, 1).getDay();
+            
+            // Dias no mês
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            // Dias vazios no início
+            for (let i = 0; i < firstDay; i++) {
+                calendarHTML += `<div class="calendar-date"></div>`;
+            }
+            
+            // Dias do mês
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const hasEvent = events.some(event => event.date === dateStr);
+                const isToday = day === now.getDate() && month === now.getMonth();
+                
+                calendarHTML += `
+                    <div class="calendar-date ${hasEvent ? 'has-event' : ''} ${isToday ? 'active' : ''}">
+                        ${day}
+                    </div>
+                `;
+            }
+            
+            calendar.innerHTML = calendarHTML;
+            document.getElementById('currentMonth').textContent = 
+                now.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+        }
+
+        // Renderiza timeline de próximos eventos
+        function renderUpcomingEvents() {
+            const container = document.getElementById('upcomingEvents');
+            const events = loadEvents();
+            const now = new Date();
+            
+            const upcoming = events
+                .filter(event => new Date(event.date) >= now)
+                .sort((a, b) => new Date(a.date) - new Date(b.date))
+                .slice(0, 5);
+            
+            if (upcoming.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i>⏰</i>
+                        <h3>Nenhum Evento Previsto</h3>
+                        <p>Não há eventos programados para as próximas semanas.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = upcoming.map(event => `
+                <div class="timeline-item">
+                    <div class="timeline-date">
+                        ${formatDate(event.date)}<br>
+                        <small>${event.time}</small>
+                    </div>
+                    <div class="timeline-content">
+                        <h4>${event.title}</h4>
+                        <p>${event.description}</p>
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <span>${getTypeIcon(event.type)} ${getTypeName(event.type)}</span>
+                            <span>📍 ${event.location}</span>
+                            <span>👥 ${event.participants}/${event.maxParticipants}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Funções auxiliares
+        function getTypeIcon(type) {
+            const icons = {
+                vampire: '🧛',
+                werewolf: '🐺',
+                angel: '👼',
+                demon: '😈',
+                human: '👤',
+                special: '⭐'
+            };
+            return icons[type] || '🎭';
+        }
+
+        function getTypeName(type) {
+            const names = {
+                vampire: 'Evento Vampírico',
+                werewolf: 'Evento de Lobisomens',
+                angel: 'Evento Angelical',
+                demon: 'Evento Demoníaco',
+                human: 'Evento Humano',
+                special: 'Evento Especial'
+            };
+            return names[type] || 'Evento';
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        function participate(eventId) {
+            alert(`🎉 Inscrição confirmada para o evento! Verifique o Discord para mais informações.`);
+        }
+
+        function showEventDetails(eventId) {
+            const event = loadEvents().find(e => e.id === eventId);
+            if (event) {
+                alert(`📋 ${event.title}\n\n📅 ${formatDate(event.date)} às ${event.time}\n📍 ${event.location}\n\n${event.description}\n\n👥 Participantes: ${event.participants}/${event.maxParticipants}`);
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            renderFeaturedEvents();
+            renderCalendar();
+            renderUpcomingEvents();
+            
+            // Atualiza a cada minuto (para eventos ao vivo)
+            setInterval(() => {
+                renderFeaturedEvents();
+                renderUpcomingEvents();
+            }, 60000);
+        });
+    </script>
+</body>
+</html>
