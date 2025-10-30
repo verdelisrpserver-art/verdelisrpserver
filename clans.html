@@ -455,6 +455,25 @@
             border-bottom: none;
         }
 
+        /* Estados vazios */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-gray);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: block;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
         /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 992px) {
             .footer-content {
@@ -557,19 +576,19 @@
     <section class="container">
         <div class="clan-stats">
             <div class="stat-card">
-                <div class="stat-number" id="totalClans">47</div>
+                <div class="stat-number" id="totalClans">0</div>
                 <div class="stat-label">Clãs Ativos</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="totalMembers">1,284</div>
+                <div class="stat-number" id="totalMembers">0</div>
                 <div class="stat-label">Membros em Clãs</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="activeWars">12</div>
+                <div class="stat-number" id="activeWars">0</div>
                 <div class="stat-label">Guerras Ativas</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="claimedLands">89</div>
+                <div class="stat-number" id="claimedLands">0</div>
                 <div class="stat-label">Territórios Dominados</div>
             </div>
         </div>
@@ -717,75 +736,13 @@
         <div class="container">
             <h2 class="section-title">Top Clãs do Servidor</h2>
             
-            <div class="clans-ranking">
-                <!-- 1º Lugar -->
-                <div class="clan-rank-item">
-                    <div class="rank-number top3">1</div>
-                    <div class="clan-info">
-                        <div class="clan-name">Sanguis Noctis</div>
-                        <div class="clan-leader">Líder: Vladimir Darkwood</div>
-                        <div class="clan-stats-small">
-                            <span>👥 48 membros</span>
-                            <span>🏆 127 vitórias</span>
-                            <span>🏰 8 territórios</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2º Lugar -->
-                <div class="clan-rank-item">
-                    <div class="rank-number top3">2</div>
-                    <div class="clan-info">
-                        <div class="clan-name">Luna Pack</div>
-                        <div class="clan-leader">Líder: Fenrir Silvermane</div>
-                        <div class="clan-stats-small">
-                            <span>👥 42 membros</span>
-                            <span>🏆 98 vitórias</span>
-                            <span>🏰 6 territórios</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3º Lugar -->
-                <div class="clan-rank-item">
-                    <div class="rank-number top3">3</div>
-                    <div class="clan-info">
-                        <div class="clan-name">Shadow Syndicate</div>
-                        <div class="clan-leader">Líder: Nyx Blackwood</div>
-                        <div class="clan-stats-small">
-                            <span>👥 35 membros</span>
-                            <span>🏆 76 vitórias</span>
-                            <span>🏰 5 territórios</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 4º Lugar -->
-                <div class="clan-rank-item">
-                    <div class="rank-number">4</div>
-                    <div class="clan-info">
-                        <div class="clan-name">Eternal Guardians</div>
-                        <div class="clan-leader">Líder: Seraphina Lightbringer</div>
-                        <div class="clan-stats-small">
-                            <span>👥 38 membros</span>
-                            <span>🏆 65 vitórias</span>
-                            <span>🏰 4 territórios</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 5º Lugar -->
-                <div class="clan-rank-item">
-                    <div class="rank-number">5</div>
-                    <div class="clan-info">
-                        <div class="clan-name">Crimson Order</div>
-                        <div class="clan-leader">Líder: Draven Bloodthorn</div>
-                        <div class="clan-stats-small">
-                            <span>👥 32 membros</span>
-                            <span>🏆 54 vitórias</span>
-                            <span>🏰 4 territórios</span>
-                        </div>
-                    </div>
+            <div class="clans-ranking" id="clansRanking">
+                <!-- Ranking será carregado dinamicamente -->
+                <div class="empty-state">
+                    <i>🏆</i>
+                    <h3>Nenhum Clã Registrado</h3>
+                    <p>Seja o primeiro a criar um clã e apareça aqui!</p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">Os dados serão atualizados automaticamente quando clãs forem criados.</p>
                 </div>
             </div>
         </div>
@@ -803,7 +760,7 @@
                     <i class="fas fa-plus" style="margin-right: 0.5rem;"></i>
                     Criar Clã Agora
                 </a>
-                <a href="#" class="btn btn-secondary">
+                <a href="#" class="btn btn-secondary" id="exploreClansBtn">
                     <i class="fas fa-search" style="margin-right: 0.5rem;"></i>
                     Explorar Clãs
                 </a>
@@ -863,56 +820,203 @@
     </footer>
 
     <script>
-        // Script específico para a página de Clãs
+        // ✅ SISTEMA DE CLÃS COM DADOS ZERADOS
         document.addEventListener('DOMContentLoaded', function() {
-            // Atualizar estatísticas dinamicamente
-            function updateClanStats() {
-                const stats = {
-                    totalClans: Math.floor(Math.random() * 20) + 40,
-                    totalMembers: Math.floor(Math.random() * 200) + 1200,
-                    activeWars: Math.floor(Math.random() * 8) + 5,
-                    claimedLands: Math.floor(Math.random() * 20) + 80
-                };
+            // Inicializar dados zerados
+            initializeClanData();
+            
+            // Atualizar estatísticas com dados reais
+            updateClanStats();
+            
+            // Carregar ranking de clãs
+            updateClanRanking();
+            
+            // Configurar botões
+            setupClanButtons();
+            
+            // Animações
+            setupAnimations();
+        });
 
-                document.getElementById('totalClans').textContent = stats.totalClans;
-                document.getElementById('totalMembers').textContent = stats.totalMembers.toLocaleString();
-                document.getElementById('activeWars').textContent = stats.activeWars;
-                document.getElementById('claimedLands').textContent = stats.claimedLands;
+        // ✅ INICIALIZAR DADOS ZERADOS
+        function initializeClanData() {
+            // Inicializa dados zerados se não existirem
+            if (!localStorage.getItem('verdelisClans')) {
+                localStorage.setItem('verdelisClans', JSON.stringify([]));
             }
+            if (!localStorage.getItem('clanStats')) {
+                const initialStats = {
+                    totalClans: 0,
+                    totalMembers: 0,
+                    activeWars: 0,
+                    claimedLands: 0
+                };
+                localStorage.setItem('clanStats', JSON.stringify(initialStats));
+            }
+            
+            console.log('✅ Dados de clãs inicializados e zerados');
+        }
 
+        // ✅ ATUALIZAR ESTATÍSTICAS COM DADOS REAIS
+        function updateClanStats() {
+            const stats = JSON.parse(localStorage.getItem('clanStats') || '{"totalClans":0,"totalMembers":0,"activeWars":0,"claimedLands":0}');
+            const clans = JSON.parse(localStorage.getItem('verdelisClans') || '[]');
+            
+            // Atualizar estatísticas baseadas nos clãs reais
+            stats.totalClans = clans.length;
+            stats.totalMembers = clans.reduce((total, clan) => total + (clan.members || 0), 0);
+            stats.activeWars = clans.reduce((total, clan) => total + (clan.activeWars || 0), 0);
+            stats.claimedLands = clans.reduce((total, clan) => total + (clan.claimedLands || 0), 0);
+            
+            // Atualizar interface
+            document.getElementById('totalClans').textContent = stats.totalClans;
+            document.getElementById('totalMembers').textContent = stats.totalMembers.toLocaleString();
+            document.getElementById('activeWars').textContent = stats.activeWars;
+            document.getElementById('claimedLands').textContent = stats.claimedLands;
+            
+            // Salvar estatísticas atualizadas
+            localStorage.setItem('clanStats', JSON.stringify(stats));
+        }
+
+        // ✅ ATUALIZAR RANKING DE CLÃS
+        function updateClanRanking() {
+            const clans = JSON.parse(localStorage.getItem('verdelisClans') || '[]');
+            const rankingContainer = document.getElementById('clansRanking');
+            
+            if (clans.length === 0) {
+                rankingContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i>🏆</i>
+                        <h3>Nenhum Clã Registrado</h3>
+                        <p>Seja o primeiro a criar um clã e apareça aqui!</p>
+                        <p style="font-size: 0.9rem; margin-top: 1rem;">Os dados serão atualizados automaticamente quando clãs forem criados.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Ordenar clãs por pontuação (simulação)
+            const sortedClans = clans.sort((a, b) => (b.score || 0) - (a.score || 0));
+            
+            rankingContainer.innerHTML = sortedClans.map((clan, index) => {
+                const rank = index + 1;
+                const isTop3 = rank <= 3;
+                
+                return `
+                    <div class="clan-rank-item" onclick="showClanDetails('${clan.id}')">
+                        <div class="rank-number ${isTop3 ? 'top3' : ''}">${rank}</div>
+                        <div class="clan-info">
+                            <div class="clan-name">${clan.name}</div>
+                            <div class="clan-leader">Líder: ${clan.leader}</div>
+                            <div class="clan-stats-small">
+                                <span>👥 ${clan.members || 0} membros</span>
+                                <span>🏆 ${clan.victories || 0} vitórias</span>
+                                <span>🏰 ${clan.claimedLands || 0} territórios</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ✅ CONFIGURAR BOTÕES
+        function setupClanButtons() {
             // Botão de criar clã
             const createClanBtn = document.getElementById('createClanBtn');
             if (createClanBtn) {
                 createClanBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
-                    // Verificar requisitos (simulação)
-                    const userLevel = 18; // Nível simulado do usuário
-                    const userMoney = 75000; // Dinheiro simulado
-                    const userVerdelium = 6000; // Verdelium simulado
-                    
-                    if (userLevel >= 15 && userMoney >= 50000 && userVerdelium >= 5000) {
-                        if (confirm('✅ Você atende todos os requisitos!\n\nDeseja criar um clã agora?\n\nCusto: $50.000 + 5.000 Verdelium')) {
-                            // Simular criação do clã
-                            showNotification('Clã criado com sucesso! Agora você pode personalizar e recrutar membros.', 'success');
-                            
-                            // Redirecionar para personalização (simulação)
-                            setTimeout(() => {
-                                window.location.href = '#clan-customization';
-                            }, 2000);
-                        }
-                    } else {
-                        let missingRequirements = [];
-                        if (userLevel < 15) missingRequirements.push(`Nível ${userLevel}/15`);
-                        if (userMoney < 50000) missingRequirements.push(`$${userMoney.toLocaleString()}/50.000`);
-                        if (userVerdelium < 5000) missingRequirements.push(`${userVerdelium.toLocaleString()}/5.000 Verdelium`);
-                        
-                        showNotification(`❌ Requisitos insuficientes!\nFaltando: ${missingRequirements.join(', ')}`, 'error');
-                    }
+                    handleClanCreation();
                 });
             }
 
-            // Animações específicas para cards de clãs
+            // Botão de explorar clãs
+            const exploreClansBtn = document.getElementById('exploreClansBtn');
+            if (exploreClansBtn) {
+                exploreClansBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showClanExplorer();
+                });
+            }
+        }
+
+        // ✅ MANIPULAR CRIAÇÃO DE CLÃ
+        function handleClanCreation() {
+            // Verificar requisitos (dados simulados para demonstração)
+            const userLevel = 18;
+            const userMoney = 75000;
+            const userVerdelium = 6000;
+            
+            if (userLevel >= 15 && userMoney >= 50000 && userVerdelium >= 5000) {
+                if (confirm('✅ Você atende todos os requisitos!\n\nDeseja criar um clã agora?\n\nCusto: $50.000 + 5.000 Verdelium')) {
+                    // Simular criação do clã
+                    const newClan = {
+                        id: Date.now().toString(),
+                        name: `Clã ${Math.floor(Math.random() * 1000)}`,
+                        leader: 'Jogador',
+                        members: 1,
+                        victories: 0,
+                        claimedLands: 0,
+                        activeWars: 0,
+                        score: 0,
+                        type: 'vampire',
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    // Salvar clã
+                    const clans = JSON.parse(localStorage.getItem('verdelisClans') || '[]');
+                    clans.push(newClan);
+                    localStorage.setItem('verdelisClans', JSON.stringify(clans));
+                    
+                    // Atualizar interface
+                    updateClanStats();
+                    updateClanRanking();
+                    
+                    showNotification('🎉 Clã criado com sucesso! Agora você pode personalizar e recrutar membros.', 'success');
+                }
+            } else {
+                let missingRequirements = [];
+                if (userLevel < 15) missingRequirements.push(`Nível ${userLevel}/15`);
+                if (userMoney < 50000) missingRequirements.push(`$${userMoney.toLocaleString()}/50.000`);
+                if (userVerdelium < 5000) missingRequirements.push(`${userVerdelium.toLocaleString()}/5.000 Verdelium`);
+                
+                showNotification(`❌ Requisitos insuficientes!\nFaltando: ${missingRequirements.join(', ')}`, 'error');
+            }
+        }
+
+        // ✅ MOSTRAR DETALHES DO CLÃ
+        function showClanDetails(clanId) {
+            const clans = JSON.parse(localStorage.getItem('verdelisClans') || '[]');
+            const clan = clans.find(c => c.id === clanId);
+            
+            if (clan) {
+                showNotification(
+                    `🏰 ${clan.name}\n` +
+                    `👑 Líder: ${clan.leader}\n` +
+                    `👥 Membros: ${clan.members}\n` +
+                    `🏆 Vitórias: ${clan.victories}\n` +
+                    `🏰 Territórios: ${clan.claimedLands}\n` +
+                    `⚔️ Guerras Ativas: ${clan.activeWars}`,
+                    'info'
+                );
+            }
+        }
+
+        // ✅ EXPLORADOR DE CLÃS
+        function showClanExplorer() {
+            const clans = JSON.parse(localStorage.getItem('verdelisClans') || '[]');
+            
+            if (clans.length === 0) {
+                showNotification('🔍 Nenhum clã disponível para explorar. Seja o primeiro a criar um!', 'info');
+                return;
+            }
+            
+            const clanList = clans.map(clan => `• ${clan.name} (${clan.members} membros)`).join('\n');
+            showNotification(`🏰 Clãs Disponíveis:\n\n${clanList}\n\nClique em um clã no ranking para ver detalhes.`, 'info');
+        }
+
+        // ✅ CONFIGURAR ANIMAÇÕES
+        function setupAnimations() {
             const clanCards = document.querySelectorAll('.clan-type-card, .benefit-card');
             clanCards.forEach((card, index) => {
                 card.style.opacity = '0';
@@ -924,21 +1028,47 @@
                     card.style.transform = 'translateY(0)';
                 }, 100 * index);
             });
+        }
 
-            // Atualizar estatísticas a cada 30 segundos
+        // ✅ FUNÇÃO DE NOTIFICAÇÃO
+        function showNotification(message, type = 'info') {
+            // Criar elemento de notificação
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                z-index: 1000;
+                max-width: 400px;
+                word-wrap: break-word;
+                white-space: pre-line;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remover após 5 segundos
+            setTimeout(() => {
+                notification.style.transition = 'opacity 0.5s ease';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            }, 5000);
+        }
+
+        // ✅ ATUALIZAÇÃO AUTOMÁTICA
+        setInterval(() => {
             updateClanStats();
-            setInterval(updateClanStats, 30000);
-
-            // Sistema de ranking interativo
-            const rankItems = document.querySelectorAll('.clan-rank-item');
-            rankItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const clanName = this.querySelector('.clan-name').textContent;
-                    const clanLeader = this.querySelector('.clan-leader').textContent;
-                    
-                    showNotification(`Clã: ${clanName}\n${clanLeader}\n\nClique em "Explorar Clãs" para ver detalhes completos.`, 'info');
-                });
-            });
-        });
-
-        // Função de notificação
+            updateClanRanking();
+        }, 30000); // Atualiza a cada 30 segundos
+    </script>
+</body>
+</html>
