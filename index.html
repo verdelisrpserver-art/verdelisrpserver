@@ -514,7 +514,7 @@
                         <li><a href="index.html" class="active">Início</a></li>
                         <li><a href="historia.html">História</a></li>
                         <li><a href="classes.html">Classes</a></li>
-                        <li><a href="eventos.html">🎪 Eventos</a></li>
+                        <li><a href="eventos.html">Eventos</a></li>
                         <li><a href="faccoes.html">Facções</a></li>
                         <li><a href="sistemas.html">Sistemas</a></li>
                         <li><a href="clans.html">Clãs</a></li>
@@ -534,7 +534,7 @@
                 <p>Um mundo pós-apocalíptico onde humanos e criaturas sobrenaturais lutam pela sobrevivência. Escolha seu destino entre 7 classes únicas e descubra segredos ancestrais.</p>
                 <div class="cta-buttons">
                     <a href="classes.html" class="btn btn-primary">Ver Classes</a>
-                    <a href="eventos.html" class="btn btn-secondary">🎪 Ver Eventos</a>
+                    <a href="eventos.html" class="btn btn-secondary">Ver Eventos</a>
                     <a href="loja.html" class="btn btn-secondary">Loja Verdelium</a>
                 </div>
             </div>
@@ -678,7 +678,7 @@
     <!-- Events Section -->
     <section class="events-section">
         <div class="container">
-            <h2 class="section-title">🎪 Próximos Eventos</h2>
+            <h2 class="section-title">Próximos Eventos</h2>
             <div class="events-grid" id="eventsGrid">
                 <!-- Eventos serão carregados dinamicamente -->
                 <div class="event-card">
@@ -689,8 +689,8 @@
                     <div class="event-content">
                         <p class="event-description">A lua cheia traz fúria e poder para os lobisomens. Caçada especial com recompensas em dobro.</p>
                         <div class="event-details">
-                            <span>🐺 Lobisomens</span>
-                            <span>📍 Floresta</span>
+                            <span>Lobisomens</span>
+                            <span>Floresta</span>
                         </div>
                         <a href="eventos.html" class="event-btn">Ver Detalhes</a>
                     </div>
@@ -704,8 +704,8 @@
                     <div class="event-content">
                         <p class="event-description">Os senhores vampiros convocam um baile na mansão abandonada. Trajes formais obrigatórios.</p>
                         <div class="event-details">
-                            <span>🧛 Vampiros</span>
-                            <span>🏰 Mansão</span>
+                            <span>Vampiros</span>
+                            <span>Mansão</span>
                         </div>
                         <a href="eventos.html" class="event-btn">Ver Detalhes</a>
                     </div>
@@ -719,8 +719,8 @@
                     <div class="event-content">
                         <p class="event-description">Portais infernais se abrem no centro da cidade. Todos os clãs devem se unir contra a ameaça.</p>
                         <div class="event-details">
-                            <span>😈 Demônios</span>
-                            <span>🏙️ Centro</span>
+                            <span>Demônios</span>
+                            <span>Centro</span>
                         </div>
                         <a href="eventos.html" class="event-btn">Ver Detalhes</a>
                     </div>
@@ -859,8 +859,8 @@
                         <div class="event-content">
                             <p class="event-description">${event.description}</p>
                             <div class="event-details">
-                                <span>${getTypeIcon(event.type)} ${getTypeName(event.type)}</span>
-                                <span>📍 ${event.location}</span>
+                                <span>${getTypeName(event.type)}</span>
+                                <span>${event.location}</span>
                             </div>
                             <a href="eventos.html" class="event-btn">Ver Detalhes</a>
                         </div>
@@ -870,18 +870,6 @@
         }
 
         // Funções auxiliares
-        function getTypeIcon(type) {
-            const icons = {
-                vampire: '🧛',
-                werewolf: '🐺',
-                angel: '👼',
-                demon: '😈',
-                human: '👤',
-                special: '⭐'
-            };
-            return icons[type] || '🎭';
-        }
-
         function getTypeName(type) {
             const names = {
                 vampire: 'Vampiros',
@@ -911,4 +899,5 @@
     </script>
 </body>
 </html>
+
 
