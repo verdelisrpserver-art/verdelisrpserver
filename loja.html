@@ -481,15 +481,36 @@
             color: var(--accent-gold);
         }
 
+        /* CORREÇÃO: Formas de Pagamento Sempre Visíveis */
         .payment-method-select {
             width: 100%;
             padding: 0.75rem;
             margin: 1rem 0;
             border: 2px solid var(--border-dark);
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: var(--text-light);
             font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method-select option {
+            background: var(--primary-dark);
+            color: var(--text-light);
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .payment-method-select:focus {
+            outline: none;
+            border-color: var(--accent-red);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .payment-method-select:hover {
+            border-color: var(--accent-red);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .terms-checkbox {
@@ -609,9 +630,17 @@
 
         .payment-method {
             padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
             border: 1px solid var(--border-dark);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-red);
+            transform: translateY(-2px);
         }
 
         /* FAQ Section */
@@ -760,6 +789,10 @@
             .messages-container {
                 top: 180px;
                 width: 95%;
+            }
+
+            .modal-footer {
+                flex-direction: column;
             }
         }
     </style>
@@ -1510,8 +1543,8 @@
     <script>
         // Sistema de acesso admin
         const ADMIN_CREDENTIALS = {
-            password: "admin123", // Senha que você me passou
-            id: "ADMIN001" // ID do admin que você me passou
+            password: "admin123",
+            id: "ADMIN001"
         };
 
         let isAdminMode = false;
@@ -1681,21 +1714,40 @@
                         showSuccess(`✅ TESTE ADMIN: Compra simulada com sucesso! Transação: ${purchaseData.transaction_id}\nModo admin - nenhum valor foi cobrado.`);
                     } else {
                         showSuccess(`✅ Compra realizada com sucesso! Seus itens serão entregues automaticamente. Transação: ${purchaseData.transaction_id}`);
+                        
+                        // Redirecionar para gateway de pagamento real
+                        redirectToPaymentGateway(purchaseData);
                     }
                     
                     // Log para debug
                     console.log('Compra processada:', purchaseData);
-                    
-                    // Redirecionar para gateway de pagamento se não for admin
-                    if (!isAdminMode && purchaseData.payment_method === 'pix') {
-                        setTimeout(() => {
-                            alert('Redirecionando para o pagamento PIX...');
-                            // window.location.href = `https://seusite.com/pix?transaction=${purchaseData.transaction_id}`;
-                        }, 1000);
-                    }
                 } else {
                     showError('❌ Erro ao processar o pagamento. Tente novamente ou entre em contato com o suporte.');
                 }
+            }
+
+            // ✅ FUNÇÃO PARA REDIRECIONAR PARA GATEWAY DE PAGAMENTO
+            function redirectToPaymentGateway(purchaseData) {
+                setTimeout(() => {
+                    switch(purchaseData.payment_method) {
+                        case 'pix':
+                            alert('🔒 Redirecionando para pagamento PIX...\n\nEm um sistema real, você seria redirecionado para o gateway de pagamento.');
+                            // window.location.href = `https://seusite.com/pix?transaction=${purchaseData.transaction_id}`;
+                            break;
+                        case 'credit':
+                            alert('💳 Redirecionando para pagamento com Cartão de Crédito...\n\nEm um sistema real, você seria redirecionado para o gateway de pagamento.');
+                            // window.location.href = `https://seusite.com/credit?transaction=${purchaseData.transaction_id}`;
+                            break;
+                        case 'boleto':
+                            alert('📄 Gerando boleto bancário...\n\nEm um sistema real, o boleto seria gerado e exibido.');
+                            // window.location.href = `https://seusite.com/boleto?transaction=${purchaseData.transaction_id}`;
+                            break;
+                        case 'paypal':
+                            alert('🌐 Redirecionando para PayPal...\n\nEm um sistema real, você seria redirecionado para o PayPal.');
+                            // window.location.href = `https://seusite.com/paypal?transaction=${purchaseData.transaction_id}`;
+                            break;
+                    }
+                }, 1000);
             }
 
             function generateTransactionId() {
@@ -1735,4 +1787,5 @@
     </script>
 </body>
 </html>
+
 
