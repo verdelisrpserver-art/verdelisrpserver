@@ -14,7 +14,7 @@ define('SECRET_KEY', 'VERDELIS_WEB_SECRET_2024');
 // FUNÇÃO DE LOG PARA DEPURAÇÃO
 // =============================================
 function logMessage($message) {
-    $log_file = dirname(__DIR__) . '/../logs/fivem_api.log';
+    $log_file = dirname(dirname(__DIR__)) . '/logs/fivem_api.log';
     $timestamp = date('Y-m-d H:i:s');
     file_put_contents($log_file, "[$timestamp] $message\n", FILE_APPEND | LOCK_EX);
 }
@@ -79,8 +79,8 @@ try {
     $server_name = $input['server_name'] ?? 'Unknown Server';
     $timestamp = $input['timestamp'] ?? time();
     
-    // Arquivo onde os dados serão salvos
-    $data_file = dirname(__DIR__) . '/data/server_stats.json';
+    // Arquivo onde os dados serão salvos (CAMINHO CORRIGIDO)
+    $data_file = __DIR__ . '/../data/server_stats.json';
     
     // Criar diretório se não existir
     $data_dir = dirname($data_file);
