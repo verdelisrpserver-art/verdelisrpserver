@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Admin - Verdelis RP</title>
+    <title>Painel Administrativo - Verdelis RP</title>
     <style>
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #2196F3;
             --danger-color: #f44336;
             --warning-color: #FF9800;
-            --vampire-color: #8B0000;
-            --werewolf-color: #8B4513;
-            --angel-color: #1E90FF;
-            --demon-color: #DC143C;
             --dark-bg: #1a1a2e;
             --card-bg: rgba(255, 255, 255, 0.1);
             --text-color: #ffffff;
@@ -302,8 +298,6 @@
         .event-card.warning { border-left-color: #FF9800; }
         .event-card.emergency { border-left-color: #f44336; }
         .event-card.success { border-left-color: #4CAF50; }
-        .event-card.video { border-left-color: #9C27B0; }
-        .event-card.campaign { border-left-color: #FF5722; }
 
         .event-content {
             flex: 1;
@@ -341,34 +335,16 @@
             color: white;
         }
 
-        .campaign-badge {
-            background: #FF9800;
-            color: black;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-left: 10px;
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a0a0a0;
         }
 
-        .video-badge {
-            background: #9C27B0;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-left: 10px;
-        }
-
-        .emergency-badge {
-            background: #f44336;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-            margin-left: 10px;
+        .empty-state i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
         }
 
         .visitor-list {
@@ -389,23 +365,6 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
-        }
-
-        .visitor-page {
-            color: #a0a0a0;
-            font-size: 0.9em;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #a0a0a0;
-        }
-
-        .empty-state i {
-            font-size: 3em;
-            margin-bottom: 15px;
-            display: block;
         }
 
         @media (max-width: 768px) {
@@ -440,14 +399,10 @@
     </style>
 </head>
 <body>
-    <!-- Verificação de autenticação SIMPLIFICADA -->
+    <!-- Verificação de autenticação -->
     <script>
-        // Verificação básica - você pode remover depois
         if (!localStorage.getItem('adminAuthenticated')) {
-            // Se não estiver autenticado, redireciona para login
-            // window.location.href = 'admin-login.html';
-            // Para teste, vamos autenticar automaticamente
-            localStorage.setItem('adminAuthenticated', 'true');
+            window.location.href = 'admin-login.html';
         }
     </script>
 
@@ -461,7 +416,6 @@
                     <li><a href="#dashboard" class="active">📊 Dashboard</a></li>
                     <li><a href="#events">🎪 Eventos</a></li>
                     <li><a href="#public-events">🌐 Eventos Públicos</a></li>
-                    <li><a href="#visitors">👥 Visitantes</a></li>
                     <li><a href="#settings">⚙️ Configurações</a></li>
                 </ul>
             </nav>
@@ -474,19 +428,19 @@
         <section id="dashboard">
             <div class="stats-grid">
                 <div class="stat-card total-visitors">
-                    <div class="stat-number" id="totalVisitors">1,247</div>
+                    <div class="stat-number" id="totalVisitors">0</div>
                     <div>Total de Visitantes</div>
                 </div>
                 <div class="stat-card today-visitors">
-                    <div class="stat-number" id="todayVisitors">89</div>
+                    <div class="stat-number" id="todayVisitors">0</div>
                     <div>Visitantes Hoje</div>
                 </div>
                 <div class="stat-card online-now">
-                    <div class="stat-number" id="onlineNow">24</div>
+                    <div class="stat-number" id="onlineNow">0</div>
                     <div>Online Agora</div>
                 </div>
                 <div class="stat-card unique-visitors">
-                    <div class="stat-number" id="uniqueVisitors">856</div>
+                    <div class="stat-number" id="uniqueVisitors">0</div>
                     <div>Visitantes Únicos</div>
                 </div>
             </div>
@@ -498,7 +452,6 @@
             
             <div class="events-tabs">
                 <button class="event-tab active" onclick="showEventForm('text')">📝 Evento de Texto</button>
-                <button class="event-tab" onclick="showEventForm('video')">🎥 Evento com Vídeo</button>
                 <button class="event-tab" onclick="showEventForm('campaign')">📢 Campanha</button>
                 <button class="event-tab" onclick="showEventForm('emergency')">🚨 Emergência</button>
             </div>
@@ -523,7 +476,7 @@
 
                     <div class="form-group">
                         <label for="textMessage">Mensagem do Evento</label>
-                        <textarea id="textMessage" placeholder="Descreva o evento para os jogadores..." required rows="4"></textarea>
+                        <textarea id="textMessage" placeholder="Descreva o evento..." required rows="4"></textarea>
                     </div>
 
                     <div class="form-row">
@@ -550,6 +503,67 @@
                 </form>
             </div>
 
+            <!-- Formulário para Campanha -->
+            <div id="campaignForm" class="event-form-container">
+                <form class="event-form" onsubmit="createCampaign(event)">
+                    <div class="form-group">
+                        <label for="campaignTitle">Título da Campanha</label>
+                        <input type="text" id="campaignTitle" placeholder="Ex: Promoção de Verão" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="campaignMessage">Mensagem da Campanha</label>
+                        <textarea id="campaignMessage" placeholder="Descreva a campanha..." required rows="4"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="campaignStart">Data de Início</label>
+                            <input type="datetime-local" id="campaignStart" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="campaignEnd">Data de Término</label>
+                            <input type="datetime-local" id="campaignEnd" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">🚀 Iniciar Campanha</button>
+                </form>
+            </div>
+
+            <!-- Formulário para Emergência -->
+            <div id="emergencyForm" class="event-form-container">
+                <form class="event-form" onsubmit="createEmergency(event)">
+                    <div class="form-group">
+                        <label for="emergencyTitle">Título da Emergência</label>
+                        <input type="text" id="emergencyTitle" placeholder="Ex: Manutenção do Servidor" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emergencyMessage">Mensagem de Emergência</label>
+                        <textarea id="emergencyMessage" placeholder="Descreva a situação..." required rows="4"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="emergencyLevel">Nível de Emergência</label>
+                            <select id="emergencyLevel">
+                                <option value="low">Baixo</option>
+                                <option value="medium">Médio</option>
+                                <option value="high">Alto</option>
+                                <option value="critical">Crítico</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergencyDuration">Duração estimada (minutos)</label>
+                            <input type="number" id="emergencyDuration" value="30" min="5" max="480">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="background: var(--danger-color);">🚨 Publicar Emergência</button>
+                </form>
+            </div>
+
             <!-- Lista de Eventos Ativos -->
             <div class="active-events">
                 <h3 class="section-title">📋 Eventos Ativos</h3>
@@ -565,8 +579,8 @@
 
         <!-- Seção de Eventos Públicos -->
         <section id="public-events" class="admin-section">
-            <h2 class="section-title">🌐 Criar Eventos Públicos para o Site</h2>
-            <p style="color: #cccccc; margin-bottom: 20px;">Estes eventos aparecerão na página pública "Eventos" para todos os visitantes verem.</p>
+            <h2 class="section-title">🌐 Criar Eventos Públicos</h2>
+            <p style="color: #cccccc; margin-bottom: 20px;">Estes eventos aparecerão na página pública do site.</p>
             
             <form class="event-form" id="publicEventForm" onsubmit="createPublicEvent(event)">
                 <div class="form-row">
@@ -581,7 +595,6 @@
                             <option value="werewolf">🐺 Lobisomens</option>
                             <option value="angel">👼 Angelical</option>
                             <option value="demon">😈 Demoníaco</option>
-                            <option value="human">👤 Humano</option>
                             <option value="special">⭐ Especial</option>
                         </select>
                     </div>
@@ -589,7 +602,7 @@
                 
                 <div class="form-group">
                     <label for="publicEventDescription">Descrição do Evento</label>
-                    <textarea id="publicEventDescription" placeholder="Descreva o evento para os jogadores..." required rows="4"></textarea>
+                    <textarea id="publicEventDescription" placeholder="Descreva o evento..." required rows="4"></textarea>
                 </div>
                 
                 <div class="form-row">
@@ -603,7 +616,7 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="btn btn-primary">🌐 Publicar Evento no Site</button>
+                <button type="submit" class="btn btn-primary">🌐 Publicar Evento</button>
             </form>
 
             <div class="active-events" style="margin-top: 30px;">
@@ -614,34 +627,6 @@
                         <p>Nenhum evento público criado</p>
                         <p><small>Crie eventos públicos usando o formulário acima</small></p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção de Visitantes -->
-        <section id="visitors" class="admin-section">
-            <h2 class="section-title">👥 Visitantes Recentes</h2>
-            <div class="visitor-list" id="visitorList">
-                <div class="visitor-item">
-                    <div class="visitor-info">
-                        <strong>🧛 João Silva</strong>
-                        <span class="visitor-page">Página: Eventos</span>
-                    </div>
-                    <div>Há 5 minutos</div>
-                </div>
-                <div class="visitor-item">
-                    <div class="visitor-info">
-                        <strong>🐺 Maria Santos</strong>
-                        <span class="visitor-page">Página: Início</span>
-                    </div>
-                    <div>Há 12 minutos</div>
-                </div>
-                <div class="visitor-item">
-                    <div class="visitor-info">
-                        <strong>👼 Pedro Costa</strong>
-                        <span class="visitor-page">Página: Regras</span>
-                    </div>
-                    <div>Há 25 minutos</div>
                 </div>
             </div>
         </section>
@@ -663,7 +648,7 @@
                 
                 <div class="form-group">
                     <label for="siteDescription">Descrição do Site</label>
-                    <textarea id="siteDescription" rows="3" placeholder="Descrição do seu site">O melhor servidor de RPG temático com vampiros, lobisomens e muito mais!</textarea>
+                    <textarea id="siteDescription" rows="3" placeholder="Descrição do seu site">Servidor de RPG temático FiveM</textarea>
                 </div>
                 
                 <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Salvar Configurações</button>
@@ -676,8 +661,8 @@
         // Função de logout
         function logout() {
             localStorage.removeItem('adminAuthenticated');
-            alert('Logout realizado!');
-            // window.location.href = 'admin-login.html';
+            localStorage.removeItem('loginTime');
+            window.location.href = 'admin-login.html';
         }
 
         // Navegação entre seções
@@ -729,7 +714,49 @@
             document.getElementById('textForm').reset();
             updateEventsList();
             
-            alert('✅ Evento de texto publicado com sucesso!');
+            alert('✅ Evento publicado com sucesso!');
+        }
+
+        function createCampaign(e) {
+            e.preventDefault();
+            
+            const eventData = {
+                id: Date.now(),
+                type: 'campaign',
+                title: document.getElementById('campaignTitle').value,
+                message: document.getElementById('campaignMessage').value,
+                startDate: document.getElementById('campaignStart').value,
+                endDate: document.getElementById('campaignEnd').value,
+                timestamp: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            saveEvent(eventData);
+            document.getElementById('campaignForm').reset();
+            updateEventsList();
+            
+            alert('🚀 Campanha publicada com sucesso!');
+        }
+
+        function createEmergency(e) {
+            e.preventDefault();
+            
+            const eventData = {
+                id: Date.now(),
+                type: 'emergency',
+                title: document.getElementById('emergencyTitle').value,
+                message: document.getElementById('emergencyMessage').value,
+                level: document.getElementById('emergencyLevel').value,
+                duration: document.getElementById('emergencyDuration').value,
+                timestamp: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            saveEvent(eventData);
+            document.getElementById('emergencyForm').reset();
+            updateEventsList();
+            
+            alert('🚨 Emergência publicada com sucesso!');
         }
 
         // Salvar evento no localStorage
@@ -756,25 +783,15 @@
             }
             
             eventsList.innerHTML = events.map(event => {
-                let badge = '';
                 let icon = '📄';
-                
-                if (event.type === 'video') {
-                    badge = '<span class="video-badge">VÍDEO</span>';
-                    icon = '🎬';
-                } else if (event.type === 'campaign') {
-                    badge = '<span class="campaign-badge">CAMPANHA</span>';
-                    icon = '📢';
-                } else if (event.type === 'emergency') {
-                    badge = '<span class="emergency-badge">EMERGÊNCIA</span>';
-                    icon = '🚨';
-                }
+                if (event.type === 'campaign') icon = '📢';
+                if (event.type === 'emergency') icon = '🚨';
                 
                 return `
                     <div class="event-card ${event.type}">
                         <div class="event-content">
                             <div class="event-title">
-                                ${icon} ${event.title} ${badge}
+                                ${icon} ${event.title}
                             </div>
                             <div class="event-message">${event.message}</div>
                             <small>Criado em: ${new Date(event.timestamp).toLocaleString()}</small>
@@ -892,7 +909,7 @@
             
             document.getElementById('siteTitle').value = settings.siteTitle || 'Verdelis RP';
             document.getElementById('adminEmail').value = settings.adminEmail || 'admin@verdelisrp.com';
-            document.getElementById('siteDescription').value = settings.siteDescription || 'O melhor servidor de RPG temático com vampiros, lobisomens e muito mais!';
+            document.getElementById('siteDescription').value = settings.siteDescription || 'Servidor de RPG temático FiveM';
         }
 
         // Funções auxiliares
@@ -902,7 +919,6 @@
                 werewolf: '🐺',
                 angel: '👼',
                 demon: '😈',
-                human: '👤',
                 special: '⭐'
             };
             return icons[type] || '🎭';
@@ -927,6 +943,7 @@
             // Define a data mínima como hoje
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('publicEventDate').min = today;
+            document.getElementById('campaignStart').min = today;
             
             console.log('🎮 Painel Admin Verdelis RP - Carregado com sucesso!');
         });
