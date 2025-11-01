@@ -5,8 +5,8 @@
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
-// Arquivo onde os dados estão salvos
-$data_file = dirname(__DIR__) . '/data/server_stats.json';
+// Arquivo onde os dados estão salvos (CAMINHO CORRIGIDO)
+$data_file = __DIR__ . '/../data/server_stats.json';
 
 // Verificar se o arquivo existe
 if (!file_exists($data_file)) {
