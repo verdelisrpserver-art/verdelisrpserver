@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login - Verdelis RP</title>
+    <title>Login Administrativo - Verdelis RP</title>
     <style>
+        :root {
+            --primary-color: #4CAF50;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,50 +19,42 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #16213e 100%);
+            color: var(--text-color);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .login-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: var(--card-bg);
             padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             width: 100%;
             max-width: 400px;
-        }
-
-        .logo {
             text-align: center;
-            margin-bottom: 30px;
         }
 
         .logo h1 {
-            color: #fff;
             font-size: 2em;
-            margin-bottom: 5px;
-        }
-
-        .logo p {
-            color: #a0a0a0;
-            font-size: 0.9em;
+            background: linear-gradient(135deg, var(--primary-color), #2196F3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
         }
 
         .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
 
         .form-group label {
             display: block;
-            color: #fff;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 500;
         }
 
         .form-group input {
@@ -64,70 +63,54 @@
             border: none;
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 1em;
+            color: var(--text-color);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s;
         }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #4CAF50;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .form-group input::placeholder {
-            color: #a0a0a0;
-        }
-
-        .login-btn {
+        .btn {
             width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-            color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            margin-top: 10px;
         }
 
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        .btn:hover {
+            background: #45a049;
         }
 
-        .login-btn:active {
-            transform: translateY(0);
-        }
-
-        .error-message {
-            color: #ff4444;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 0.9em;
+        .alert {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
             display: none;
         }
 
-        .security-notice {
-            text-align: center;
-            color: #a0a0a0;
-            font-size: 0.8em;
-            margin-top: 20px;
+        .alert-error {
+            background: rgba(244, 67, 54, 0.2);
+            border: 1px solid #f44336;
+            color: #f44336;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="logo">
-            <h1>🔒 VERDELIS RP</h1>
+            <h1>🎮 VERDELIS RP</h1>
             <p>Painel Administrativo</p>
+        </div>
+
+        <div id="errorAlert" class="alert alert-error">
+            ❌ Usuário ou senha incorretos!
         </div>
 
         <form id="loginForm">
             <div class="form-group">
-                <label for="username">Usuário Admin</label>
+                <label for="username">Usuário</label>
                 <input type="text" id="username" placeholder="Digite seu usuário" required>
             </div>
 
@@ -136,46 +119,44 @@
                 <input type="password" id="password" placeholder="Digite sua senha" required>
             </div>
 
-            <button type="submit" class="login-btn">ACESSAR PAINEL</button>
-            
-            <div class="error-message" id="errorMessage">
-                Usuário ou senha incorretos!
-            </div>
+            <button type="submit" class="btn">🚪 Entrar no Painel</button>
         </form>
-
-        <div class="security-notice">
-            ⚠️ Acesso restrito à equipe administrativa
-        </div>
     </div>
 
     <script>
-        // Credenciais de admin (em produção, use um backend seguro)
+        // Credenciais
         const ADMIN_CREDENTIALS = {
-            username: "verdelisadmin",
-            password: "Rp2024!Verdelis"
+            username: 'admin',
+            password: 'verdelis2024'
         };
 
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Elementos
+        const loginForm = document.getElementById('loginForm');
+        const errorAlert = document.getElementById('errorAlert');
+
+        // Processar login
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            const errorMessage = document.getElementById('errorMessage');
-
-            // Verifica credenciais
+            
             if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
-                // Salva sessão e redireciona para o painel
                 localStorage.setItem('adminAuthenticated', 'true');
-                localStorage.setItem('loginTime', new Date().getTime());
-                window.location.href = 'admin-panel.html';
+                localStorage.setItem('loginTime', new Date().getTime().toString());
+                window.location.href = 'admin-painel.html';
             } else {
-                errorMessage.style.display = 'block';
-                // Limpa o campo de senha
+                errorAlert.style.display = 'block';
                 document.getElementById('password').value = '';
             }
         });
 
-        // Foca no campo de usuário ao carregar
+        // Se já estiver autenticado, redireciona direto
+        if (localStorage.getItem('adminAuthenticated')) {
+            window.location.href = 'admin-painel.html';
+        }
+
+        // Focar no campo de usuário
         document.getElementById('username').focus();
     </script>
 </body>
