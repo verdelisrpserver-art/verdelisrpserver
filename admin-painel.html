@@ -399,11 +399,20 @@
     </style>
 </head>
 <body>
-    <!-- Verificação de autenticação -->
     <script>
-        if (!localStorage.getItem('adminAuthenticated')) {
-            window.location.href = 'admin-login.html';
-        }
+        // VERIFICAÇÃO DE LOGIN - CORRIGIDA SEM TELA BRANCA
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('adminAuthenticated')) {
+                console.log('🔒 Usuário não autenticado, redirecionando para login...');
+                setTimeout(function() {
+                    window.location.href = './admin-login.html';
+                }, 100);
+            } else {
+                console.log('✅ Usuário autenticado, carregando painel...');
+                // Mostra o conteúdo quando autenticado
+                document.body.style.display = 'block';
+            }
+        });
     </script>
 
     <header class="admin-header">
@@ -658,27 +667,14 @@
     </main>
 
     <script>
-        // Função de logout
+        // FUNÇÃO LOGOUT - CORRIGIDA
         function logout() {
-            localStorage.removeItem('adminAuthenticated');
-            localStorage.removeItem('loginTime');
-            window.location.href = 'admin-login.html';
+            if (confirm('Deseja realmente sair do painel?')) {
+                localStorage.removeItem('adminAuthenticated');
+                localStorage.removeItem('loginTime');
+                window.location.href = './admin-login.html';
+            }
         }
-
-        // Navegação entre seções
-        document.querySelectorAll('.admin-nav a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                
-                document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-                
-                document.getElementById(targetId).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
 
         // Sistema de abas para eventos
         function showEventForm(formType) {
@@ -934,8 +930,33 @@
             document.getElementById('textPreview').textContent = this.value || 'Seu evento aparecerá aqui...';
         });
 
-        // Inicialização
+        // Navegação entre seções
+        document.querySelectorAll('.admin-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                
+                document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.getElementById(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // INICIALIZAÇÃO - CORRIGIDA
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ Painel Admin carregado!');
+            
+            // Verifica se ainda está autenticado
+            if (!localStorage.getItem('adminAuthenticated')) {
+                console.log('🔒 Redirecionando para login...');
+                window.location.href = './admin-login.html';
+                return;
+            }
+
+            // Inicializa sistemas
             updateEventsList();
             updatePublicEventsList();
             loadSettings();
@@ -944,9 +965,10 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('publicEventDate').min = today;
             document.getElementById('campaignStart').min = today;
-            
-            console.log('🎮 Painel Admin Verdelis RP - Carregado com sucesso!');
+
+            console.log('🎮 Painel Admin Verdelis RP - Inicializado com sucesso!');
         });
     </script>
 </body>
 </html>
+
