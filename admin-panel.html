@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -411,40 +410,6 @@
             display: block;
         }
 
-        /* Novos estilos para dados do FiveM */
-        .server-status {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid #4CAF50;
-        }
-
-        .class-distribution-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .class-item {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .class-icon {
-            font-size: 2em;
-            margin-bottom: 5px;
-        }
-
-        .class-count {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #4CAF50;
-        }
-
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -497,7 +462,7 @@
                     <li><a href="#dashboard" class="active">📊 Dashboard</a></li>
                     <li><a href="#events">🎪 Eventos</a></li>
                     <li><a href="#public-events">🌐 Eventos Públicos</a></li>
-                    <li><a href="#visitors">👥 Jogadores</a></li>
+                    <li><a href="#visitors">👥 Visitantes</a></li>
                     <li><a href="#settings">⚙️ Configurações</a></li>
                 </ul>
             </nav>
@@ -511,26 +476,20 @@
             <div class="stats-grid">
                 <div class="stat-card total-visitors">
                     <div class="stat-number" id="totalVisitors">0</div>
-                    <div>Total de Clãs</div>
+                    <div>Total de Visitantes</div>
                 </div>
                 <div class="stat-card today-visitors">
-                    <div class="stat-number" id="todayVisitors">60</div>
-                    <div>FPS do Servidor</div>
+                    <div class="stat-number" id="todayVisitors">0</div>
+                    <div>Visitantes Hoje</div>
                 </div>
                 <div class="stat-card online-now">
                     <div class="stat-number" id="onlineNow">0</div>
-                    <div>Jogadores Online</div>
+                    <div>Online Agora</div>
                 </div>
                 <div class="stat-card unique-visitors">
-                    <div class="stat-number" id="uniqueVisitors">32</div>
-                    <div>Slots do Servidor</div>
+                    <div class="stat-number" id="uniqueVisitors">0</div>
+                    <div>Visitantes Únicos</div>
                 </div>
-            </div>
-
-            <!-- Status do Servidor FiveM (será preenchido automaticamente) -->
-            <div id="serverInfoDisplay" class="server-status">
-                🌐 <strong>Servidor FiveM</strong><br>
-                📡 Aguardando dados do servidor...
             </div>
         </section>
 
@@ -795,25 +754,15 @@
             </div>
         </section>
 
-        <!-- Seção de Jogadores (Agora com dados REAIS do FiveM) -->
+        <!-- Seção de Visitantes -->
         <section id="visitors" class="admin-section">
-            <h2 class="section-title">👥 Jogadores Online - Dados em Tempo Real</h2>
+            <h2 class="section-title">👥 Visitantes Recentes</h2>
             <div class="visitor-list" id="visitorList">
                 <div class="empty-state">
-                    <i>🎮</i>
-                    <p>Conectando ao servidor FiveM...</p>
-                    <p><small>Aguardando dados dos jogadores online</small></p>
+                    <i>👁️</i>
+                    <p>Nenhum dado de visitante disponível</p>
+                    <p><small>Os dados dos visitantes serão exibidos aqui quando disponíveis</small></p>
                 </div>
-            </div>
-
-            <!-- Distribuição de Classes (será preenchida automaticamente) -->
-            <div id="classDistribution" style="margin-top: 30px;">
-                <!-- Será preenchido automaticamente -->
-            </div>
-
-            <!-- Clãs Ativos (será preenchido automaticamente) -->
-            <div id="activeClans" style="margin-top: 30px;">
-                <!-- Será preenchido automaticamente -->
             </div>
         </section>
 
@@ -855,264 +804,6 @@
     </main>
 
     <script>
-        // =============================================
-        // SISTEMA DE DADOS EM TEMPO REAL - FIVEM
-        // =============================================
-        const FIVEM_CONFIG = {
-            apiUrl: './api/get-server-data.php', // ✅ CAMINHO CORRIGIDO
-            updateInterval: 15000, // 15 segundos
-            enableLogs: true
-        };
-
-        // =============================================
-        // FUNÇÃO PRINCIPAL: BUSCAR DADOS DO FIVEM
-        // =============================================
-        async function fetchFiveMData() {
-            try {
-                if (FIVEM_CONFIG.enableLogs) {
-                    console.log('🔄 Buscando dados do FiveM...');
-                }
-                
-                const response = await fetch(FIVEM_CONFIG.apiUrl);
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    updateAdminPanelWithRealData(result.data, result.server_info);
-                } else {
-                    console.error('❌ Erro ao buscar dados:', result.error);
-                    showOfflineMode();
-                }
-            } catch (error) {
-                console.error('❌ Erro de conexão:', error);
-                showOfflineMode();
-            }
-        }
-
-        // =============================================
-        // ATUALIZAR PAINEL COM DADOS REAIS
-        // =============================================
-        function updateAdminPanelWithRealData(serverData, serverInfo) {
-            if (!serverData) {
-                console.warn('⚠️ Dados do servidor vazios');
-                return;
-            }
-            
-            // ✅ ATUALIZAR ESTATÍSTICAS PRINCIPAIS
-            updateMainStatistics(serverData.statistics, serverInfo);
-            
-            // ✅ ATUALIZAR LISTA DE JOGADORES
-            updatePlayersList(serverData.online_players);
-            
-            // ✅ ATUALIZAR DISTRIBUIÇÃO DE CLASSES
-            updateClassDistribution(serverData.class_distribution);
-            
-            // ✅ ATUALIZAR CLÃS ATIVOS
-            updateActiveClans(serverData.active_clans);
-            
-            if (FIVEM_CONFIG.enableLogs) {
-                console.log('✅ Painel atualizado com dados do FiveM');
-                console.log('📊 Jogadores online:', serverData.statistics?.online_players || 0);
-                console.log('🕒 Última atualização:', serverInfo.minutes_ago + ' minutos atrás');
-            }
-        }
-
-        // =============================================
-        // ATUALIZAR ESTATÍSTICAS PRINCIPAIS
-        // =============================================
-        function updateMainStatistics(stats, serverInfo) {
-            if (!stats) return;
-            
-            // Atualizar cards principais COM DADOS REAIS
-            document.getElementById('onlineNow').textContent = stats.online_players || '0';
-            document.getElementById('totalVisitors').textContent = stats.total_clans || '0';
-            document.getElementById('todayVisitors').textContent = stats.server_fps || '60';
-            document.getElementById('uniqueVisitors').textContent = stats.max_players || '32';
-            
-            // Atualizar informações do servidor
-            const serverInfoElement = document.getElementById('serverInfoDisplay');
-            if (serverInfoElement) {
-                serverInfoElement.innerHTML = `
-                    🌐 <strong>${serverInfo.name}</strong><br>
-                    📡 Atualizado: ${serverInfo.last_update}<br>
-                    ⏰ Há ${serverInfo.minutes_ago} minutos | 
-                    🎮 ${stats.online_players || 0} jogadores online
-                `;
-            }
-        }
-
-        // =============================================
-        // ATUALIZAR LISTA DE JOGADORES ONLINE
-        // =============================================
-        function updatePlayersList(players) {
-            const visitorsList = document.getElementById('visitorList');
-            
-            if (!players || players.length === 0) {
-                visitorsList.innerHTML = `
-                    <div class="empty-state">
-                        <i>🎮</i>
-                        <p>Nenhum jogador online no momento</p>
-                        <p><small>Os jogadores aparecerão aqui quando conectarem</small></p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Ordenar jogadores por nível (maior primeiro)
-            players.sort((a, b) => (b.level || 0) - (a.level || 0));
-            
-            visitorsList.innerHTML = players.map(player => `
-                <div class="visitor-item">
-                    <div class="visitor-info">
-                        <strong>${player.class_icon} ${player.name}</strong>
-                        <span class="visitor-page">
-                            Nível ${player.level} | ${player.clan} | Ping: ${player.ping}ms
-                        </span>
-                    </div>
-                    <div style="margin-top: 8px; font-size: 0.85em; color: #ccc;">
-                        ${player.health > 0 ? '❤️ ' + player.health + '%' : '💀 Morto'} 
-                        | 🛡️ ${player.armor || 0}%
-                        | ID: ${player.id}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // =============================================
-        // ATUALIZAR DISTRIBUIÇÃO DE CLASSES
-        // =============================================
-        function updateClassDistribution(classes) {
-            if (!classes) return;
-            
-            let distributionSection = document.getElementById('classDistribution');
-            
-            if (!distributionSection) {
-                distributionSection = document.createElement('div');
-                distributionSection.id = 'classDistribution';
-                distributionSection.className = 'admin-section';
-                distributionSection.innerHTML = `
-                    <h2 class="section-title">🎭 Distribuição de Classes</h2>
-                    <div id="classDistributionContent"></div>
-                `;
-                
-                // Inserir após a lista de jogadores
-                document.getElementById('visitors').appendChild(distributionSection);
-            }
-            
-            const distributionContent = document.getElementById('classDistributionContent');
-            let distributionHTML = '<div class="class-distribution-grid">';
-            
-            for (const [className, count] of Object.entries(classes)) {
-                const icon = getClassIcon(className);
-                distributionHTML += `
-                    <div class="class-item">
-                        <div class="class-icon">${icon}</div>
-                        <div style="font-weight: bold; margin: 5px 0;">${formatClassName(className)}</div>
-                        <div class="class-count">${count}</div>
-                    </div>
-                `;
-            }
-            
-            distributionHTML += '</div>';
-            distributionContent.innerHTML = distributionHTML;
-        }
-
-        // =============================================
-        // ATUALIZAR CLÃS ATIVOS
-        // =============================================
-        function updateActiveClans(clans) {
-            if (!clans || clans.length === 0) return;
-            
-            let clansSection = document.getElementById('activeClans');
-            
-            if (!clansSection) {
-                clansSection = document.createElement('div');
-                clansSection.id = 'activeClans';
-                clansSection.className = 'admin-section';
-                clansSection.innerHTML = `
-                    <h2 class="section-title">🏰 Clãs Ativos</h2>
-                    <div id="clansListContent"></div>
-                `;
-                
-                // Inserir após a distribuição de classes
-                const classSection = document.getElementById('classDistribution');
-                if (classSection) {
-                    classSection.after(clansSection);
-                } else {
-                    document.getElementById('visitors').appendChild(clansSection);
-                }
-            }
-            
-            const clansContent = document.getElementById('clansListContent');
-            clansContent.innerHTML = clans.map(clan => `
-                <div style="background: rgba(255,255,255,0.05); padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #4CAF50;">
-                    <strong>${clan.name} [${clan.tag}]</strong><br>
-                    <small>Tipo: ${clan.type} | Membros: ${clan.members}</small>
-                </div>
-            `).join('');
-        }
-
-        // =============================================
-        // FUNÇÕES AUXILIARES FIVEM
-        // =============================================
-        function getClassIcon(className) {
-            const icons = {
-                vampiro: "🧛",
-                lobisomem: "🐺", 
-                demonio: "😈",
-                anjo_caido: "👼",
-                escolhido: "⭐",
-                fau: "🔬",
-                humano: "👤"
-            };
-            return icons[className] || "👤";
-        }
-
-        function formatClassName(className) {
-            const names = {
-                vampiro: "Vampiro",
-                lobisomem: "Lobisomem", 
-                demonio: "Demônio",
-                anjo_caido: "Anjo Caído",
-                escolhido: "Escolhido",
-                fau: "FAU",
-                humano: "Humano"
-            };
-            return names[className] || className;
-        }
-
-        function showOfflineMode() {
-            console.log('📴 Modo offline - usando dados locais');
-            
-            const statusElement = document.getElementById('serverInfoDisplay');
-            if (statusElement) {
-                statusElement.innerHTML = `
-                    🌐 <strong>Servidor Offline</strong><br>
-                    📡 Não foi possível conectar ao servidor FiveM<br>
-                    ⚠️ Dados podem não estar atualizados
-                `;
-                statusElement.style.borderLeftColor = '#f44336';
-            }
-        }
-
-        // =============================================
-        // INICIALIZAÇÃO DO SISTEMA FIVEM
-        // =============================================
-        function initializeRealTimeSystem() {
-            console.log('🚀 Iniciando sistema de dados em tempo real...');
-            
-            // Primeira atualização imediata
-            fetchFiveMData();
-            
-            // Configurar atualização automática
-            setInterval(fetchFiveMData, FIVEM_CONFIG.updateInterval);
-            
-            console.log('✅ Sistema de dados em tempo real inicializado!');
-        }
-
-        // =============================================
-        // SISTEMA ORIGINAL DO PAINEL (MANTIDO)
-        // =============================================
-        
         // Função de logout
         function logout() {
             localStorage.removeItem('adminAuthenticated');
@@ -1154,7 +845,7 @@
             event.target.classList.add('active');
         }
 
-        // Sistema de eventos
+        // ========== SISTEMA DE EVENTOS (NOTIFICAÇÕES) ==========
         function createTextEvent(e) {
             e.preventDefault();
             
@@ -1298,7 +989,7 @@
             }).join('');
         }
 
-        // Sistema de eventos públicos
+        // ========== SISTEMA DE EVENTOS PÚBLICOS ==========
         function createPublicEvent(e) {
             e.preventDefault();
             
@@ -1318,6 +1009,7 @@
                 createdAt: new Date().toISOString()
             };
             
+            // Salva no localStorage para a página pública acessar
             const publicEvents = JSON.parse(localStorage.getItem('verdelisPublicEvents') || '[]');
             publicEvents.push(eventData);
             localStorage.setItem('verdelisPublicEvents', JSON.stringify(publicEvents));
@@ -1344,6 +1036,10 @@
             }
             
             eventsList.innerHTML = events.map(event => {
+                const eventDate = new Date(event.date);
+                const now = new Date();
+                const isUpcoming = eventDate >= now;
+                
                 return `
                     <div class="event-card ${event.type}">
                         <div class="event-content">
@@ -1419,6 +1115,28 @@
             document.getElementById('autoCleanup').value = settings.autoCleanup || 30;
         }
 
+        // ✅ SISTEMA DE ESTATÍSTICAS REAIS - DADOS ZERADOS
+        function updateVisitorStats() {
+            // Busca dados REAIS do localStorage (zerados inicialmente)
+            const total = parseInt(localStorage.getItem('totalVisitors') || '0');
+            const today = parseInt(localStorage.getItem('todayVisitors') || '0');
+            const online = parseInt(localStorage.getItem('onlineNow') || '0');
+            const unique = parseInt(localStorage.getItem('uniqueVisitors') || '0');
+            
+            // Atualiza a interface com dados REAIS
+            document.getElementById('totalVisitors').textContent = total.toLocaleString();
+            document.getElementById('todayVisitors').textContent = today;
+            document.getElementById('onlineNow').textContent = online;
+            document.getElementById('uniqueVisitors').textContent = unique.toLocaleString();
+            
+            console.log('📈 Estatísticas atualizadas (DADOS REAIS):', { 
+                total, 
+                today, 
+                online, 
+                unique 
+            });
+        }
+
         // Funções auxiliares
         function getTypeIcon(type) {
             const icons = {
@@ -1453,10 +1171,6 @@
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
-            // Iniciar sistema de dados do FiveM
-            initializeRealTimeSystem();
-            
-            // Manter sistemas existentes
             updateEventsList();
             updatePublicEventsList();
             loadSettings();
@@ -1474,8 +1188,45 @@
                 }
             }, 60000); // Verifica a cada minuto
             
-            console.log('🎮 Painel Admin Verdelis RP - Carregado com dados em tempo real!');
+            // ✅ ATUALIZA ESTATÍSTICAS REAIS a cada 30 segundos
+            setInterval(updateVisitorStats, 30000);
+            
+            // ✅ INICIALIZA DADOS ZERADOS se não existirem
+            initializeTrackingData();
         });
+
+        // ✅ INICIALIZA DADOS ZERADOS PARA TRACKING
+        function initializeTrackingData() {
+            const now = new Date();
+            const today = now.toDateString();
+            
+            // Inicializa dados zerados se não existirem
+            if (!localStorage.getItem('totalVisitors')) {
+                localStorage.setItem('totalVisitors', '0');
+            }
+            if (!localStorage.getItem('uniqueVisitors')) {
+                localStorage.setItem('uniqueVisitors', '0');
+            }
+            if (!localStorage.getItem('todayVisitors')) {
+                localStorage.setItem('todayVisitors', '0');
+                localStorage.setItem('todayDate', today);
+            }
+            if (!localStorage.getItem('onlineNow')) {
+                localStorage.setItem('onlineNow', '0');
+            }
+            
+            // Zera visitantes do dia se for um novo dia
+            const storedDate = localStorage.getItem('todayDate');
+            if (storedDate !== today) {
+                localStorage.setItem('todayVisitors', '0');
+                localStorage.setItem('todayDate', today);
+            }
+            
+            console.log('✅ Dados de tracking inicializados e zerados');
+        }
+
+        // ✅ INICIALIZA AS ESTATÍSTICAS COM DADOS REAIS
+        updateVisitorStats();
     </script>
 </body>
 </html>
