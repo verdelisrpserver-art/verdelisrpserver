@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin - Verdelis RP</title>
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --danger-color: #f44336;
+            --warning-color: #FF9800;
+            --vampire-color: #8B0000;
+            --werewolf-color: #8B4513;
+            --angel-color: #1E90FF;
+            --demon-color: #DC143C;
+            --dark-bg: #1a1a2e;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --text-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #16213e 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .admin-header {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo h1 {
+            font-size: 1.8em;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .admin-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+
+        .admin-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .admin-nav a:hover, .admin-nav a.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        .admin-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .total-visitors .stat-number { color: #4CAF50; }
+        .today-visitors .stat-number { color: #2196F3; }
+        .online-now .stat-number { color: #FF9800; }
+        .unique-visitors .stat-number { color: #9C27B0; }
+
+        .admin-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .events-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .event-tab {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 5px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .event-tab:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .event-tab.active {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .event-form-container {
+            display: none;
+        }
+
+        .event-form-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .event-form {
+            display: grid;
+            gap: 15px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #0b7dda;
+        }
+
+        .event-preview {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .preview-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .active-events {
+            margin-top: 30px;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .event-card.info { border-left-color: #2196F3; }
+        .event-card.warning { border-left-color: #FF9800; }
+        .event-card.emergency { border-left-color: #f44336; }
+        .event-card.success { border-left-color: #4CAF50; }
+        .event-card.video { border-left-color: #9C27B0; }
+        .event-card.campaign { border-left-color: #FF5722; }
+
+        .event-content {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .event-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-message {
+            color: #cccccc;
+            font-size: 0.9em;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .event-actions button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+
+        .btn-remove {
+            background: #f44336;
+            color: white;
+        }
+
+        .campaign-badge {
+            background: #FF9800;
+            color: black;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .video-badge {
+            background: #9C27B0;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .emergency-badge {
+            background: #f44336;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        .visitor-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .visitor-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .visitor-info {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .visitor-page {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a0a0a0;
+        }
+
+        .empty-state i {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .admin-nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .event-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .event-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Verificação de autenticação SIMPLIFICADA -->
+    <script>
+        // Verificação básica - você pode remover depois
+        if (!localStorage.getItem('adminAuthenticated')) {
+            // Se não estiver autenticado, redireciona para login
+            // window.location.href = 'admin-login.html';
+            // Para teste, vamos autenticar automaticamente
+            localStorage.setItem('adminAuthenticated', 'true');
+        }
+    </script>
+
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>🎮 VERDELIS RP - PAINEL ADMIN</h1>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" class="active">📊 Dashboard</a></li>
+                    <li><a href="#events">🎪 Eventos</a></li>
+                    <li><a href="#public-events">🌐 Eventos Públicos</a></li>
+                    <li><a href="#visitors">👥 Visitantes</a></li>
+                    <li><a href="#settings">⚙️ Configurações</a></li>
+                </ul>
+            </nav>
+            <button class="logout-btn" onclick="logout()">🚪 Sair</button>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <!-- Seção de Estatísticas -->
+        <section id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card total-visitors">
+                    <div class="stat-number" id="totalVisitors">1,247</div>
+                    <div>Total de Visitantes</div>
+                </div>
+                <div class="stat-card today-visitors">
+                    <div class="stat-number" id="todayVisitors">89</div>
+                    <div>Visitantes Hoje</div>
+                </div>
+                <div class="stat-card online-now">
+                    <div class="stat-number" id="onlineNow">24</div>
+                    <div>Online Agora</div>
+                </div>
+                <div class="stat-card unique-visitors">
+                    <div class="stat-number" id="uniqueVisitors">856</div>
+                    <div>Visitantes Únicos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Gerenciamento de Eventos -->
+        <section id="events" class="admin-section">
+            <h2 class="section-title">🎪 Gerenciar Eventos & Notificações</h2>
+            
+            <div class="events-tabs">
+                <button class="event-tab active" onclick="showEventForm('text')">📝 Evento de Texto</button>
+                <button class="event-tab" onclick="showEventForm('video')">🎥 Evento com Vídeo</button>
+                <button class="event-tab" onclick="showEventForm('campaign')">📢 Campanha</button>
+                <button class="event-tab" onclick="showEventForm('emergency')">🚨 Emergência</button>
+            </div>
+
+            <!-- Formulário para Evento de Texto -->
+            <div id="textForm" class="event-form-container active">
+                <form class="event-form" onsubmit="createTextEvent(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="textTitle">Título do Evento</label>
+                            <input type="text" id="textTitle" placeholder="Ex: Lua Cheia Especial" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="textType">Tipo de Evento</label>
+                            <select id="textType">
+                                <option value="info">ℹ️ Informativo</option>
+                                <option value="warning">⚠️ Aviso</option>
+                                <option value="success">✅ Sucesso</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="textMessage">Mensagem do Evento</label>
+                        <textarea id="textMessage" placeholder="Descreva o evento para os jogadores..." required rows="4"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="textDuration">Duração (minutos)</label>
+                            <input type="number" id="textDuration" value="10" min="1" max="1440">
+                        </div>
+                        <div class="form-group">
+                            <label for="textPriority">Prioridade</label>
+                            <select id="textPriority">
+                                <option value="low">Baixa</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="high">Alta</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">📢 Publicar Evento</button>
+                    
+                    <div class="event-preview">
+                        <div class="preview-title">Pré-visualização:</div>
+                        <div id="textPreview">Seu evento aparecerá aqui...</div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Lista de Eventos Ativos -->
+            <div class="active-events">
+                <h3 class="section-title">📋 Eventos Ativos</h3>
+                <div id="activeEventsList">
+                    <div class="empty-state">
+                        <i>📝</i>
+                        <p>Nenhum evento ativo no momento</p>
+                        <p><small>Crie seu primeiro evento usando os formulários acima</small></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Eventos Públicos -->
+        <section id="public-events" class="admin-section">
+            <h2 class="section-title">🌐 Criar Eventos Públicos para o Site</h2>
+            <p style="color: #cccccc; margin-bottom: 20px;">Estes eventos aparecerão na página pública "Eventos" para todos os visitantes verem.</p>
+            
+            <form class="event-form" id="publicEventForm" onsubmit="createPublicEvent(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="publicEventTitle">Título do Evento</label>
+                        <input type="text" id="publicEventTitle" placeholder="Ex: Lua Cheia Sangrenta" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publicEventType">Tipo de Evento</label>
+                        <select id="publicEventType" required>
+                            <option value="vampire">🧛 Vampírico</option>
+                            <option value="werewolf">🐺 Lobisomens</option>
+                            <option value="angel">👼 Angelical</option>
+                            <option value="demon">😈 Demoníaco</option>
+                            <option value="human">👤 Humano</option>
+                            <option value="special">⭐ Especial</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="publicEventDescription">Descrição do Evento</label>
+                    <textarea id="publicEventDescription" placeholder="Descreva o evento para os jogadores..." required rows="4"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="publicEventDate">Data do Evento</label>
+                        <input type="date" id="publicEventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="publicEventTime">Horário</label>
+                        <input type="time" id="publicEventTime" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">🌐 Publicar Evento no Site</button>
+            </form>
+
+            <div class="active-events" style="margin-top: 30px;">
+                <h3 class="section-title">📋 Eventos Públicos Ativos</h3>
+                <div id="publicEventsList">
+                    <div class="empty-state">
+                        <i>🌐</i>
+                        <p>Nenhum evento público criado</p>
+                        <p><small>Crie eventos públicos usando o formulário acima</small></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Visitantes -->
+        <section id="visitors" class="admin-section">
+            <h2 class="section-title">👥 Visitantes Recentes</h2>
+            <div class="visitor-list" id="visitorList">
+                <div class="visitor-item">
+                    <div class="visitor-info">
+                        <strong>🧛 João Silva</strong>
+                        <span class="visitor-page">Página: Eventos</span>
+                    </div>
+                    <div>Há 5 minutos</div>
+                </div>
+                <div class="visitor-item">
+                    <div class="visitor-info">
+                        <strong>🐺 Maria Santos</strong>
+                        <span class="visitor-page">Página: Início</span>
+                    </div>
+                    <div>Há 12 minutos</div>
+                </div>
+                <div class="visitor-item">
+                    <div class="visitor-info">
+                        <strong>👼 Pedro Costa</strong>
+                        <span class="visitor-page">Página: Regras</span>
+                    </div>
+                    <div>Há 25 minutos</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção de Configurações -->
+        <section id="settings" class="admin-section">
+            <h2 class="section-title">⚙️ Configurações do Sistema</h2>
+            <div class="event-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="siteTitle">Título do Site</label>
+                        <input type="text" id="siteTitle" value="Verdelis RP" placeholder="Título do seu site">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminEmail">Email do Admin</label>
+                        <input type="email" id="adminEmail" value="admin@verdelisrp.com" placeholder="Seu email">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="siteDescription">Descrição do Site</label>
+                    <textarea id="siteDescription" rows="3" placeholder="Descrição do seu site">O melhor servidor de RPG temático com vampiros, lobisomens e muito mais!</textarea>
+                </div>
+                
+                <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Salvar Configurações</button>
+                <button type="button" class="btn btn-secondary" onclick="resetSettings()">🔄 Restaurar Padrões</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Função de logout
+        function logout() {
+            localStorage.removeItem('adminAuthenticated');
+            alert('Logout realizado!');
+            // window.location.href = 'admin-login.html';
+        }
+
+        // Navegação entre seções
+        document.querySelectorAll('.admin-nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                
+                document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                
+                document.getElementById(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Sistema de abas para eventos
+        function showEventForm(formType) {
+            document.querySelectorAll('.event-form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            document.getElementById(formType + 'Form').classList.add('active');
+            
+            document.querySelectorAll('.event-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Sistema de eventos
+        function createTextEvent(e) {
+            e.preventDefault();
+            
+            const eventData = {
+                id: Date.now(),
+                type: 'text',
+                title: document.getElementById('textTitle').value,
+                message: document.getElementById('textMessage').value,
+                eventType: document.getElementById('textType').value,
+                duration: document.getElementById('textDuration').value,
+                priority: document.getElementById('textPriority').value,
+                timestamp: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            saveEvent(eventData);
+            document.getElementById('textForm').reset();
+            updateEventsList();
+            
+            alert('✅ Evento de texto publicado com sucesso!');
+        }
+
+        // Salvar evento no localStorage
+        function saveEvent(eventData) {
+            const events = JSON.parse(localStorage.getItem('verdelisEvents') || '[]');
+            events.push(eventData);
+            localStorage.setItem('verdelisEvents', JSON.stringify(events));
+        }
+
+        // Atualizar lista de eventos
+        function updateEventsList() {
+            const eventsList = document.getElementById('activeEventsList');
+            const events = JSON.parse(localStorage.getItem('verdelisEvents') || '[]');
+            
+            if (events.length === 0) {
+                eventsList.innerHTML = `
+                    <div class="empty-state">
+                        <i>📝</i>
+                        <p>Nenhum evento ativo no momento</p>
+                        <p><small>Crie seu primeiro evento usando os formulários acima</small></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            eventsList.innerHTML = events.map(event => {
+                let badge = '';
+                let icon = '📄';
+                
+                if (event.type === 'video') {
+                    badge = '<span class="video-badge">VÍDEO</span>';
+                    icon = '🎬';
+                } else if (event.type === 'campaign') {
+                    badge = '<span class="campaign-badge">CAMPANHA</span>';
+                    icon = '📢';
+                } else if (event.type === 'emergency') {
+                    badge = '<span class="emergency-badge">EMERGÊNCIA</span>';
+                    icon = '🚨';
+                }
+                
+                return `
+                    <div class="event-card ${event.type}">
+                        <div class="event-content">
+                            <div class="event-title">
+                                ${icon} ${event.title} ${badge}
+                            </div>
+                            <div class="event-message">${event.message}</div>
+                            <small>Criado em: ${new Date(event.timestamp).toLocaleString()}</small>
+                        </div>
+                        <div class="event-actions">
+                            <button class="btn-remove" onclick="removeEvent(${event.id})">🗑️ Remover</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Sistema de eventos públicos
+        function createPublicEvent(e) {
+            e.preventDefault();
+            
+            const eventData = {
+                id: Date.now(),
+                title: document.getElementById('publicEventTitle').value,
+                description: document.getElementById('publicEventDescription').value,
+                type: document.getElementById('publicEventType').value,
+                date: document.getElementById('publicEventDate').value,
+                time: document.getElementById('publicEventTime').value,
+                createdBy: 'Admin',
+                createdAt: new Date().toISOString()
+            };
+            
+            const publicEvents = JSON.parse(localStorage.getItem('verdelisPublicEvents') || '[]');
+            publicEvents.push(eventData);
+            localStorage.setItem('verdelisPublicEvents', JSON.stringify(publicEvents));
+            
+            alert('✅ Evento público criado com sucesso!');
+            document.getElementById('publicEventForm').reset();
+            updatePublicEventsList();
+        }
+
+        // Atualizar lista de eventos públicos
+        function updatePublicEventsList() {
+            const eventsList = document.getElementById('publicEventsList');
+            const events = JSON.parse(localStorage.getItem('verdelisPublicEvents') || '[]');
+            
+            if (events.length === 0) {
+                eventsList.innerHTML = `
+                    <div class="empty-state">
+                        <i>🌐</i>
+                        <p>Nenhum evento público criado</p>
+                        <p><small>Crie eventos públicos usando o formulário acima</small></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            eventsList.innerHTML = events.map(event => {
+                return `
+                    <div class="event-card ${event.type}">
+                        <div class="event-content">
+                            <div class="event-title">
+                                ${getTypeIcon(event.type)} ${event.title}
+                            </div>
+                            <div class="event-message">${event.description}</div>
+                            <small>
+                                📅 ${formatDate(event.date)} às ${event.time}
+                            </small>
+                        </div>
+                        <div class="event-actions">
+                            <button class="btn-remove" onclick="removePublicEvent(${event.id})">🗑️ Remover</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Remover evento público
+        function removePublicEvent(eventId) {
+            if (confirm('Tem certeza que deseja remover este evento público?')) {
+                let events = JSON.parse(localStorage.getItem('verdelisPublicEvents') || '[]');
+                events = events.filter(event => event.id !== eventId);
+                localStorage.setItem('verdelisPublicEvents', JSON.stringify(events));
+                updatePublicEventsList();
+            }
+        }
+
+        // Remover evento
+        function removeEvent(eventId) {
+            if (confirm('Tem certeza que deseja remover este evento?')) {
+                let events = JSON.parse(localStorage.getItem('verdelisEvents') || '[]');
+                events = events.filter(event => event.id !== eventId);
+                localStorage.setItem('verdelisEvents', JSON.stringify(events));
+                updateEventsList();
+            }
+        }
+
+        // Sistema de configurações
+        function saveSettings() {
+            const settings = {
+                siteTitle: document.getElementById('siteTitle').value,
+                adminEmail: document.getElementById('adminEmail').value,
+                siteDescription: document.getElementById('siteDescription').value
+            };
+            
+            localStorage.setItem('verdelisSettings', JSON.stringify(settings));
+            alert('✅ Configurações salvas com sucesso!');
+        }
+
+        function resetSettings() {
+            if (confirm('Tem certeza que deseja restaurar as configurações padrão?')) {
+                localStorage.removeItem('verdelisSettings');
+                loadSettings();
+                alert('🔄 Configurações restauradas para os valores padrão!');
+            }
+        }
+
+        function loadSettings() {
+            const settings = JSON.parse(localStorage.getItem('verdelisSettings') || '{}');
+            
+            document.getElementById('siteTitle').value = settings.siteTitle || 'Verdelis RP';
+            document.getElementById('adminEmail').value = settings.adminEmail || 'admin@verdelisrp.com';
+            document.getElementById('siteDescription').value = settings.siteDescription || 'O melhor servidor de RPG temático com vampiros, lobisomens e muito mais!';
+        }
+
+        // Funções auxiliares
+        function getTypeIcon(type) {
+            const icons = {
+                vampire: '🧛',
+                werewolf: '🐺',
+                angel: '👼',
+                demon: '😈',
+                human: '👤',
+                special: '⭐'
+            };
+            return icons[type] || '🎭';
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('pt-BR');
+        }
+
+        // Atualizar preview de texto em tempo real
+        document.getElementById('textMessage').addEventListener('input', function() {
+            document.getElementById('textPreview').textContent = this.value || 'Seu evento aparecerá aqui...';
+        });
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            updateEventsList();
+            updatePublicEventsList();
+            loadSettings();
+            
+            // Define a data mínima como hoje
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('publicEventDate').min = today;
+            
+            console.log('🎮 Painel Admin Verdelis RP - Carregado com sucesso!');
+        });
+    </script>
+</body>
+</html>
