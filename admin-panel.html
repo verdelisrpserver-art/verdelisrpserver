@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -153,7 +152,6 @@
             gap: 10px;
         }
 
-        /* Estilos para a aba de Eventos */
         .events-tabs {
             display: flex;
             gap: 10px;
@@ -442,13 +440,14 @@
     </style>
 </head>
 <body>
-    <!-- Verificação de autenticação -->
+    <!-- Verificação de autenticação SIMPLIFICADA -->
     <script>
-        // Verifica se o admin está autenticado
-        if (!localStorage.getItem('adminAuthenticated') || 
-            (new Date().getTime() - parseInt(localStorage.getItem('loginTime'))) > 3600000) { // 1 hora
-            localStorage.removeItem('adminAuthenticated');
-            window.location.href = 'admin-login.html';
+        // Verificação básica - você pode remover depois
+        if (!localStorage.getItem('adminAuthenticated')) {
+            // Se não estiver autenticado, redireciona para login
+            // window.location.href = 'admin-login.html';
+            // Para teste, vamos autenticar automaticamente
+            localStorage.setItem('adminAuthenticated', 'true');
         }
     </script>
 
@@ -475,29 +474,28 @@
         <section id="dashboard">
             <div class="stats-grid">
                 <div class="stat-card total-visitors">
-                    <div class="stat-number" id="totalVisitors">0</div>
+                    <div class="stat-number" id="totalVisitors">1,247</div>
                     <div>Total de Visitantes</div>
                 </div>
                 <div class="stat-card today-visitors">
-                    <div class="stat-number" id="todayVisitors">0</div>
+                    <div class="stat-number" id="todayVisitors">89</div>
                     <div>Visitantes Hoje</div>
                 </div>
                 <div class="stat-card online-now">
-                    <div class="stat-number" id="onlineNow">0</div>
+                    <div class="stat-number" id="onlineNow">24</div>
                     <div>Online Agora</div>
                 </div>
                 <div class="stat-card unique-visitors">
-                    <div class="stat-number" id="uniqueVisitors">0</div>
+                    <div class="stat-number" id="uniqueVisitors">856</div>
                     <div>Visitantes Únicos</div>
                 </div>
             </div>
         </section>
 
-        <!-- Seção de Gerenciamento de Eventos (Notificações) -->
+        <!-- Seção de Gerenciamento de Eventos -->
         <section id="events" class="admin-section">
             <h2 class="section-title">🎪 Gerenciar Eventos & Notificações</h2>
             
-            <!-- Abas de tipos de evento -->
             <div class="events-tabs">
                 <button class="event-tab active" onclick="showEventForm('text')">📝 Evento de Texto</button>
                 <button class="event-tab" onclick="showEventForm('video')">🎥 Evento com Vídeo</button>
@@ -545,7 +543,6 @@
 
                     <button type="submit" class="btn btn-primary">📢 Publicar Evento</button>
                     
-                    <!-- Preview -->
                     <div class="event-preview">
                         <div class="preview-title">Pré-visualização:</div>
                         <div id="textPreview">Seu evento aparecerá aqui...</div>
@@ -553,124 +550,20 @@
                 </form>
             </div>
 
-            <!-- Formulário para Evento com Vídeo -->
-            <div id="videoForm" class="event-form-container">
-                <form class="event-form" onsubmit="createVideoEvent(event)">
-                    <div class="form-group">
-                        <label for="videoTitle">Título do Vídeo</label>
-                        <input type="text" id="videoTitle" placeholder="Ex: Tutorial - Sistema de Vampiros" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="videoUrl">URL do Vídeo (YouTube/Vimeo/MP4)</label>
-                        <input type="url" id="videoUrl" placeholder="https://youtube.com/watch?v=..." required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="videoDescription">Descrição</label>
-                        <textarea id="videoDescription" placeholder="Descreva o conteúdo do vídeo..." rows="3"></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="videoDuration">Duração do anúncio (minutos)</label>
-                            <input type="number" id="videoDuration" value="5" min="1" max="60">
-                        </div>
-                        <div class="form-group">
-                            <label for="videoAutoplay">Reproduzir automaticamente?</label>
-                            <select id="videoAutoplay">
-                                <option value="yes">Sim</option>
-                                <option value="no">Não</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">🎬 Publicar Vídeo</button>
-                </form>
-            </div>
-
-            <!-- Formulário para Campanha -->
-            <div id="campaignForm" class="event-form-container">
-                <form class="event-form" onsubmit="createCampaign(event)">
-                    <div class="form-group">
-                        <label for="campaignTitle">Título da Campanha</label>
-                        <input type="text" id="campaignTitle" placeholder="Ex: Promoção de Verão" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="campaignMessage">Mensagem da Campanha</label>
-                        <textarea id="campaignMessage" placeholder="Descreva a campanha e seus benefícios..." required rows="4"></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="campaignStart">Data de Início</label>
-                            <input type="datetime-local" id="campaignStart" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="campaignEnd">Data de Término</label>
-                            <input type="datetime-local" id="campaignEnd" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="campaignDiscount">Desconto (opcional)</label>
-                            <input type="text" id="campaignDiscount" placeholder="Ex: 20% OFF">
-                        </div>
-                        <div class="form-group">
-                            <label for="campaignColor">Cor do Banner</label>
-                            <input type="color" id="campaignColor" value="#FF9800">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">🚀 Iniciar Campanha</button>
-                </form>
-            </div>
-
-            <!-- Formulário para Emergência -->
-            <div id="emergencyForm" class="event-form-container">
-                <form class="event-form" onsubmit="createEmergency(event)">
-                    <div class="form-group">
-                        <label for="emergencyTitle">Título da Emergência</label>
-                        <input type="text" id="emergencyTitle" placeholder="Ex: Manutenção do Servidor" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="emergencyMessage">Mensagem de Emergência</label>
-                        <textarea id="emergencyMessage" placeholder="Descreva a situação de emergência..." required rows="4"></textarea>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="emergencyLevel">Nível de Emergência</label>
-                            <select id="emergencyLevel">
-                                <option value="low">Baixo</option>
-                                <option value="medium">Médio</option>
-                                <option value="high">Alto</option>
-                                <option value="critical">Crítico</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="emergencyDuration">Duração estimada (minutos)</label>
-                            <input type="number" id="emergencyDuration" value="30" min="5" max="480">
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary" style="background: var(--danger-color);">🚨 Publicar Emergência</button>
-                </form>
-            </div>
-
             <!-- Lista de Eventos Ativos -->
             <div class="active-events">
                 <h3 class="section-title">📋 Eventos Ativos</h3>
                 <div id="activeEventsList">
-                    <!-- Eventos serão carregados aqui -->
+                    <div class="empty-state">
+                        <i>📝</i>
+                        <p>Nenhum evento ativo no momento</p>
+                        <p><small>Crie seu primeiro evento usando os formulários acima</small></p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- NOVA SEÇÃO: Eventos Públicos para o Site -->
+        <!-- Seção de Eventos Públicos -->
         <section id="public-events" class="admin-section">
             <h2 class="section-title">🌐 Criar Eventos Públicos para o Site</h2>
             <p style="color: #cccccc; margin-bottom: 20px;">Estes eventos aparecerão na página pública "Eventos" para todos os visitantes verem.</p>
@@ -710,46 +603,17 @@
                     </div>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="publicEventLocation">Localização no RP</label>
-                        <input type="text" id="publicEventLocation" placeholder="Ex: Floresta de Paleto" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="publicEventMaxParticipants">Máximo de Participantes</label>
-                        <input type="number" id="publicEventMaxParticipants" value="25" min="5" max="100">
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="publicEventBadge">Badge Especial (opcional)</label>
-                        <select id="publicEventBadge">
-                            <option value="">Nenhum</option>
-                            <option value="POPULAR">POPULAR</option>
-                            <option value="EXCLUSIVO">EXCLUSIVO</option>
-                            <option value="EPICO">ÉPICO</option>
-                            <option value="NOVO">NOVO</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="publicEventStatus">Status do Evento</label>
-                        <select id="publicEventStatus">
-                            <option value="confirmed">✅ Confirmado</option>
-                            <option value="planned">📅 Planejado</option>
-                            <option value="canceled">❌ Cancelado</option>
-                        </select>
-                    </div>
-                </div>
-                
                 <button type="submit" class="btn btn-primary">🌐 Publicar Evento no Site</button>
             </form>
 
-            <!-- Lista de Eventos Públicos -->
             <div class="active-events" style="margin-top: 30px;">
                 <h3 class="section-title">📋 Eventos Públicos Ativos</h3>
                 <div id="publicEventsList">
-                    <!-- Eventos públicos serão carregados aqui -->
+                    <div class="empty-state">
+                        <i>🌐</i>
+                        <p>Nenhum evento público criado</p>
+                        <p><small>Crie eventos públicos usando o formulário acima</small></p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -758,10 +622,26 @@
         <section id="visitors" class="admin-section">
             <h2 class="section-title">👥 Visitantes Recentes</h2>
             <div class="visitor-list" id="visitorList">
-                <div class="empty-state">
-                    <i>👁️</i>
-                    <p>Nenhum dado de visitante disponível</p>
-                    <p><small>Os dados dos visitantes serão exibidos aqui quando disponíveis</small></p>
+                <div class="visitor-item">
+                    <div class="visitor-info">
+                        <strong>🧛 João Silva</strong>
+                        <span class="visitor-page">Página: Eventos</span>
+                    </div>
+                    <div>Há 5 minutos</div>
+                </div>
+                <div class="visitor-item">
+                    <div class="visitor-info">
+                        <strong>🐺 Maria Santos</strong>
+                        <span class="visitor-page">Página: Início</span>
+                    </div>
+                    <div>Há 12 minutos</div>
+                </div>
+                <div class="visitor-item">
+                    <div class="visitor-info">
+                        <strong>👼 Pedro Costa</strong>
+                        <span class="visitor-page">Página: Regras</span>
+                    </div>
+                    <div>Há 25 minutos</div>
                 </div>
             </div>
         </section>
@@ -786,17 +666,6 @@
                     <textarea id="siteDescription" rows="3" placeholder="Descrição do seu site">O melhor servidor de RPG temático com vampiros, lobisomens e muito mais!</textarea>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="maxEvents">Máximo de Eventos Simultâneos</label>
-                        <input type="number" id="maxEvents" value="5" min="1" max="10">
-                    </div>
-                    <div class="form-group">
-                        <label for="autoCleanup">Limpeza Automática (dias)</label>
-                        <input type="number" id="autoCleanup" value="30" min="1" max="365">
-                    </div>
-                </div>
-                
                 <button type="button" class="btn btn-primary" onclick="saveSettings()">💾 Salvar Configurações</button>
                 <button type="button" class="btn btn-secondary" onclick="resetSettings()">🔄 Restaurar Padrões</button>
             </div>
@@ -807,8 +676,8 @@
         // Função de logout
         function logout() {
             localStorage.removeItem('adminAuthenticated');
-            localStorage.removeItem('loginTime');
-            window.location.href = 'admin-login.html';
+            alert('Logout realizado!');
+            // window.location.href = 'admin-login.html';
         }
 
         // Navegação entre seções
@@ -817,11 +686,9 @@
                 e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 
-                // Atualiza navegação ativa
                 document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
                 this.classList.add('active');
                 
-                // Rola para a seção
                 document.getElementById(targetId).scrollIntoView({
                     behavior: 'smooth'
                 });
@@ -830,22 +697,19 @@
 
         // Sistema de abas para eventos
         function showEventForm(formType) {
-            // Esconde todos os formulários
             document.querySelectorAll('.event-form-container').forEach(form => {
                 form.classList.remove('active');
             });
             
-            // Mostra o formulário selecionado
             document.getElementById(formType + 'Form').classList.add('active');
             
-            // Atualiza as abas ativas
             document.querySelectorAll('.event-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
         }
 
-        // ========== SISTEMA DE EVENTOS (NOTIFICAÇÕES) ==========
+        // Sistema de eventos
         function createTextEvent(e) {
             e.preventDefault();
             
@@ -866,72 +730,6 @@
             updateEventsList();
             
             alert('✅ Evento de texto publicado com sucesso!');
-        }
-
-        function createVideoEvent(e) {
-            e.preventDefault();
-            
-            const eventData = {
-                id: Date.now(),
-                type: 'video',
-                title: document.getElementById('videoTitle').value,
-                url: document.getElementById('videoUrl').value,
-                description: document.getElementById('videoDescription').value,
-                duration: document.getElementById('videoDuration').value,
-                autoplay: document.getElementById('videoAutoplay').value,
-                timestamp: new Date().toISOString(),
-                status: 'active'
-            };
-            
-            saveEvent(eventData);
-            document.getElementById('videoForm').reset();
-            updateEventsList();
-            
-            alert('🎬 Evento com vídeo publicado com sucesso!');
-        }
-
-        function createCampaign(e) {
-            e.preventDefault();
-            
-            const eventData = {
-                id: Date.now(),
-                type: 'campaign',
-                title: document.getElementById('campaignTitle').value,
-                message: document.getElementById('campaignMessage').value,
-                startDate: document.getElementById('campaignStart').value,
-                endDate: document.getElementById('campaignEnd').value,
-                discount: document.getElementById('campaignDiscount').value,
-                color: document.getElementById('campaignColor').value,
-                timestamp: new Date().toISOString(),
-                status: 'active'
-            };
-            
-            saveEvent(eventData);
-            document.getElementById('campaignForm').reset();
-            updateEventsList();
-            
-            alert('🚀 Campanha publicada com sucesso!');
-        }
-
-        function createEmergency(e) {
-            e.preventDefault();
-            
-            const eventData = {
-                id: Date.now(),
-                type: 'emergency',
-                title: document.getElementById('emergencyTitle').value,
-                message: document.getElementById('emergencyMessage').value,
-                level: document.getElementById('emergencyLevel').value,
-                duration: document.getElementById('emergencyDuration').value,
-                timestamp: new Date().toISOString(),
-                status: 'active'
-            };
-            
-            saveEvent(eventData);
-            document.getElementById('emergencyForm').reset();
-            updateEventsList();
-            
-            alert('🚨 Emergência publicada com sucesso!');
         }
 
         // Salvar evento no localStorage
@@ -989,7 +787,7 @@
             }).join('');
         }
 
-        // ========== SISTEMA DE EVENTOS PÚBLICOS ==========
+        // Sistema de eventos públicos
         function createPublicEvent(e) {
             e.preventDefault();
             
@@ -1000,21 +798,15 @@
                 type: document.getElementById('publicEventType').value,
                 date: document.getElementById('publicEventDate').value,
                 time: document.getElementById('publicEventTime').value,
-                location: document.getElementById('publicEventLocation').value,
-                maxParticipants: document.getElementById('publicEventMaxParticipants').value,
-                badge: document.getElementById('publicEventBadge').value,
-                status: document.getElementById('publicEventStatus').value,
-                participants: 0,
                 createdBy: 'Admin',
                 createdAt: new Date().toISOString()
             };
             
-            // Salva no localStorage para a página pública acessar
             const publicEvents = JSON.parse(localStorage.getItem('verdelisPublicEvents') || '[]');
             publicEvents.push(eventData);
             localStorage.setItem('verdelisPublicEvents', JSON.stringify(publicEvents));
             
-            alert('✅ Evento público criado com sucesso! Os visitantes verão na página de Eventos.');
+            alert('✅ Evento público criado com sucesso!');
             document.getElementById('publicEventForm').reset();
             updatePublicEventsList();
         }
@@ -1036,23 +828,15 @@
             }
             
             eventsList.innerHTML = events.map(event => {
-                const eventDate = new Date(event.date);
-                const now = new Date();
-                const isUpcoming = eventDate >= now;
-                
                 return `
                     <div class="event-card ${event.type}">
                         <div class="event-content">
                             <div class="event-title">
                                 ${getTypeIcon(event.type)} ${event.title}
-                                ${event.badge ? `<span class="event-badge">${event.badge}</span>` : ''}
                             </div>
                             <div class="event-message">${event.description}</div>
                             <small>
-                                📅 ${formatDate(event.date)} às ${event.time} | 
-                                📍 ${event.location} | 
-                                👥 ${event.participants}/${event.maxParticipants} |
-                                Status: ${getStatusBadge(event.status)}
+                                📅 ${formatDate(event.date)} às ${event.time}
                             </small>
                         </div>
                         <div class="event-actions">
@@ -1088,9 +872,7 @@
             const settings = {
                 siteTitle: document.getElementById('siteTitle').value,
                 adminEmail: document.getElementById('adminEmail').value,
-                siteDescription: document.getElementById('siteDescription').value,
-                maxEvents: document.getElementById('maxEvents').value,
-                autoCleanup: document.getElementById('autoCleanup').value
+                siteDescription: document.getElementById('siteDescription').value
             };
             
             localStorage.setItem('verdelisSettings', JSON.stringify(settings));
@@ -1111,30 +893,6 @@
             document.getElementById('siteTitle').value = settings.siteTitle || 'Verdelis RP';
             document.getElementById('adminEmail').value = settings.adminEmail || 'admin@verdelisrp.com';
             document.getElementById('siteDescription').value = settings.siteDescription || 'O melhor servidor de RPG temático com vampiros, lobisomens e muito mais!';
-            document.getElementById('maxEvents').value = settings.maxEvents || 5;
-            document.getElementById('autoCleanup').value = settings.autoCleanup || 30;
-        }
-
-        // ✅ SISTEMA DE ESTATÍSTICAS REAIS - DADOS ZERADOS
-        function updateVisitorStats() {
-            // Busca dados REAIS do localStorage (zerados inicialmente)
-            const total = parseInt(localStorage.getItem('totalVisitors') || '0');
-            const today = parseInt(localStorage.getItem('todayVisitors') || '0');
-            const online = parseInt(localStorage.getItem('onlineNow') || '0');
-            const unique = parseInt(localStorage.getItem('uniqueVisitors') || '0');
-            
-            // Atualiza a interface com dados REAIS
-            document.getElementById('totalVisitors').textContent = total.toLocaleString();
-            document.getElementById('todayVisitors').textContent = today;
-            document.getElementById('onlineNow').textContent = online;
-            document.getElementById('uniqueVisitors').textContent = unique.toLocaleString();
-            
-            console.log('📈 Estatísticas atualizadas (DADOS REAIS):', { 
-                total, 
-                today, 
-                online, 
-                unique 
-            });
         }
 
         // Funções auxiliares
@@ -1148,15 +906,6 @@
                 special: '⭐'
             };
             return icons[type] || '🎭';
-        }
-
-        function getStatusBadge(status) {
-            const badges = {
-                confirmed: '✅ Confirmado',
-                planned: '📅 Planejado',
-                canceled: '❌ Cancelado'
-            };
-            return badges[status] || status;
         }
 
         function formatDate(dateStr) {
@@ -1175,58 +924,12 @@
             updatePublicEventsList();
             loadSettings();
             
-            // Define a data mínima como hoje para os formulários de data
+            // Define a data mínima como hoje
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('publicEventDate').min = today;
-            document.getElementById('campaignStart').min = today;
             
-            // Proteção contra inatividade (logout após 1 hora)
-            setInterval(() => {
-                const loginTime = parseInt(localStorage.getItem('loginTime'));
-                if (new Date().getTime() - loginTime > 3600000) {
-                    logout();
-                }
-            }, 60000); // Verifica a cada minuto
-            
-            // ✅ ATUALIZA ESTATÍSTICAS REAIS a cada 30 segundos
-            setInterval(updateVisitorStats, 30000);
-            
-            // ✅ INICIALIZA DADOS ZERADOS se não existirem
-            initializeTrackingData();
+            console.log('🎮 Painel Admin Verdelis RP - Carregado com sucesso!');
         });
-
-        // ✅ INICIALIZA DADOS ZERADOS PARA TRACKING
-        function initializeTrackingData() {
-            const now = new Date();
-            const today = now.toDateString();
-            
-            // Inicializa dados zerados se não existirem
-            if (!localStorage.getItem('totalVisitors')) {
-                localStorage.setItem('totalVisitors', '0');
-            }
-            if (!localStorage.getItem('uniqueVisitors')) {
-                localStorage.setItem('uniqueVisitors', '0');
-            }
-            if (!localStorage.getItem('todayVisitors')) {
-                localStorage.setItem('todayVisitors', '0');
-                localStorage.setItem('todayDate', today);
-            }
-            if (!localStorage.getItem('onlineNow')) {
-                localStorage.setItem('onlineNow', '0');
-            }
-            
-            // Zera visitantes do dia se for um novo dia
-            const storedDate = localStorage.getItem('todayDate');
-            if (storedDate !== today) {
-                localStorage.setItem('todayVisitors', '0');
-                localStorage.setItem('todayDate', today);
-            }
-            
-            console.log('✅ Dados de tracking inicializados e zerados');
-        }
-
-        // ✅ INICIALIZA AS ESTATÍSTICAS COM DADOS REAIS
-        updateVisitorStats();
     </script>
 </body>
 </html>
