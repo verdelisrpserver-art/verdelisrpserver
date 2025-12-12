@@ -215,7 +215,31 @@
                 category: urlParams.get('category')
             };
         }
+<!-- BOTÃO MODO TESTE ADMIN - COLE ONDE QUISER NA LOJA -->
+<div style="text-align:center; margin:30px 0;">
+    <button onclick="modoTesteDireto()" style="padding:15px 30px; font-size:1.3rem; background:#FFD700; color:#000; border:none; border-radius:12px; cursor:pointer; font-weight:bold;">
+        MODO ADMIN / TESTE RÁPIDO
+    </button>
+</div>
 
+<script>
+function modoTesteDireto() {
+    if (!confirm('MODO ADMIN ATIVADO\nNenhum pagamento real\nItens entregues automaticamente\n\nContinuar?')) return;
+
+    const fakeOrder = {
+        playerId: "99999",
+        playerName: "Admin_Teste",
+        productId: "ADMIN_PACK",
+        productName: "PACOTE COMPLETO ADMIN (TESTE)",
+        price: "0.01",
+        category: "admin",
+        isAdminTest: true
+    };
+
+    localStorage.setItem('verdelisOrder', JSON.stringify(fakeOrder));
+    window.location.href = 'payment-success.html?transaction_id=ADMIN_TESTE_' + Date.now();
+}
+</script>
         // Validar ID do jogador
         function validatePlayerId(id) {
             const idRegex = /^\d+$/;
@@ -282,4 +306,5 @@
         });
     </script>
 </body>
+
 </html>
