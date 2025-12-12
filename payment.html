@@ -1,3 +1,8 @@
+<!-- ARQUIVO COMPLETO: payment.html -->
+<!-- Copie e cole TODO este conteúdo no seu payment.html -->
+<!-- Aqui está o arquivo INTEIRO com TODAS as funções, estilos e script. -->
+<!-- Substitua apenas o que está marcado com <<< AQUI >>> -->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,42 +10,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento - Verdelis RP</title>
     <style>
-        /* Mantenha o CSS anterior da payment.html e adicione: */
-        .order-summary {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            border-left: 4px solid #e94560;
-        }
-
-        .order-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .info-label {
-            font-size: 0.9em;
-            color: #8f8f8f;
-            margin-bottom: 5px;
-        }
-
-        .info-value {
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .player-id {
-            color: #e94560;
-            font-size: 1.1em;
-        }
+        body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(135deg, #1a1a2e, #16213e); color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0; padding: 20px; }
+        .container { background: rgba(255,255,255,0.08); padding: 40px; border-radius: 15px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .logo { text-align: center; margin-bottom: 30px; }
+        .logo h1 { color: #e94560; font-size: 2.8rem; }
+        .order-summary { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #e94560; }
+        .info-item { margin: 12px 0; }
+        .info-label { color: #aaa; font-size: 0.9rem; }
+        .info-value { font-weight: bold; color: #fff; }
+        .player-id { color: #e94560; }
+        .btn { padding: 14px; width: 100%; border:none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin-top: 10px; }
+        .btn-primary { background: #e94560; color: white; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; }
     </style>
 </head>
 <body>
@@ -50,131 +31,68 @@
             <p>Finalizar Compra</p>
         </div>
 
-        <!-- Resumo do Pedido -->
         <div class="order-summary">
             <h3>Resumo do Pedido</h3>
-            <div class="order-info" id="orderSummary">
-                <!-- Será preenchido via JavaScript -->
-            </div>
+            <div id="orderSummary"></div>
         </div>
 
-        <!-- Formulário de Pagamento (mantenha o existente) -->
-        <form id="paymentForm">
-            <!-- Seus campos de pagamento existentes -->
-            
-            <div class="btn-group">
-                <button type="button" class="btn btn-secondary" onclick="goBack()">Voltar</button>
-                <button type="submit" class="btn btn-primary">Finalizar Compra</button>
-            </div>
-        </form>
+        <!-- Aqui você pode deixar só o botão ou colocar formulário de cartão se quiser -->
+        <div style="text-align:center; padding: 20px; background: rgba(233,69,96,0.1); border-radius: 10px;">
+            <p>Ao clicar abaixo você será redirecionado para o pagamento seguro</p>
+            <button id="payButton" class="btn btn-primary">IR PARA PAGAMENTO SEGURO</button>
+            <button onclick="history.back()" class="btn btn-secondary">Voltar</button>
+        </div>
     </div>
 
     <script>
-        // Carregar dados do pedido
+        // <<< AQUI VOCÊ COLOCA SEU LINK DE PAGAMENTO >>>
+        // Exemplos reais:
+        // Mercado Pago: https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=123456789
+        // PagSeguro: https://pagseguro.uol.com.br/checkout/v2/payment.html?code=ABC123
+        // PicPay, Stripe, etc.
+        const SEU_LINK_DE_PAGAMENTO = "link.mercadopago.com.br/verdelis"; // <<<< COLOQUE SEU LINK AQUI
+
         function loadOrderData() {
-            const orderData = JSON.parse(localStorage.getItem('verdelisOrder'));
-            
-            if (!orderData) {
-                alert('Dados do pedido não encontrados. Redirecionando para a loja.');
+            const order = JSON.parse(localStorage.getItem('verdelisOrder'));
+            if (!order) {
+                alert('Erro: dados do pedido não encontrados.');
                 window.location.href = 'loja.html';
-                return;
+                return null;
             }
 
-            // Preencher resumo do pedido
             document.getElementById('orderSummary').innerHTML = `
-                <div class="info-item">
-                    <span class="info-label">Produto:</span>
-                    <span class="info-value">${orderData.productName}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">ID do Jogador:</span>
-                    <span class="info-value player-id">${orderData.playerId}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Nome:</span>
-                    <span class="info-value">${orderData.playerName}</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Valor:</span>
-                    <span class="info-value">R$ ${parseFloat(orderData.price).toFixed(2)}</span>
-                </div>
+                <div class="info-item"><span class="info-label">Produto:</span><br><span class="info-value">${order.productName}</span></div>
+                <div class="info-item"><span class="info-label">ID do Jogador:</span><br><span class="info-value player-id">${order.playerId}</span></div>
+                <div class="info-item"><span class="info-label">Nome no jogo:</span><br><span class="info-value">${order.playerName || 'Não informado'}</span></div>
+                <div class="info-item"><span class="info-label">Valor:</span><br><span class="info-value">R$ ${parseFloat(order.price).toFixed(2)}</span></div>
             `;
 
-            return orderData;
+            return order;
         }
 
-        // Enviar dados para o webhook
-        async function processPayment(paymentData, orderData) {
-            try {
-                const response = await fetch('link.mercadopago.com.br/verdelis', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ...paymentData,
-                        ...orderData,
-                        status: 'pending'
-                    })
-                });
+        document.getElementById('payButton').addEventListener('click', function() {
+            const order = loadOrderData();
+            if (!order) return;
 
-                if (response.ok) {
-                    return await response.json();
-                } else {
-                    throw new Error('Erro no processamento do pagamento');
-                }
-            } catch (error) {
-                console.error('Erro:', error);
-                throw error;
-            }
-        }
+            // Monta a URL com todos os dados que seu gateway precisa
+            const params = new URLSearchParams({
+                playerId: order.playerId,
+                playerName: order.playerName || '',
+                product: order.productName,
+                valor: order.price,
+                email: order.playerName + '@verdelis.com', // opcional
+                reference: 'VERDELIS_' + Date.now(),
+                success_url: window.location.origin + '/payment-success.html',
+                cancel_url: window.location.origin + '/payment-cancel.html'
+            });
 
-        // Manipular envio do formulário de pagamento
-        document.getElementById('paymentForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const orderData = loadOrderData();
-            const paymentData = {
-                // Seus dados de pagamento existentes
-                cardNumber: document.getElementById('cardNumber').value,
-                cardName: document.getElementById('cardName').value,
-                expiryDate: document.getElementById('expiryDate').value,
-                cvv: document.getElementById('cvv').value
-            };
-
-            try {
-                const result = await processPayment(paymentData, orderData);
-                
-                if (result.success) {
-                    // Limpar dados do localStorage
-                    localStorage.removeItem('verdelisOrder');
-                    
-                    // Redirecionar para página de sucesso
-                    window.location.href = `success.html?orderId=${result.orderId}&playerId=${orderData.playerId}`;
-                } else {
-                    alert('Erro no pagamento: ' + result.message);
-                }
-            } catch (error) {
-                alert('Erro ao processar pagamento. Tente novamente.');
-            }
+            const finalUrl = SEU_LINK_DE_PAGAMENTO + '?' + params.toString();
+            window.location.href = finalUrl; // Redireciona para o pagamento real
         });
 
-        // Voltar para identificação do jogador
-        function goBack() {
-            window.location.href = 'player_id.html?' + new URLSearchParams({
-                productId: orderData.productId,
-                productName: orderData.productName,
-                price: orderData.price,
-                category: orderData.category
-            }).toString();
-        }
-
-        // Carregar dados quando a página carregar
-        let orderData;
-        window.addEventListener('load', function() {
-            orderData = loadOrderData();
-        });
+        // Carrega os dados ao abrir a página
+        window.onload = loadOrderData;
     </script>
 </body>
-
 </html>
+
